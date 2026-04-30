@@ -1997,9 +1997,10 @@ function renderTeacherDetail(record) {
 function renderTeacherInsights(rows) {
   const container = document.getElementById("teacher-insights");
   if (!container) return;
-  const average = rows.length ? Math.round(rows.reduce((sum, row) => sum + row.score, 0) / rows.length) : 0;
-  const supportCount = rows.filter((row) => row.score < 70).length;
-  const grouped = rows.reduce((map, row) => {
+  const scoredRows = rows.filter((row) => row.experimentId);
+  const average = scoredRows.length ? Math.round(scoredRows.reduce((sum, row) => sum + row.score, 0) / scoredRows.length) : 0;
+  const supportCount = scoredRows.filter((row) => row.score < 70).length;
+  const grouped = scoredRows.reduce((map, row) => {
     map[row.experimentId] = map[row.experimentId] || [];
     map[row.experimentId].push(row.score);
     return map;
@@ -2025,8 +2026,11 @@ function renderTeacherTable(rows) {
   const tableBody = document.getElementById("teacher-table-body");
   if (!tableBody) return;
   tableBody.innerHTML = rows.map((row, index) => {
-    const experiment = getExperimentConfig(row.experimentId);
-    return `<tr data-row-index="${index}"><td>${escapeHtml(row.studentName)}</td><td>${escapeHtml(row.classCode)}</td><td>${escapeHtml(getText(experiment.title))}</td><td>${escapeHtml(String(row.score))}%</td><td>${escapeHtml(getText(row.aiEvaluation))}</td></tr>`;
+    const levelLabel = LEVEL_LABELS[row.level] || LEVEL_LABELS.cem;
+    const levelDisplay = getText(levelLabel);
+    const experimentDisplay = row.experimentId ? getText(getExperimentConfig(row.experimentId).title) : getText({ fr: "Aucune experience", ar: "لا توجد تجربة" });
+    const scoreDisplay = row.experimentId ? `${escapeHtml(String(row.score))}%` : "-";
+    return `<tr data-row-index="${index}"><td>${escapeHtml(row.studentName)}</td><td>${escapeHtml(row.classCode)}</td><td>${escapeHtml(levelDisplay)}</td><td>${escapeHtml(experimentDisplay)}</td><td>${scoreDisplay}</td><td>${escapeHtml(getText(row.aiEvaluation))}</td></tr>`;
   }).join("");
   tableBody.querySelectorAll("tr").forEach((rowNode) => {
     rowNode.addEventListener("click", () => renderTeacherDetail(rows[Number(rowNode.dataset.rowIndex)]));
