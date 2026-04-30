@@ -390,8 +390,8 @@ function dualText(fr, ar, en = fr) {
 }
 
 function localizedTextMarkup(value, extraClass = "") {
-  const cls = extraClass ? ` class="${extraClass}"` : "";
-  return `<span${cls} dir="ltr" lang="fr">${escapeHtml(value.fr || "")}</span><span${cls} dir="rtl" lang="ar">${escapeHtml(value.ar || "")}</span><span${cls} dir="ltr" lang="en">${escapeHtml(value.en || value.fr || "")}</span>`;
+  const className = extraClass ? ` ${extraClass}` : "";
+  return `<span class="lang-fr${className}" dir="ltr" lang="fr">${escapeHtml(value.fr || "")}</span><span class="lang-ar${className}" dir="rtl" lang="ar">${escapeHtml(value.ar || "")}</span><span class="lang-en${className}" dir="ltr" lang="en">${escapeHtml(value.en || value.fr || "")}</span>`;
 }
 
 function normalizeLevelKey(level) {
