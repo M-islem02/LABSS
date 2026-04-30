@@ -185,14 +185,14 @@ const LEVEL_EXPERIENCES = {
     {
       id: "lyc-01",
       status: "available",
-      icon: "🔬",
+      icon: "⚗️",
       lab: "chimie",
       subject: { fr: "Chimie", ar: "الكيمياء", en: "Chemistry" },
-      title: { fr: "Électrolyse de l'eau", ar: "تحليل الماء كهربائياً", en: "Electrolysis of water" },
+      title: { fr: "Réaction chimique : production d'hydrogène", ar: "تفاعل كيميائي: إنتاج الهيدروجين (Zn + HCl)", en: "Chemical reaction: hydrogen production" },
       description: {
-        fr: "Décompose l'eau en dioxygène et dihydrogène grâce au courant électrique.",
-        ar: "حلّل الماء إلى أكسجين وهيدروجين باستخدام التيار الكهربائي.",
-        en: "Decompose water into oxygen and hydrogen using electrical current."
+        fr: "Réagis le zinc avec l'acide chlorhydrique (HCl) pour produire du dihydrogène et teste-le à la flamme.",
+        ar: "فاعل الزنك مع حمض الهيدروكلوريك (HCl) لإنتاج غاز الهيدروجين واختبره باللهب.",
+        en: "React zinc with hydrochloric acid (HCl) to produce hydrogen gas and test it with a flame."
       }
     },
     { id: "lyc-02", status: "coming_soon", icon: "🌿", title: { fr: "La photosynthèse", ar: "التمثيل الضوئي", en: "Photosynthesis" } },
@@ -676,7 +676,7 @@ function createAssistantWidget() {
       <div class="assistant-popover" id="assistant-popover">
         <div class="assistant-header">
           <div>
-            <h2>Assistant VirtuLab</h2>
+            <h2>Assistant EduVirtuel</h2>
             <p>${dualText("Aide rapide pour la navigation et les experiences.", "مساعدة سريعة للتنقل والتجارب.")}</p>
           </div>
         </div>
@@ -689,7 +689,7 @@ function createAssistantWidget() {
       </div>
       <button class="assistant-launcher" id="assistant-launcher" type="button">
         <span>💬</span>
-        <span>${dualText("Assistant VirtuLab", "مساعد VirtuLab")}</span>
+        <span>${dualText("Assistant EduVirtuel", "مساعد EduVirtuel")}</span>
       </button>
     </div>
   `;
@@ -915,6 +915,12 @@ function initIndex() {
 }
 
 function initStudentForm() {
+  // If student already has a saved session, skip straight to dashboard
+  const existingName = localStorage.getItem(STORAGE.studentName);
+  if (existingName) {
+    window.location.href = "dashboard.html";
+    return;
+  }
   const form = document.getElementById("student-form");
   if (!form) return;
   const levelInput = form.querySelector('input[name="level"]');
@@ -2126,6 +2132,21 @@ function initLabCodeGenerator() {
   });
 }
 
+function updateTeacherStats(rows) {
+  const statTotal = document.getElementById("stat-total");
+  const statAvg = document.getElementById("stat-avg");
+  const statExp = document.getElementById("stat-exp");
+  const statCodes = document.getElementById("stat-codes");
+  const uniqueStudents = new Set(rows.map((r) => r.studentName)).size;
+  const scoredRows = rows.filter((r) => r.experimentId && r.score > 0);
+  const avg = scoredRows.length ? Math.round(scoredRows.reduce((s, r) => s + r.score, 0) / scoredRows.length) : 0;
+  const codes = readLabCodes();
+  if (statTotal) statTotal.textContent = uniqueStudents;
+  if (statAvg) statAvg.textContent = scoredRows.length ? `${avg}%` : "-";
+  if (statExp) statExp.textContent = scoredRows.length;
+  if (statCodes) statCodes.textContent = codes.length;
+}
+
 function initTeacherDashboard() {
   if (localStorage.getItem(STORAGE.teacherLogged) !== "true") return (window.location.href = "prof-login.html");
   const rows = getTeacherRows();
@@ -2139,6 +2160,7 @@ function initTeacherDashboard() {
     filtered = filtered.sort((a, b) => descending ? b.score - a.score : a.score - b.score);
     renderTeacherTable(filtered);
     renderTeacherInsights(filtered);
+    updateTeacherStats(rows);
   }
 
   if (filterInput) filterInput.addEventListener("input", applyFilters);
@@ -2164,6 +2186,7 @@ function initPage() {
   if (pageId === "quiz") initQuizPage();
   if (pageId === "teacher-login") initTeacherLogin();
   if (pageId === "teacher-dashboard") initTeacherDashboard();
+  createAssistantWidget();
 }
 
 document.addEventListener("DOMContentLoaded", initPage);

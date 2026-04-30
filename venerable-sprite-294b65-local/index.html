@@ -1,23 +1,23 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VirtuLab - Accueil</title>
-  <link rel="icon" href="favicon.svg">
+  <title>EduVirtuel - Accueil</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
 </head>
 <body data-page="index" data-lang="fr">
   <header class="topbar">
     <div class="topbar-inner">
       <a class="brand" href="index.html">
-        <span class="brand-mark">V</span>
+        <span class="brand-mark" aria-hidden="true"></span>
         <span>
-          <strong>VirtuLab</strong>
+          <strong>EduVirtuel</strong>
           <small>
-            <span class="lang-fr">Labo virtuel simple pour apprendre</span>
-            <span class="lang-ar">Ù…Ø®ØªØ¨Ø± Ø§ÙØªØ±Ø§Ø¶ÙŠ Ø¨Ø³ÙŠØ· Ù„Ù„ØªØ¹Ù„Ù…</span>
-            <span class="lang-en">A simple virtual lab to learn</span>
+            <span class="lang-fr">Portail Éducation Virtuel</span>
+            <span class="lang-ar">بوابة التعليم الافتراضي</span>
+            <span class="lang-en">Virtual Education Portal</span>
           </small>
         </span>
       </a>
@@ -31,7 +31,7 @@
       <div class="topbar-nav">
         <div class="student-pill">
           <span class="lang-fr">Profil</span>
-          <span class="lang-ar">Ø§Ù„Ù…Ù„Ù</span>
+          <span class="lang-ar">&#x627;&#x644;&#x645;&#x644;&#x641;</span>
           <span class="lang-en">Profile</span>
           <strong data-student-display></strong>
         </div>
@@ -43,8 +43,8 @@
         </div>
 
         <button type="button" class="secondary-btn logout-btn">
-          <span class="lang-fr">Se dÃ©connecter</span>
-          <span class="lang-ar">ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø®Ø±ÙˆØ¬</span>
+          <span class="lang-fr">Se d&eacute;connecter</span>
+          <span class="lang-ar">&#x62A;&#x633;&#x62C;&#x64A;&#x644; &#x627;&#x644;&#x62E;&#x631;&#x648;&#x62C;</span>
           <span class="lang-en">Log out</span>
         </button>
       </div>
@@ -53,11 +53,12 @@
 
   <div class="loading-screen" id="loading-screen">
     <div class="loading-card">
-      <div class="loading-logo">VirtuLab</div>
-      <p>
-        <span class="lang-fr">PrÃ©paration du laboratoire...</span>
-        <span class="lang-ar">Ø¬Ø§Ø±ÙŠ ØªØ­Ø¶ÙŠØ± Ø§Ù„Ù…Ø®ØªØ¨Ø±...</span>
-        <span class="lang-en">Preparing the lab...</span>
+      <span class="loading-logo-icon" aria-hidden="true">&#x2697;&#xFE0F;</span>
+      <div class="loading-logo">EduVirtuel</div>
+      <p class="loading-subtitle">
+        <span class="lang-fr">Portail &Eacute;ducation Virtuel</span>
+        <span class="lang-ar">&#x628;&#x648;&#x627;&#x628;&#x629; &#x627;&#x644;&#x62A;&#x639;&#x644;&#x64A;&#x645; &#x627;&#x644;&#x627;&#x641;&#x62A;&#x631;&#x627;&#x636;&#x64A;</span>
+        <span class="lang-en">Virtual Education Portal</span>
       </p>
       <div class="spinner"></div>
     </div>
@@ -66,15 +67,15 @@
   <main class="page-shell hero-shell" id="main-content">
     <section class="hero-grid home-hero fade-up">
       <div class="hero-copy">
-        <span class="eyebrow">VirtuLab</span>
+        <span class="eyebrow">EduVirtuel</span>
         <h1>
-          <span class="lang-fr">Apprendre les sciences avec des expÃ©riences faciles</span>
-          <span class="lang-ar">ØªØ¹Ù„Ù… Ø§Ù„Ø¹Ù„ÙˆÙ… Ø¨ØªØ¬Ø§Ø±Ø¨ Ø³Ù‡Ù„Ø© ÙˆÙˆØ§Ø¶Ø­Ø©</span>
+          <span class="lang-fr">Apprendre les sciences avec des exp&eacute;riences faciles</span>
+          <span class="lang-ar">&#x62A;&#x639;&#x644;&#x645; &#x627;&#x644;&#x639;&#x644;&#x648;&#x645; &#x628;&#x62A;&#x62C;&#x627;&#x631;&#x628; &#x633;&#x647;&#x644;&#x629; &#x648;&#x648;&#x627;&#x636;&#x62D;&#x629;</span>
           <span class="lang-en">Learn science with easy experiments</span>
         </h1>
         <p class="hero-subtitle">
-          <span class="lang-fr">Le parcours est simple : Ã©cris ton prÃ©nom, choisis ta matiÃ¨re, puis ouvre un labo 3D avec des consignes courtes.</span>
-          <span class="lang-ar">Ø§Ù„Ù…Ø³Ø§Ø± Ø¨Ø³ÙŠØ·: Ø§ÙƒØªØ¨ Ø§Ø³Ù…ÙƒØŒ Ø§Ø®ØªØ± Ù…Ø§Ø¯ØªÙƒØŒ Ø«Ù… Ø§ÙØªØ­ Ù…Ø®ØªØ¨Ø±Ø§ Ø«Ù„Ø§Ø«ÙŠ Ø§Ù„Ø£Ø¨Ø¹Ø§Ø¯ Ø¨ØªØ¹Ù„ÙŠÙ…Ø§Øª Ù‚ØµÙŠØ±Ø©.</span>
+          <span class="lang-fr">Le parcours est simple&nbsp;: &eacute;cris ton pr&eacute;nom, choisis ta mati&egrave;re, puis ouvre un labo 3D avec des consignes courtes.</span>
+          <span class="lang-ar">&#x627;&#x644;&#x645;&#x633;&#x627;&#x631; &#x628;&#x633;&#x64A;&#x637;&#x3A; &#x627;&#x643;&#x62A;&#x628; &#x627;&#x633;&#x645;&#x643;&#x60C; &#x627;&#x62E;&#x62A;&#x631; &#x645;&#x627;&#x62F;&#x62A;&#x643;&#x60C; &#x62B;&#x645; &#x627;&#x641;&#x62A;&#x62D; &#x645;&#x62E;&#x62A;&#x628;&#x631;&#x627; &#x62B;&#x644;&#x627;&#x62B;&#x64A; &#x627;&#x644;&#x623;&#x628;&#x639;&#x627;&#x62F; &#x628;&#x62A;&#x639;&#x644;&#x64A;&#x645;&#x627;&#x62A; &#x642;&#x635;&#x64A;&#x631;&#x629;.</span>
           <span class="lang-en">The path is simple: write your name, choose your subject, then open a 3D lab with short instructions.</span>
         </p>
 
@@ -82,50 +83,50 @@
 
         <div class="hero-step-list">
           <div class="hero-step">
-            <span class="step-icon" aria-hidden="true">ðŸ‘¤</span>
+            <span class="step-icon" aria-hidden="true">&#x1F464;</span>
             <strong>1</strong>
-            <span class="lang-fr">Entre ton prÃ©nom</span>
-            <span class="lang-ar">Ø£Ø¯Ø®Ù„ Ø§Ø³Ù…Ùƒ</span>
+            <span class="lang-fr">Entre ton pr&eacute;nom</span>
+            <span class="lang-ar">&#x623;&#x62F;&#x62E;&#x644; &#x627;&#x633;&#x645;&#x643;</span>
             <span class="lang-en">Enter your first name</span>
           </div>
           <div class="hero-step">
-            <span class="step-icon" aria-hidden="true">ðŸ“‹</span>
+            <span class="step-icon" aria-hidden="true">&#x1F4CB;</span>
             <strong>2</strong>
-            <span class="lang-fr">Choisis la matiÃ¨re</span>
-            <span class="lang-ar">Ø§Ø®ØªØ± Ø§Ù„Ù…Ø§Ø¯Ø©</span>
+            <span class="lang-fr">Choisis la mati&egrave;re</span>
+            <span class="lang-ar">&#x627;&#x62E;&#x62A;&#x631; &#x627;&#x644;&#x645;&#x627;&#x62F;&#x629;</span>
             <span class="lang-en">Choose the subject</span>
           </div>
           <div class="hero-step">
-            <span class="step-icon" aria-hidden="true">ðŸš€</span>
+            <span class="step-icon" aria-hidden="true">&#x1F680;</span>
             <strong>3</strong>
-            <span class="lang-fr">Commence l'expÃ©rience</span>
-            <span class="lang-ar">Ø§Ø¨Ø¯Ø£ Ø§Ù„ØªØ¬Ø±Ø¨Ø©</span>
+            <span class="lang-fr">Commence l&rsquo;exp&eacute;rience</span>
+            <span class="lang-ar">&#x627;&#x628;&#x62F;&#x623; &#x627;&#x644;&#x62A;&#x62C;&#x631;&#x628;&#x629;</span>
             <span class="lang-en">Start the experiment</span>
           </div>
         </div>
 
         <div class="hero-actions">
           <a class="primary-btn" href="student.html">
-            <span class="lang-fr">Commencer comme Ã©lÃ¨ve</span>
-            <span class="lang-ar">Ø§Ø¨Ø¯Ø£ ÙƒÙ…ØªØ¹Ù„Ù…</span>
+            <span class="lang-fr">Commencer comme &eacute;l&egrave;ve</span>
+            <span class="lang-ar">&#x627;&#x628;&#x62F;&#x623; &#x643;&#x645;&#x62A;&#x639;&#x644;&#x645;</span>
             <span class="lang-en">Start as a student</span>
           </a>
           <a class="secondary-btn" href="prof-login.html">
             <span class="lang-fr">Espace enseignant</span>
-            <span class="lang-ar">ÙØ¶Ø§Ø¡ Ø§Ù„Ø£Ø³ØªØ§Ø°</span>
+            <span class="lang-ar">&#x641;&#x636;&#x627;&#x621; &#x627;&#x644;&#x623;&#x633;&#x62A;&#x627;&#x630;</span>
             <span class="lang-en">Teacher space</span>
           </a>
         </div>
       </div>
 
       <div class="hero-visual fade-up delay-1" aria-hidden="true">
-        <span>ðŸ”¬</span>
-        <span>ðŸ§ª</span>
-        <span>ðŸŒ±</span>
-        <span>âš¡</span>
-        <span>ðŸ’§</span>
-        <span>ðŸ§¬</span>
-        <span>ðŸŒ</span>
+        <span>&#x1F52C;</span>
+        <span>&#x1F9EA;</span>
+        <span>&#x1F331;</span>
+        <span>&#x26A1;</span>
+        <span>&#x1F4A7;</span>
+        <span>&#x1F9EC;</span>
+        <span>&#x1F30D;</span>
       </div>
     </section>
 
@@ -133,8 +134,8 @@
       <div class="hero-stat">
         <strong>5</strong>
         <span>
-          <span class="lang-fr">expÃ©riences prÃªtes</span>
-          <span class="lang-ar">ØªØ¬Ø§Ø±Ø¨ Ø¬Ø§Ù‡Ø²Ø©</span>
+          <span class="lang-fr">exp&eacute;riences pr&ecirc;tes</span>
+          <span class="lang-ar">&#x62A;&#x62C;&#x627;&#x631;&#x628; &#x62C;&#x627;&#x647;&#x632;&#x629;</span>
           <span class="lang-en">ready experiments</span>
         </span>
       </div>
@@ -142,7 +143,7 @@
         <strong>3</strong>
         <span>
           <span class="lang-fr">langues disponibles</span>
-          <span class="lang-ar">Ù„ØºØ§Øª Ù…ØªØ§Ø­Ø©</span>
+          <span class="lang-ar">&#x644;&#x63A;&#x627;&#x62A; &#x645;&#x62A;&#x627;&#x62D;&#x629;</span>
           <span class="lang-en">languages available</span>
         </span>
       </div>
@@ -150,7 +151,7 @@
         <strong>3D</strong>
         <span>
           <span class="lang-fr">labo visuel pour mieux comprendre</span>
-          <span class="lang-ar">Ù…Ø®ØªØ¨Ø± Ø¨ØµØ±ÙŠ Ù„Ù„ÙÙ‡Ù… Ø£ÙØ¶Ù„</span>
+          <span class="lang-ar">&#x645;&#x62E;&#x62A;&#x628;&#x631; &#x628;&#x635;&#x631;&#x64A; &#x644;&#x644;&#x641;&#x647;&#x645; &#x623;&#x641;&#x636;&#x644;</span>
           <span class="lang-en">visual lab to understand better</span>
         </span>
       </div>
@@ -158,52 +159,52 @@
 
     <section class="level-showcase fade-up delay-2" aria-label="School levels">
       <article class="level-showcase-card level-primary">
-        <div class="level-showcase-art">ðŸ“šâœï¸ðŸŽ¨</div>
+        <div class="level-showcase-art">&#x1F4DA;&#x270F;&#xFE0F;&#x1F3A8;</div>
         <div class="level-showcase-copy">
-          <h2><span>Primaire</span><span dir="rtl" lang="ar">Ø§Ø¨ØªØ¯Ø§Ø¦ÙŠ</span><em>Primary school</em></h2>
-          <p><span class="lang-fr">Explore la nature !</span><span class="lang-ar">Ø§ÙƒØªØ´Ù Ø§Ù„Ø·Ø¨ÙŠØ¹Ø©!</span><span class="lang-en">Explore nature!</span></p>
+          <h2><span>Primaire</span><span dir="rtl" lang="ar">&#x627;&#x628;&#x62A;&#x62F;&#x627;&#x626;&#x64A;</span><em>Primary school</em></h2>
+          <p><span class="lang-fr">Explore la nature&nbsp;!</span><span class="lang-ar">&#x627;&#x643;&#x62A;&#x634;&#x641; &#x627;&#x644;&#x637;&#x628;&#x64A;&#x639;&#x629;!</span><span class="lang-en">Explore nature!</span></p>
         </div>
       </article>
       <article class="level-showcase-card level-cem">
-        <div class="level-showcase-art">ðŸ§ªâš—ï¸ðŸ”­</div>
+        <div class="level-showcase-art">&#x1F9EA;&#x2697;&#xFE0F;&#x1F52D;</div>
         <div class="level-showcase-copy">
-          <h2><span>CEM</span><span dir="rtl" lang="ar">Ø§Ù„ØªØ¹Ù„ÙŠÙ… Ø§Ù„Ù…ØªÙˆØ³Ø·</span><em>Middle school</em></h2>
-          <p><span class="lang-fr">Comprends comment Ã§a marche</span><span class="lang-ar">Ø§ÙÙ‡Ù… ÙƒÙŠÙ ØªØ¹Ù…Ù„ Ø§Ù„Ø£Ø´ÙŠØ§Ø¡</span><span class="lang-en">Understand how things work</span></p>
+          <h2><span>CEM</span><span dir="rtl" lang="ar">&#x627;&#x644;&#x62A;&#x639;&#x644;&#x64A;&#x645; &#x627;&#x644;&#x645;&#x62A;&#x648;&#x633;&#x637;</span><em>Middle school</em></h2>
+          <p><span class="lang-fr">Comprends comment &ccedil;a marche</span><span class="lang-ar">&#x627;&#x641;&#x647;&#x645; &#x643;&#x64A;&#x641; &#x62A;&#x639;&#x645;&#x644; &#x627;&#x644;&#x623;&#x634;&#x64A;&#x627;&#x621;</span><span class="lang-en">Understand how things work</span></p>
         </div>
       </article>
       <article class="level-showcase-card level-lycee">
-        <div class="level-showcase-art">ðŸŽ“ðŸ”¬ðŸ’¡</div>
+        <div class="level-showcase-art">&#x1F393;&#x1F52C;&#x1F4A1;</div>
         <div class="level-showcase-copy">
-          <h2><span>LycÃ©e</span><span dir="rtl" lang="ar">Ø«Ø§Ù†ÙˆÙŠ</span><em>High school</em></h2>
-          <p><span class="lang-fr">Deviens un vrai scientifique</span><span class="lang-ar">ÙƒÙ† Ø¹Ø§Ù„Ù…Ø§Ù‹ Ø­Ù‚ÙŠÙ‚ÙŠØ§Ù‹</span><span class="lang-en">Become a real scientist</span></p>
+          <h2><span>Lyc&eacute;e</span><span dir="rtl" lang="ar">&#x62B;&#x627;&#x646;&#x648;&#x64A;</span><em>High school</em></h2>
+          <p><span class="lang-fr">Deviens un vrai scientifique</span><span class="lang-ar">&#x643;&#x646; &#x639;&#x627;&#x644;&#x645;&#x627; &#x62D;&#x642;&#x64A;&#x642;&#x64A;&#x627;</span><span class="lang-en">Become a real scientist</span></p>
         </div>
       </article>
     </section>
 
     <section class="feature-grid fade-up delay-3">
       <article class="info-card visual-info-card">
-        <div class="feature-icon" aria-hidden="true">ðŸ“</div>
-        <h2><span class="lang-fr">Ã‰tapes courtes</span><span class="lang-ar">Ø®Ø·ÙˆØ§Øª Ù‚ØµÙŠØ±Ø©</span><span class="lang-en">Short steps</span></h2>
-        <p><span class="lang-fr">Chaque activitÃ© avance avec de petites consignes faciles Ã  suivre.</span><span class="lang-ar">ÙƒÙ„ Ù†Ø´Ø§Ø· ÙŠØªÙ‚Ø¯Ù… Ø¨ØªØ¹Ù„ÙŠÙ…Ø§Øª ØµØºÙŠØ±Ø© ÙˆØ³Ù‡Ù„Ø© Ø§Ù„Ù…ØªØ§Ø¨Ø¹Ø©.</span><span class="lang-en">Each activity advances with small, easy-to-follow instructions.</span></p>
+        <div class="feature-icon" aria-hidden="true">&#x1F50D;</div>
+        <h2><span class="lang-fr">&Eacute;tapes courtes</span><span class="lang-ar">&#x62E;&#x637;&#x648;&#x627;&#x62A; &#x642;&#x635;&#x64A;&#x631;&#x629;</span><span class="lang-en">Short steps</span></h2>
+        <p><span class="lang-fr">Chaque activit&eacute; avance avec de petites consignes faciles &agrave; suivre.</span><span class="lang-ar">&#x643;&#x644; &#x646;&#x634;&#x627;&#x637; &#x64A;&#x62A;&#x642;&#x62F;&#x645; &#x628;&#x62A;&#x639;&#x644;&#x64A;&#x645;&#x627;&#x62A; &#x635;&#x63A;&#x64A;&#x631;&#x629; &#x648;&#x633;&#x647;&#x644;&#x629; &#x627;&#x644;&#x645;&#x62A;&#x627;&#x628;&#x639;&#x629;.</span><span class="lang-en">Each activity advances with small, easy-to-follow instructions.</span></p>
       </article>
       <article class="info-card visual-info-card">
-        <div class="feature-icon" aria-hidden="true">ðŸƒ</div>
-        <h2><span class="lang-fr">Grandes cartes</span><span class="lang-ar">Ø¨Ø·Ø§Ù‚Ø§Øª ÙƒØ¨ÙŠØ±Ø©</span><span class="lang-en">Large cards</span></h2>
-        <p><span class="lang-fr">Les choix importants apparaissent sous forme de boutons grands et clairs.</span><span class="lang-ar">Ø§Ù„Ø®ÙŠØ§Ø±Ø§Øª Ø§Ù„Ù…Ù‡Ù…Ø© ØªØ¸Ù‡Ø± Ø¹Ù„Ù‰ Ø´ÙƒÙ„ Ø£Ø²Ø±Ø§Ø± ÙƒØ¨ÙŠØ±Ø© ÙˆÙˆØ§Ø¶Ø­Ø©.</span><span class="lang-en">Important choices appear as large, clear buttons.</span></p>
+        <div class="feature-icon" aria-hidden="true">&#x1F3C3;</div>
+        <h2><span class="lang-fr">Grandes cartes</span><span class="lang-ar">&#x628;&#x637;&#x627;&#x642;&#x627;&#x62A; &#x643;&#x628;&#x64A;&#x631;&#x629;</span><span class="lang-en">Large cards</span></h2>
+        <p><span class="lang-fr">Les choix importants apparaissent sous forme de boutons grands et clairs.</span><span class="lang-ar">&#x627;&#x644;&#x62E;&#x64A;&#x627;&#x631;&#x627;&#x62A; &#x627;&#x644;&#x645;&#x647;&#x645;&#x629; &#x62A;&#x638;&#x647;&#x631; &#x639;&#x644;&#x649; &#x634;&#x643;&#x644; &#x623;&#x632;&#x631;&#x627;&#x631; &#x643;&#x628;&#x64A;&#x631;&#x629; &#x648;&#x648;&#x627;&#x636;&#x62D;&#x629;.</span><span class="lang-en">Important choices appear as large, clear buttons.</span></p>
       </article>
       <article class="info-card visual-info-card">
-        <div class="feature-icon" aria-hidden="true">ðŸ†</div>
-        <h2><span class="lang-fr">Petit quiz final</span><span class="lang-ar">Ø§Ø®ØªØ¨Ø§Ø± Ù‚ØµÙŠØ± ÙÙŠ Ø§Ù„Ù†Ù‡Ø§ÙŠØ©</span><span class="lang-en">Final mini-quiz</span></h2>
-        <p><span class="lang-fr">Ã€ la fin, l'Ã©lÃ¨ve voit son score et vÃ©rifie ce qu'il a compris.</span><span class="lang-ar">ÙÙŠ Ø§Ù„Ù†Ù‡Ø§ÙŠØ© ÙŠØ±Ù‰ Ø§Ù„Ù…ØªØ¹Ù„Ù… Ù†ØªÙŠØ¬ØªÙ‡ ÙˆÙŠØªØ­Ù‚Ù‚ Ù…Ù…Ø§ ÙÙ‡Ù…Ù‡.</span><span class="lang-en">At the end, the student sees their score and checks what they understood.</span></p>
+        <div class="feature-icon" aria-hidden="true">&#x1F3C6;</div>
+        <h2><span class="lang-fr">Petit quiz final</span><span class="lang-ar">&#x627;&#x62E;&#x62A;&#x628;&#x627;&#x631; &#x642;&#x635;&#x64A;&#x631; &#x641;&#x64A; &#x627;&#x644;&#x646;&#x647;&#x627;&#x64A;&#x629;</span><span class="lang-en">Final mini-quiz</span></h2>
+        <p><span class="lang-fr">&Agrave; la fin, l&rsquo;&eacute;l&egrave;ve voit son score et v&eacute;rifie ce qu&rsquo;il a compris.</span><span class="lang-ar">&#x641;&#x64A; &#x627;&#x644;&#x646;&#x647;&#x627;&#x64A;&#x629; &#x64A;&#x631;&#x649; &#x627;&#x644;&#x645;&#x62A;&#x639;&#x644;&#x645; &#x646;&#x62A;&#x64A;&#x62C;&#x62A;&#x647; &#x648;&#x64A;&#x62A;&#x62D;&#x642;&#x642; &#x645;&#x645;&#x627; &#x641;&#x647;&#x645;&#x647;.</span><span class="lang-en">At the end, the student sees their score and checks what they understood.</span></p>
       </article>
     </section>
   </main>
 
   <footer class="site-footer">
-    <strong>VirtuLab</strong>
-    <p><span class="lang-fr">Labo virtuel simple pour apprendre</span><span class="lang-ar">Ù…Ø®ØªØ¨Ø± Ø§ÙØªØ±Ø§Ø¶ÙŠ Ø¨Ø³ÙŠØ· Ù„Ù„ØªØ¹Ù„Ù…</span><span class="lang-en">A simple virtual lab to learn</span></p>
-    <div class="footer-science" aria-hidden="true">ðŸ”¬ ðŸ§ª ðŸŒ± âš¡ ðŸ’§ ðŸ§² ðŸŒ ðŸ§¬</div>
-    <p><span class="lang-fr">Made with â¤ï¸ for Algerian students</span><span class="lang-ar">ØµÙÙ†Ø¹ Ø¨Ù€ â¤ï¸ Ù„Ù„Ø·Ù„Ø§Ø¨ Ø§Ù„Ø¬Ø²Ø§Ø¦Ø±ÙŠÙŠÙ†</span><span class="lang-en">Made with â¤ï¸ for Algerian students</span></p>
+    <strong>EduVirtuel</strong>
+    <p><span class="lang-fr">Portail Éducation Virtuel</span><span class="lang-ar">بوابة التعليم الافتراضي</span><span class="lang-en">Virtual Education Portal</span></p>
+    <div class="footer-science" aria-hidden="true">&#x1F52C; &#x1F9EA; &#x1F331; &#x26A1; &#x1F4A7; &#x1F9F2; &#x1F30D; &#x1F9EC;</div>
+    <p><span class="lang-fr">Made with &#x2764;&#xFE0F; for Algerian students</span><span class="lang-ar">&#x635;&#x646;&#x639; &#x628;&#x640; &#x2764;&#xFE0F; &#x644;&#x644;&#x637;&#x644;&#x627;&#x628; &#x627;&#x644;&#x62C;&#x632;&#x627;&#x626;&#x631;&#x64A;&#x64A;&#x646;</span><span class="lang-en">Made with &#x2764;&#xFE0F; for Algerian students</span></p>
   </footer>
 
   <div id="assistant-root"></div>

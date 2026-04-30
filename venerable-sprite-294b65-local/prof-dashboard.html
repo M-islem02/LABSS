@@ -3,57 +3,148 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VirtuLab - Tableau de bord enseignant</title>
+  <title>EduVirtuel - Tableau de bord enseignant</title>
   <link rel="icon" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="teacher-dashboard" data-lang="fr">
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="index.html">
-        <span class="brand-mark">V</span>
-        <span>
-          <strong>VirtuLab</strong>
-          <small><span class="lang-fr">Plateforme de laboratoire intelligent</span><span class="lang-ar">&#x645;&#x646;&#x635;&#x629; &#x627;&#x644;&#x645;&#x62E;&#x62A;&#x628;&#x631; &#x627;&#x644;&#x630;&#x643;&#x64A; &#x627;&#x644;&#x627;&#x641;&#x62A;&#x631;&#x627;&#x636;&#x64A;</span></small>
-        </span>
+<body data-page="teacher-dashboard" data-lang="fr" class="teacher-page">
+  <header class="topbar"><div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span><strong>EduVirtuel</strong><small>
+        <span class="lang-fr">Plateforme de laboratoire virtuel</span>
+        <span class="lang-ar">&#x645;&#x646;&#x635;&#x629; &#x627;&#x644;&#x645;&#x62E;&#x62A;&#x628;&#x631; &#x627;&#x644;&#x627;&#x641;&#x62A;&#x631;&#x627;&#x636;&#x64A;</span>
+        <span class="lang-en">Virtual lab platform</span>
+      </small></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="topbar-nav">
+      <div class="student-pill"><span class="lang-fr">Profil</span><span class="lang-ar">&#x627;&#x644;&#x645;&#x644;&#x641;</span><span class="lang-en">Profile</span><strong data-student-display></strong></div>
+      <div class="lang-switch" aria-label="Language">
+        <button type="button" class="lang-btn" data-lang="fr">FR</button>
+        <button type="button" class="lang-btn" data-lang="ar">AR</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <a href="index.html" class="secondary-btn" style="text-decoration:none">
+        <span class="lang-fr">&#x2190; Accueil</span>
+        <span class="lang-ar">&#x627;&#x644;&#x631;&#x626;&#x64A;&#x633;&#x64A;&#x629; &#x2192;</span>
+        <span class="lang-en">&#x2190; Home</span>
       </a>
-      <button class="menu-toggle" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
-      <div class="topbar-nav">
-        <div class="student-pill"><span class="lang-fr">Profil</span><span class="lang-ar">&#x627;&#x644;&#x645;&#x644;&#x641;</span><strong data-student-display></strong></div>
-        <div class="lang-switch"><button type="button" class="lang-btn" data-lang="fr">FR</button><button type="button" class="lang-btn" data-lang="ar">AR</button><button type="button" class="lang-btn" data-lang="en">EN</button></div>
-        <button type="button" class="secondary-btn logout-btn"><span class="lang-fr">Se deconnecter</span><span class="lang-ar">&#x62A;&#x633;&#x62C;&#x64A;&#x644; &#x627;&#x644;&#x62E;&#x631;&#x648;&#x62C;</span></button>
+      <button type="button" class="secondary-btn logout-btn">
+        <span class="lang-fr">Se d&eacute;connecter</span>
+        <span class="lang-ar">&#x62A;&#x633;&#x62C;&#x64A;&#x644; &#x627;&#x644;&#x62E;&#x631;&#x648;&#x62C;</span>
+        <span class="lang-en">Log out</span>
+      </button>
+    </div>
+  </div></header>
+
+  <!-- Background decorations -->
+  <div class="page-bg-deco" aria-hidden="true">
+    <div class="bg-blob bg-blob-1">&#x1F4CA;</div>
+    <div class="bg-blob bg-blob-2">&#x1F393;</div>
+    <div class="bg-blob bg-blob-3">&#x1F4CB;</div>
+    <div class="bg-blob bg-blob-4">&#x1F4C8;</div>
+    <div class="bg-molecule bg-molecule-1"></div>
+    <div class="bg-molecule bg-molecule-2"></div>
+    <div class="bg-molecule bg-molecule-3"></div>
+  </div>
+
+  <main class="page-shell" style="max-width:100%;padding:14px 28px 36px;position:relative;z-index:1;">
+
+    <!-- Hero strip -->
+    <div class="teacher-hero-strip fade-up">
+      <div class="teacher-hero-icon">&#x1F9D1;&#x200D;&#x1F3EB;</div>
+      <div class="teacher-hero-text">
+        <h1>
+          <span class="lang-fr">Tableau de bord enseignant</span>
+          <span class="lang-ar">&#x644;&#x648;&#x62D;&#x629; &#x627;&#x644;&#x623;&#x633;&#x62A;&#x627;&#x630;</span>
+          <span class="lang-en">Teacher dashboard</span>
+        </h1>
+        <p>
+          <span class="lang-fr">Consultez les r&eacute;sultats, filtrez une classe et ouvrez le d&eacute;tail d&rsquo;un &eacute;l&egrave;ve.</span>
+          <span class="lang-ar">&#x627;&#x637;&#x644;&#x639; &#x639;&#x644;&#x649; &#x627;&#x644;&#x646;&#x62A;&#x627;&#x626;&#x62C;&#x60C; &#x635;&#x641;&#x651;&#x650; &#x627;&#x644;&#x628;&#x64A;&#x627;&#x646;&#x627;&#x62A; &#x62D;&#x633;&#x628; &#x627;&#x644;&#x642;&#x633;&#x645; &#x648;&#x627;&#x641;&#x62A;&#x62D; &#x62A;&#x641;&#x627;&#x635;&#x64A;&#x644; &#x643;&#x644; &#x645;&#x62A;&#x639;&#x644;&#x645;.</span>
+          <span class="lang-en">View results, filter by class and open a student&rsquo;s detail.</span>
+        </p>
       </div>
     </div>
-  </header>
 
-  <main class="page-shell">
-    <section class="page-intro fade-up">
-      <span class="eyebrow">VirtuLab</span>
-      <h1><span class="lang-fr">Tableau de bord enseignant</span><span class="lang-ar">&#x644;&#x648;&#x62D;&#x629; &#x627;&#x644;&#x623;&#x633;&#x62A;&#x627;&#x630;</span></h1>
-      <p><span class="lang-fr">Consultez les resultats, filtrez une classe et ouvrez le detail d'un eleve.</span><span class="lang-ar">&#x627;&#x637;&#x644;&#x639; &#x639;&#x644;&#x649; &#x627;&#x644;&#x646;&#x62A;&#x627;&#x626;&#x62C;&#x60C; &#x635;&#x641;&#x651;&#x650; &#x627;&#x644;&#x628;&#x64A;&#x627;&#x646;&#x627;&#x62A; &#x62D;&#x633;&#x628; &#x627;&#x644;&#x642;&#x633;&#x645;&#x60C; &#x648;&#x627;&#x641;&#x62A;&#x62D; &#x62A;&#x641;&#x627;&#x635;&#x64A;&#x644; &#x643;&#x644; &#x645;&#x62A;&#x639;&#x644;&#x645;.</span></p>
-    </section>
+    <!-- Stats bar -->
+    <div class="teacher-stats-bar fade-up delay-1" id="teacher-stats-bar">
+      <div class="teacher-stat-card">
+        <strong id="stat-total">0</strong>
+        <small>
+          <span class="lang-fr">&#xC9;l&egrave;ves enregistr&eacute;s</span>
+          <span class="lang-ar">&#x637;&#x644;&#x627;&#x628; &#x645;&#x633;&#x62C;&#x644;&#x648;&#x646;</span>
+          <span class="lang-en">Registered students</span>
+        </small>
+      </div>
+      <div class="teacher-stat-card">
+        <strong id="stat-avg">-</strong>
+        <small>
+          <span class="lang-fr">Score moyen</span>
+          <span class="lang-ar">&#x627;&#x644;&#x645;&#x639;&#x62F;&#x644; &#x627;&#x644;&#x639;&#x627;&#x645;</span>
+          <span class="lang-en">Average score</span>
+        </small>
+      </div>
+      <div class="teacher-stat-card">
+        <strong id="stat-exp">0</strong>
+        <small>
+          <span class="lang-fr">Exp&eacute;riences compl&eacute;t&eacute;es</span>
+          <span class="lang-ar">&#x62A;&#x62C;&#x627;&#x631;&#x628; &#x645;&#x643;&#x62A;&#x645;&#x644;&#x629;</span>
+          <span class="lang-en">Completed experiments</span>
+        </small>
+      </div>
+      <div class="teacher-stat-card">
+        <strong id="stat-codes">0</strong>
+        <small>
+          <span class="lang-fr">Codes de classe actifs</span>
+          <span class="lang-ar">&#x631;&#x645;&#x648;&#x632; &#x641;&#x635;&#x648;&#x644; &#x646;&#x634;&#x637;&#x629;</span>
+          <span class="lang-en">Active class codes</span>
+        </small>
+      </div>
+    </div>
 
-    <section class="teacher-layout">
-      <article class="panel-card fade-up delay-1">
+    <!-- Main layout -->
+    <section class="teacher-layout fade-up delay-2">
+      <!-- Left: students table -->
+      <article class="panel-card">
+        <div class="panel-head">
+          <h2>&#x1F4CB;
+            <span class="lang-fr">Suivi des &eacute;l&egrave;ves</span>
+            <span class="lang-ar">&#x645;&#x62A;&#x627;&#x628;&#x639;&#x629; &#x627;&#x644;&#x637;&#x644;&#x627;&#x628;</span>
+            <span class="lang-en">Student tracking</span>
+          </h2>
+        </div>
         <div class="toolbar">
           <label class="filter-field">
             <span class="lang-fr">Filtrer par code classe</span>
             <span class="lang-ar">&#x627;&#x644;&#x62A;&#x635;&#x641;&#x64A;&#x629; &#x62D;&#x633;&#x628; &#x631;&#x645;&#x632; &#x627;&#x644;&#x642;&#x633;&#x645;</span>
-            <input type="text" id="class-filter" data-placeholder-fr="Exemple : CEM2026" data-placeholder-ar="&#x645;&#x62B;&#x627;&#x644;: CEM2026">
+            <span class="lang-en">Filter by class code</span>
+            <input type="text" id="class-filter" data-placeholder-fr="Ex : CEM2026" data-placeholder-ar="&#x645;&#x62B;&#x627;&#x644;: CEM2026" data-placeholder-en="e.g. CEM2026">
           </label>
-          <button type="button" class="secondary-btn" id="sort-score-btn"><span class="lang-fr">Trier par score</span><span class="lang-ar">&#x62A;&#x631;&#x62A;&#x64A;&#x628; &#x62D;&#x633;&#x628; &#x627;&#x644;&#x646;&#x62A;&#x64A;&#x62C;&#x629;</span></button>
+          <button type="button" class="secondary-btn" id="sort-score-btn">
+            <span class="lang-fr">Trier par score</span>
+            <span class="lang-ar">&#x62A;&#x631;&#x62A;&#x64A;&#x628; &#x62D;&#x633;&#x628; &#x627;&#x644;&#x646;&#x62A;&#x64A;&#x62C;&#x629;</span>
+            <span class="lang-en">Sort by score</span>
+          </button>
         </div>
-        <div class="teacher-meta"><div class="badge badge-light"><span class="lang-fr">Code classe enseignant : CEM2026</span><span class="lang-ar">&#x631;&#x645;&#x632; &#x642;&#x633;&#x645; &#x627;&#x644;&#x623;&#x633;&#x62A;&#x627;&#x630;: CEM2026</span></div></div>
+        <div class="teacher-meta">
+          <div class="badge badge-light">
+            <span class="lang-fr">Code classe : CEM2026</span>
+            <span class="lang-ar">&#x631;&#x645;&#x632; &#x642;&#x633;&#x645; &#x627;&#x644;&#x623;&#x633;&#x62A;&#x627;&#x630;: CEM2026</span>
+            <span class="lang-en">Teacher class code: CEM2026</span>
+          </div>
+        </div>
         <div class="table-wrap">
           <table class="results-table">
             <thead>
               <tr>
-                <th><span class="lang-fr">Nom eleve</span><span class="lang-ar">&#x627;&#x633;&#x645; &#x627;&#x644;&#x645;&#x62A;&#x639;&#x644;&#x645;</span></th>
-                <th><span class="lang-fr">Classe</span><span class="lang-ar">&#x627;&#x644;&#x642;&#x633;&#x645;</span></th>
-                <th><span class="lang-fr">Niveau</span><span class="lang-ar">&#x627;&#x644;&#x645;&#x633;&#x62A;&#x648;&#x649;</span></th>
-                <th><span class="lang-fr">Experience</span><span class="lang-ar">&#x627;&#x644;&#x62A;&#x62C;&#x631;&#x628;&#x629;</span></th>
-                <th><span class="lang-fr">Score</span><span class="lang-ar">&#x627;&#x644;&#x646;&#x62A;&#x64A;&#x62C;&#x629;</span></th>
-                <th><span class="lang-fr">Evaluation IA</span><span class="lang-ar">&#x62A;&#x642;&#x64A;&#x64A;&#x645; &#x627;&#x644;&#x630;&#x643;&#x627;&#x621; &#x627;&#x644;&#x627;&#x635;&#x637;&#x646;&#x627;&#x639;&#x64A;</span></th>
+                <th><span class="lang-fr">Nom &eacute;l&egrave;ve</span><span class="lang-ar">&#x627;&#x633;&#x645; &#x627;&#x644;&#x645;&#x62A;&#x639;&#x644;&#x645;</span><span class="lang-en">Student name</span></th>
+                <th><span class="lang-fr">Classe</span><span class="lang-ar">&#x627;&#x644;&#x642;&#x633;&#x645;</span><span class="lang-en">Class</span></th>
+                <th><span class="lang-fr">Niveau</span><span class="lang-ar">&#x627;&#x644;&#x645;&#x633;&#x62A;&#x648;&#x649;</span><span class="lang-en">Level</span></th>
+                <th><span class="lang-fr">Exp&eacute;rience</span><span class="lang-ar">&#x627;&#x644;&#x62A;&#x62C;&#x631;&#x628;&#x629;</span><span class="lang-en">Experiment</span></th>
+                <th><span class="lang-fr">Score</span><span class="lang-ar">&#x627;&#x644;&#x646;&#x62A;&#x64A;&#x62C;&#x629;</span><span class="lang-en">Score</span></th>
+                <th><span class="lang-fr">Evaluation IA</span><span class="lang-ar">&#x62A;&#x642;&#x64A;&#x64A;&#x645; &#x627;&#x644;&#x630;&#x643;&#x627;&#x621; &#x627;&#x644;&#x627;&#x635;&#x637;&#x646;&#x627;&#x639;&#x64A;</span><span class="lang-en">AI evaluation</span></th>
               </tr>
             </thead>
             <tbody id="teacher-table-body"></tbody>
@@ -61,52 +152,89 @@
         </div>
       </article>
 
+      <!-- Right: side stack -->
       <aside class="side-stack">
+
+        <!-- Student detail -->
         <article class="panel-card fade-up delay-2">
           <div class="panel-head">
-            <h2><span class="lang-fr">Detail eleve</span><span class="lang-ar">&#x62A;&#x641;&#x627;&#x635;&#x64A;&#x644; &#x627;&#x644;&#x645;&#x62A;&#x639;&#x644;&#x645;</span></h2>
-            <p><span class="lang-fr">Cliquez sur une ligne du tableau pour afficher l'analyse detaillee.</span><span class="lang-ar">&#x627;&#x646;&#x642;&#x631; &#x639;&#x644;&#x649; &#x633;&#x637;&#x631; &#x641;&#x64A; &#x627;&#x644;&#x62C;&#x62F;&#x648;&#x644; &#x644;&#x639;&#x631;&#x636; &#x627;&#x644;&#x62A;&#x62D;&#x644;&#x64A;&#x644; &#x627;&#x644;&#x645;&#x641;&#x635;&#x644;.</span></p>
+            <h2>&#x1F464;
+              <span class="lang-fr">D&eacute;tail &eacute;l&egrave;ve</span>
+              <span class="lang-ar">&#x62A;&#x641;&#x627;&#x635;&#x64A;&#x644; &#x627;&#x644;&#x645;&#x62A;&#x639;&#x644;&#x645;</span>
+              <span class="lang-en">Student detail</span>
+            </h2>
+            <p>
+              <span class="lang-fr">Cliquez sur une ligne du tableau pour afficher l&rsquo;analyse d&eacute;taill&eacute;e.</span>
+              <span class="lang-ar">&#x627;&#x646;&#x642;&#x631; &#x639;&#x644;&#x649; &#x633;&#x637;&#x631; &#x641;&#x64A; &#x627;&#x644;&#x62C;&#x62F;&#x648;&#x644; &#x644;&#x639;&#x631;&#x636; &#x627;&#x644;&#x62A;&#x62D;&#x644;&#x64A;&#x644; &#x627;&#x644;&#x645;&#x641;&#x635;&#x644;.</span>
+              <span class="lang-en">Click a row in the table to view detailed analysis.</span>
+            </p>
           </div>
           <div id="student-detail" class="detail-card"></div>
         </article>
 
-        <article class="panel-card fade-up delay-2">
+        <!-- Class code generator -->
+        <article class="panel-card fade-up delay-3">
           <div class="panel-head">
-            <h2><span class="lang-fr">Code pour les eleves</span><span class="lang-ar">&#x631;&#x645;&#x632; &#x644;&#x644;&#x62A;&#x644;&#x627;&#x645;&#x64A;&#x630;</span></h2>
-            <p><span class="lang-fr">Creez un code simple. L'eleve le saisit au depart et voit seulement l'activite choisie.</span><span class="lang-ar">&#x623;&#x646;&#x634;&#x626; &#x631;&#x645;&#x632;&#x627; &#x628;&#x633;&#x64A;&#x637;&#x627;. &#x64A;&#x62F;&#x62E;&#x644;&#x647; &#x627;&#x644;&#x62A;&#x644;&#x645;&#x64A;&#x630; &#x641;&#x64A; &#x627;&#x644;&#x628;&#x62F;&#x627;&#x64A;&#x629; &#x641;&#x64A;&#x631;&#x649; &#x627;&#x644;&#x646;&#x634;&#x627;&#x637; &#x627;&#x644;&#x645;&#x62E;&#x62A;&#x627;&#x631; &#x641;&#x642;&#x637;.</span></p>
+            <h2>&#x1F511;
+              <span class="lang-fr">Code pour les &eacute;l&egrave;ves</span>
+              <span class="lang-ar">&#x631;&#x645;&#x632; &#x644;&#x644;&#x62A;&#x644;&#x627;&#x645;&#x64A;&#x630;</span>
+              <span class="lang-en">Student code</span>
+            </h2>
+            <p>
+              <span class="lang-fr">Cr&eacute;ez un code simple. L&rsquo;&eacute;l&egrave;ve le saisit au d&eacute;part pour rejoindre votre classe.</span>
+              <span class="lang-ar">&#x623;&#x646;&#x634;&#x626; &#x631;&#x645;&#x632;&#x627; &#x628;&#x633;&#x64A;&#x637;&#x627; &#x64A;&#x62F;&#x62E;&#x644;&#x647; &#x627;&#x644;&#x62A;&#x644;&#x645;&#x64A;&#x630; &#x641;&#x64A; &#x627;&#x644;&#x628;&#x62F;&#x627;&#x64A;&#x629;.</span>
+              <span class="lang-en">Create a simple code. The student enters it at the start to join your class.</span>
+            </p>
           </div>
           <form id="lab-code-form" class="code-generator-form">
             <label>
               <span class="lang-fr">Niveau</span>
               <span class="lang-ar">&#x627;&#x644;&#x645;&#x633;&#x62A;&#x648;&#x649;</span>
+              <span class="lang-en">Level</span>
               <select name="codeLevel">
-                <option value="primary">Primaire</option>
-                <option value="cem" selected>CEM</option>
-                <option value="lycee">Lycee</option>
+                <option value="primary">Primaire / &#x627;&#x628;&#x62A;&#x62F;&#x627;&#x626;&#x64A;</option>
+                <option value="cem" selected>CEM / &#x645;&#x62A;&#x648;&#x633;&#x637;</option>
+                <option value="lycee">Lyc&eacute;e / &#x62B;&#x627;&#x646;&#x648;&#x64A;</option>
               </select>
             </label>
             <label>
-              <span class="lang-fr">Activite</span>
+              <span class="lang-fr">Activit&eacute;</span>
               <span class="lang-ar">&#x627;&#x644;&#x646;&#x634;&#x627;&#x637;</span>
+              <span class="lang-en">Activity</span>
               <select name="codeExperiment">
-                <option value="plante">Absorption de l'eau par la plante</option>
-                <option value="circuit">Circuit electrique</option>
+                <option value="plante">Absorption de l&rsquo;eau par la plante</option>
+                <option value="circuit">Circuit &eacute;lectrique</option>
                 <option value="masse">Masses et balance</option>
-                <option value="chimie">Reaction produisant l'hydrogene</option>
+                <option value="chimie">R&eacute;action produisant l&rsquo;hydrog&egrave;ne</option>
               </select>
             </label>
-            <button type="submit" class="primary-btn"><span class="lang-fr">Creer le code</span><span class="lang-ar">&#x625;&#x646;&#x634;&#x627;&#x621; &#x627;&#x644;&#x631;&#x645;&#x632;</span></button>
+            <button type="submit" class="primary-btn">
+              <span>&#x1F511;</span>
+              <span class="lang-fr">Cr&eacute;er le code</span>
+              <span class="lang-ar">&#x625;&#x646;&#x634;&#x627;&#x621; &#x627;&#x644;&#x631;&#x645;&#x632;</span>
+              <span class="lang-en">Create code</span>
+            </button>
           </form>
           <div id="lab-code-list" class="generated-code-list"></div>
         </article>
 
+        <!-- AI Insights -->
         <article class="panel-card fade-up delay-3">
           <div class="panel-head">
-            <h2><span class="lang-fr">AI Insights</span><span class="lang-ar">&#x631;&#x624;&#x649; &#x627;&#x644;&#x630;&#x643;&#x627;&#x621; &#x627;&#x644;&#x627;&#x635;&#x637;&#x646;&#x627;&#x639;&#x64A;</span></h2>
-            <p><span class="lang-fr">Resume automatique des performances du groupe.</span><span class="lang-ar">&#x645;&#x644;&#x62E;&#x635; &#x622;&#x644;&#x64A; &#x644;&#x623;&#x62F;&#x627;&#x621; &#x627;&#x644;&#x645;&#x62C;&#x645;&#x648;&#x639;&#x629;.</span></p>
+            <h2>&#x1F916;
+              <span class="lang-fr">AI Insights</span>
+              <span class="lang-ar">&#x631;&#x624;&#x649; &#x627;&#x644;&#x630;&#x643;&#x627;&#x621; &#x627;&#x644;&#x627;&#x635;&#x637;&#x646;&#x627;&#x639;&#x64A;</span>
+              <span class="lang-en">AI Insights</span>
+            </h2>
+            <p>
+              <span class="lang-fr">R&eacute;sum&eacute; automatique des performances du groupe.</span>
+              <span class="lang-ar">&#x645;&#x644;&#x62E;&#x635; &#x622;&#x644;&#x64A; &#x644;&#x623;&#x62F;&#x627;&#x621; &#x627;&#x644;&#x645;&#x62C;&#x645;&#x648;&#x639;&#x629;.</span>
+              <span class="lang-en">Automatic summary of group performance.</span>
+            </p>
           </div>
           <div id="teacher-insights" class="insights-list"></div>
         </article>
+
       </aside>
     </section>
   </main>

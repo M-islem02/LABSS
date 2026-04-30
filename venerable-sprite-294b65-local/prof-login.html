@@ -1,83 +1,161 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VirtuLab - Connexion enseignant</title>
+  <title>EduVirtuel - Connexion enseignant</title>
   <link rel="icon" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
 </head>
 <body data-page="teacher-login" data-lang="fr">
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="index.html">
-        <span class="brand-mark">V</span>
-        <span>
-          <strong>VirtuLab</strong>
-          <small>
-            <span class="lang-fr">Plateforme de laboratoire intelligent</span>
-            <span class="lang-ar">Ù…Ù†ØµØ© Ø§Ù„Ù…Ø®ØªØ¨Ø± Ø§Ù„Ø°ÙƒÙŠ Ø§Ù„Ø§ÙØªØ±Ø§Ø¶ÙŠ</span>
-          </small>
-        </span>
-      </a>
-      <button class="menu-toggle" type="button" aria-label="Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <div class="topbar-nav">
-        <div class="student-pill">
-          <span class="lang-fr">Profil</span>
-          <span class="lang-ar">Ø§Ù„Ù…Ù„Ù</span>
-          <strong data-student-display></strong>
-        </div>
-        <div class="lang-switch">
-          <button type="button" class="lang-btn" data-lang="fr">FR</button>
-          <button type="button" class="lang-btn" data-lang="ar">AR</button>
-        </div>
-        <button type="button" class="secondary-btn logout-btn">
-          <span class="lang-fr">Se deconnecter</span>
-          <span class="lang-ar">ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø®Ø±ÙˆØ¬</span>
-        </button>
+  <header class="topbar"><div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span><strong>EduVirtuel</strong><small>
+        <span class="lang-fr">Plateforme de laboratoire virtuel</span>
+        <span class="lang-ar">&#x645;&#x646;&#x635;&#x629; &#x627;&#x644;&#x645;&#x62E;&#x62A;&#x628;&#x631; &#x627;&#x644;&#x627;&#x641;&#x62A;&#x631;&#x627;&#x636;&#x64A;</span>
+        <span class="lang-en">Virtual lab platform</span>
+      </small></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="topbar-nav">
+      <div class="student-pill"><span class="lang-fr">Profil</span><span class="lang-ar">&#x627;&#x644;&#x645;&#x644;&#x641;</span><span class="lang-en">Profile</span><strong data-student-display></strong></div>
+      <div class="lang-switch" aria-label="Language">
+        <button type="button" class="lang-btn" data-lang="fr">FR</button>
+        <button type="button" class="lang-btn" data-lang="ar">AR</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
       </div>
+      <a href="index.html" class="secondary-btn" style="text-decoration:none">
+        <span class="lang-fr">&#x2190; Accueil</span>
+        <span class="lang-ar">&#x627;&#x644;&#x631;&#x626;&#x64A;&#x633;&#x64A;&#x629; &#x2192;</span>
+        <span class="lang-en">&#x2190; Home</span>
+      </a>
     </div>
-  </header>
+  </div></header>
 
-  <main class="page-shell narrow-shell">
-    <section class="page-intro fade-up">
-      <span class="eyebrow">VirtuLab</span>
-      <h1>
-        <span class="lang-fr">Connexion enseignant</span>
-        <span class="lang-ar">Ø¯Ø®ÙˆÙ„ Ø§Ù„Ø£Ø³ØªØ§Ø°</span>
-      </h1>
-      <p>
-        <span class="lang-fr">Accedez au tableau de suivi avec les identifiants de demonstration.</span>
-        <span class="lang-ar">Ø§Ø¯Ø®Ù„ Ø¥Ù„Ù‰ Ù„ÙˆØ­Ø© Ø§Ù„Ù…ØªØ§Ø¨Ø¹Ø© Ø¨Ø§Ø³ØªØ¹Ù…Ø§Ù„ Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ø¹Ø±Ø¶ Ø§Ù„ØªØ¬Ø±ÙŠØ¨ÙŠØ©.</span>
-      </p>
-    </section>
+  <!-- Background decorations -->
+  <div class="page-bg-deco" aria-hidden="true">
+    <div class="bg-blob bg-blob-1">&#x1F4CA;</div>
+    <div class="bg-blob bg-blob-2">&#x1F9D1;&#x200D;&#x1F3EB;</div>
+    <div class="bg-blob bg-blob-3">&#x1F4CB;</div>
+    <div class="bg-blob bg-blob-4">&#x1F393;</div>
+    <div class="bg-molecule bg-molecule-1"></div>
+    <div class="bg-molecule bg-molecule-2"></div>
+    <div class="bg-molecule bg-molecule-3"></div>
+  </div>
 
-    <section class="form-card fade-up delay-1">
-      <form id="teacher-login-form" class="stack-form">
-        <label>
-          <span class="lang-fr">Nom d'utilisateur</span>
-          <span class="lang-ar">Ø§Ø³Ù… Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù…</span>
-          <input type="text" name="username" required value="admin">
-        </label>
-        <label>
-          <span class="lang-fr">Mot de passe</span>
-          <span class="lang-ar">ÙƒÙ„Ù…Ø© Ø§Ù„Ù…Ø±ÙˆØ±</span>
-          <input type="password" name="password" required value="1234">
-        </label>
-        <button class="primary-btn" type="submit">
-          <span class="lang-fr">Se connecter</span>
-          <span class="lang-ar">ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¯Ø®ÙˆÙ„</span>
-        </button>
-        <p class="form-note">
-          <span class="lang-fr">Identifiants de demonstration : admin / 1234</span>
-          <span class="lang-ar">Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ø¹Ø±Ø¶: admin / 1234</span>
+  <main style="position:relative;z-index:1;">
+    <div class="prof-login-wrap">
+
+      <!-- Left: Hero panel -->
+      <div class="prof-login-hero fade-up">
+        <div class="prof-login-hero-icon">&#x1F9D1;&#x200D;&#x1F3EB;</div>
+        <h2>
+          <span class="lang-fr">Espace enseignant</span>
+          <span class="lang-ar">&#x641;&#x636;&#x627;&#x621; &#x627;&#x644;&#x623;&#x633;&#x62A;&#x627;&#x630;</span>
+          <span class="lang-en">Teacher space</span>
+        </h2>
+        <p>
+          <span class="lang-fr">Suivez vos &eacute;l&egrave;ves en temps r&eacute;el, consultez les r&eacute;sultats et g&eacute;rez vos codes de classe.</span>
+          <span class="lang-ar">&#x62A;&#x627;&#x628;&#x639; &#x637;&#x644;&#x627;&#x628;&#x643; &#x641;&#x64A; &#x627;&#x644;&#x648;&#x642;&#x62A; &#x627;&#x644;&#x641;&#x639;&#x644;&#x64A;&#x60C; &#x627;&#x637;&#x644;&#x639; &#x639;&#x644;&#x649; &#x627;&#x644;&#x646;&#x62A;&#x627;&#x626;&#x62C; &#x648;&#x623;&#x62F;&#x651;&#x650;&#x631; &#x631;&#x645;&#x648;&#x632; &#x627;&#x644;&#x641;&#x635;&#x644;.</span>
+          <span class="lang-en">Track your students in real time, review results and manage your class codes.</span>
         </p>
-      </form>
-    </section>
+        <ul class="prof-feature-list">
+          <li><span>&#x1F4CA;</span> <span>
+            <span class="lang-fr">Tableau de bord avec scores et &eacute;valuations IA</span>
+            <span class="lang-ar">&#x644;&#x648;&#x62D;&#x629; &#x628;&#x627;&#x644;&#x646;&#x62A;&#x627;&#x626;&#x62C; &#x648;&#x62A;&#x642;&#x64A;&#x64A;&#x645;&#x627;&#x62A; &#x627;&#x644;&#x630;&#x643;&#x627;&#x621; &#x627;&#x644;&#x627;&#x635;&#x637;&#x646;&#x627;&#x639;&#x64A;</span>
+            <span class="lang-en">Dashboard with scores and AI evaluations</span>
+          </span></li>
+          <li><span>&#x1F511;</span> <span>
+            <span class="lang-fr">Codes de classe pour guider chaque &eacute;l&egrave;ve</span>
+            <span class="lang-ar">&#x631;&#x645;&#x648;&#x632; &#x627;&#x644;&#x641;&#x635;&#x644; &#x644;&#x62A;&#x648;&#x62C;&#x64A;&#x647; &#x643;&#x644; &#x62A;&#x644;&#x645;&#x64A;&#x630;</span>
+            <span class="lang-en">Class codes to guide each student</span>
+          </span></li>
+          <li><span>&#x1F916;</span> <span>
+            <span class="lang-fr">Insights IA sur les performances du groupe</span>
+            <span class="lang-ar">&#x62A;&#x62D;&#x644;&#x64A;&#x644;&#x627;&#x62A; &#x630;&#x643;&#x64A;&#x629; &#x644;&#x623;&#x62F;&#x627;&#x621; &#x627;&#x644;&#x645;&#x62C;&#x645;&#x648;&#x639;&#x629;</span>
+            <span class="lang-en">AI insights on group performance</span>
+          </span></li>
+          <li><span>&#x1F4E7;</span> <span>
+            <span class="lang-fr">Filtrage par classe et tri par score</span>
+            <span class="lang-ar">&#x62A;&#x635;&#x641;&#x64A;&#x629; &#x62D;&#x633;&#x628; &#x627;&#x644;&#x641;&#x635;&#x644; &#x648;&#x62A;&#x631;&#x62A;&#x64A;&#x628; &#x62D;&#x633;&#x628; &#x627;&#x644;&#x646;&#x62A;&#x64A;&#x62C;&#x629;</span>
+            <span class="lang-en">Filter by class and sort by score</span>
+          </span></li>
+        </ul>
+      </div>
+
+      <!-- Right: Login form -->
+      <div class="prof-login-form-side fade-up delay-1">
+        <section class="form-card">
+          <div class="panel-head">
+            <h2>&#x1F510;
+              <span class="lang-fr">Connexion</span>
+              <span class="lang-ar">&#x62A;&#x633;&#x62C;&#x64A;&#x644; &#x627;&#x644;&#x62F;&#x62E;&#x648;&#x644;</span>
+              <span class="lang-en">Log in</span>
+            </h2>
+            <p>
+              <span class="lang-fr">Acc&eacute;dez au tableau de bord avec vos identifiants.</span>
+              <span class="lang-ar">&#x627;&#x62F;&#x62E;&#x644; &#x628;&#x628;&#x64A;&#x627;&#x646;&#x627;&#x62A;&#x643; &#x644;&#x644;&#x648;&#x635;&#x648;&#x644; &#x625;&#x644;&#x649; &#x644;&#x648;&#x62D;&#x629; &#x627;&#x644;&#x642;&#x64A;&#x627;&#x62F;&#x629;.</span>
+              <span class="lang-en">Enter your credentials to access the dashboard.</span>
+            </p>
+          </div>
+          <form id="teacher-login-form" class="stack-form">
+            <label class="icon-field">
+              <span class="lang-fr">Nom d&rsquo;utilisateur</span>
+              <span class="lang-ar">&#x627;&#x633;&#x645; &#x627;&#x644;&#x645;&#x633;&#x62A;&#x62E;&#x62F;&#x645;</span>
+              <span class="lang-en">Username</span>
+              <span class="input-icon" aria-hidden="true">&#x1F464;</span>
+              <input type="text" name="username" required value="admin"
+                data-placeholder-fr="Nom d'utilisateur"
+                data-placeholder-ar="&#x627;&#x633;&#x645; &#x627;&#x644;&#x645;&#x633;&#x62A;&#x62E;&#x62F;&#x645;"
+                data-placeholder-en="Username">
+            </label>
+            <label class="icon-field">
+              <span class="lang-fr">Mot de passe</span>
+              <span class="lang-ar">&#x643;&#x644;&#x645;&#x629; &#x627;&#x644;&#x645;&#x631;&#x648;&#x631;</span>
+              <span class="lang-en">Password</span>
+              <span class="input-icon" aria-hidden="true">&#x1F512;</span>
+              <input type="password" name="password" required value="1234"
+                data-placeholder-fr="Mot de passe"
+                data-placeholder-ar="&#x643;&#x644;&#x645;&#x629; &#x627;&#x644;&#x645;&#x631;&#x648;&#x631;"
+                data-placeholder-en="Password">
+            </label>
+            <button class="primary-btn" type="submit" style="width:100%;margin-top:4px;">
+              <span>&#x1F510;</span>
+              <span class="lang-fr">Se connecter</span>
+              <span class="lang-ar">&#x62A;&#x633;&#x62C;&#x64A;&#x644; &#x627;&#x644;&#x62F;&#x62E;&#x648;&#x644;</span>
+              <span class="lang-en">Log in</span>
+            </button>
+            <p class="form-note" style="text-align:center;">
+              <span class="lang-fr">D&eacute;mo : <strong>admin</strong> / <strong>1234</strong></span>
+              <span class="lang-ar">&#x628;&#x64A;&#x627;&#x646;&#x627;&#x62A; &#x627;&#x644;&#x639;&#x631;&#x636;: <strong>admin</strong> / <strong>1234</strong></span>
+              <span class="lang-en">Demo: <strong>admin</strong> / <strong>1234</strong></span>
+            </p>
+          </form>
+        </section>
+
+        <!-- Quick stats preview below form -->
+        <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="info-card" style="text-align:center;padding:16px;">
+            <div style="font-size:2rem;font-weight:800;color:var(--teal);">4</div>
+            <div style="font-size:0.83rem;color:var(--text-light);">
+              <span class="lang-fr">&#xC9;l&egrave;ves actifs</span>
+              <span class="lang-ar">&#x637;&#x644;&#x627;&#x628; &#x646;&#x634;&#x637;&#x648;&#x646;</span>
+              <span class="lang-en">Active students</span>
+            </div>
+          </div>
+          <div class="info-card" style="text-align:center;padding:16px;">
+            <div style="font-size:2rem;font-weight:800;color:var(--teal);">77%</div>
+            <div style="font-size:0.83rem;color:var(--text-light);">
+              <span class="lang-fr">Score moyen</span>
+              <span class="lang-ar">&#x627;&#x644;&#x645;&#x639;&#x62F;&#x644; &#x627;&#x644;&#x639;&#x627;&#x645;</span>
+              <span class="lang-en">Average score</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </main>
 
   <div id="assistant-root"></div>

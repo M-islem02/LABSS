@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VirtuLab - Ã‰lÃ¨ve</title>
+  <title>EduVirtuel - &#xC9;l&#xE8;ve</title>
   <link rel="icon" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -11,13 +11,13 @@
   <header class="topbar">
     <div class="topbar-inner">
       <a class="brand" href="index.html">
-        <span class="brand-mark">V</span>
+        <span class="brand-mark" aria-hidden="true"></span>
         <span>
-          <strong>VirtuLab</strong>
+          <strong>EduVirtuel</strong>
           <small>
-            <span class="lang-fr">Labo virtuel simple pour apprendre</span>
-            <span class="lang-ar">Ù…Ø®ØªØ¨Ø± Ø§ÙØªØ±Ø§Ø¶ÙŠ Ø¨Ø³ÙŠØ· Ù„Ù„ØªØ¹Ù„Ù…</span>
-            <span class="lang-en">A simple virtual lab to learn</span>
+            <span class="lang-fr">Portail Éducation Virtuel</span>
+            <span class="lang-ar">بوابة التعليم الافتراضي</span>
+            <span class="lang-en">Virtual Education Portal</span>
           </small>
         </span>
       </a>
@@ -25,7 +25,7 @@
       <div class="topbar-nav">
         <div class="student-pill">
           <span class="lang-fr">Profil</span>
-          <span class="lang-ar">Ø§Ù„Ù…Ù„Ù</span>
+          <span class="lang-ar">&#x627;&#x644;&#x645;&#x644;&#x641;</span>
           <span class="lang-en">Profile</span>
           <strong data-student-display></strong>
         </div>
@@ -35,113 +35,161 @@
           <button type="button" class="lang-btn" data-lang="en">EN</button>
         </div>
         <button type="button" class="secondary-btn logout-btn">
-          <span class="lang-fr">Se dÃ©connecter</span>
-          <span class="lang-ar">ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø®Ø±ÙˆØ¬</span>
+          <span class="lang-fr">Se d&eacute;connecter</span>
+          <span class="lang-ar">&#x62A;&#x633;&#x62C;&#x64A;&#x644; &#x627;&#x644;&#x62E;&#x631;&#x648;&#x62C;</span>
           <span class="lang-en">Log out</span>
         </button>
       </div>
     </div>
   </header>
 
-  <main class="page-shell narrow-shell student-page">
-    <section class="page-intro fade-up">
-      <span class="eyebrow">VirtuLab</span>
-      <div class="student-mascot" aria-hidden="true">ðŸ§‘â€ðŸ”¬</div>
-      <h1>
-        <span class="lang-fr">Commencer mon activitÃ©</span>
-        <span class="lang-ar">Ø¨Ø¯Ø¡ Ø§Ù„Ù†Ø´Ø§Ø·</span>
-        <span class="lang-en">Start my activity</span>
-      </h1>
-      <p>
-        <span class="lang-fr">Remplis seulement l'essentiel, puis choisis ton niveau pour voir les expÃ©riences qui te correspondent.</span>
-        <span class="lang-ar">Ø§Ù…Ù„Ø£ Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø§Ù„Ù…Ù‡Ù…Ø© ÙÙ‚Ø·ØŒ Ø«Ù… Ø§Ø®ØªØ± Ù…Ø³ØªÙˆØ§Ùƒ Ù„Ø±Ø¤ÙŠØ© Ø§Ù„ØªØ¬Ø§Ø±Ø¨ Ø§Ù„Ù…Ù†Ø§Ø³Ø¨Ø© Ù„Ùƒ.</span>
-        <span class="lang-en">Fill in just the essentials, then choose your level to see the right experiments for you.</span>
-      </p>
-    </section>
+  <main class="page-shell student-page">
 
-    <section class="panel-card simple-flow-card fade-up delay-1">
-      <div class="simple-flow-grid">
-        <div><span class="step-icon" aria-hidden="true">ðŸ‘¤</span><strong>1</strong><span class="lang-fr">Ã‰cris ton prÃ©nom</span><span class="lang-ar">Ø§ÙƒØªØ¨ Ø§Ø³Ù…Ùƒ</span><span class="lang-en">Write your first name</span></div>
-        <div><span class="step-icon" aria-hidden="true">ðŸŽ’</span><strong>2</strong><span class="lang-fr">Choisis ton niveau</span><span class="lang-ar">Ø§Ø®ØªØ± Ù…Ø³ØªÙˆØ§Ùƒ</span><span class="lang-en">Choose your level</span></div>
-        <div><span class="step-icon" aria-hidden="true">ðŸš€</span><strong>3</strong><span class="lang-fr">Continue vers les matiÃ¨res</span><span class="lang-ar">Ø§Ù†ØªÙ‚Ù„ Ø¥Ù„Ù‰ Ø§Ù„Ù…ÙˆØ§Ø¯</span><span class="lang-en">Continue to subjects</span></div>
+    <!-- Compact intro banner -->
+    <div class="student-intro-row fade-up">
+      <div class="student-mascot-sm" aria-hidden="true">&#x1F9D1;&#x200D;&#x1F393;</div>
+      <div class="student-intro-copy">
+        <span class="eyebrow">EduVirtuel</span>
+        <h1>
+          <span class="lang-fr">Commencer mon activit&eacute;</span>
+          <span class="lang-ar">&#x628;&#x62F;&#x621; &#x627;&#x644;&#x646;&#x634;&#x627;&#x637;</span>
+          <span class="lang-en">Start my activity</span>
+        </h1>
+        <p>
+          <span class="lang-fr">Remplis seulement l&rsquo;essentiel, puis choisis ton niveau pour voir les exp&eacute;riences.</span>
+          <span class="lang-ar">&#x627;&#x645;&#x644;&#x623; &#x627;&#x644;&#x645;&#x639;&#x644;&#x648;&#x645;&#x627;&#x62A; &#x627;&#x644;&#x645;&#x647;&#x645;&#x629; &#x641;&#x642;&#x637;&#x60C; &#x62B;&#x645; &#x627;&#x62E;&#x62A;&#x631; &#x645;&#x633;&#x62A;&#x648;&#x627;&#x643;.</span>
+          <span class="lang-en">Fill in just the essentials, then choose your level.</span>
+        </p>
       </div>
-    </section>
+      <div class="student-steps-inline" aria-hidden="true">
+        <div class="step-badge"><span>&#x270D;&#xFE0F;</span><strong>1</strong></div>
+        <div class="step-badge"><span>&#x1F393;</span><strong>2</strong></div>
+        <div class="step-badge"><span>&#x1F680;</span><strong>3</strong></div>
+      </div>
+    </div>
 
-    <section class="form-card student-form-card fade-up delay-2">
-      <form id="student-form" class="stack-form">
-        <div class="student-form-grid">
-          <label class="icon-field">
-            <span class="lang-fr">PrÃ©nom</span>
-            <span class="lang-ar">Ø§Ù„Ø§Ø³Ù…</span>
-            <span class="lang-en">First name</span>
-            <span class="input-icon" aria-hidden="true">ðŸ‘¤</span>
-            <input type="text" name="firstName" required data-placeholder-fr="Exemple : Ahmed" data-placeholder-ar="Ù…Ø«Ø§Ù„: Ø£Ø­Ù…Ø¯" data-placeholder-en="Example: Ahmed">
-          </label>
-          <label class="icon-field">
-            <span class="lang-fr">Nom (optionnel)</span>
-            <span class="lang-ar">Ø§Ù„Ù„Ù‚Ø¨ (Ø§Ø®ØªÙŠØ§Ø±ÙŠ)</span>
-            <span class="lang-en">Last name (optional)</span>
-            <span class="input-icon" aria-hidden="true">ðŸ“</span>
-            <input type="text" name="lastName" data-placeholder-fr="Exemple : Benali" data-placeholder-ar="Ù…Ø«Ø§Ù„: Ø¨Ù† Ø¹Ù„ÙŠ" data-placeholder-en="Example: Benali">
-          </label>
+    <!-- Single form wrapping the 2-column grid -->
+    <form id="student-form" class="student-main-grid fade-up delay-1">
+
+      <!-- Left column: personal info -->
+      <section class="form-card student-form-card">
+        <div class="panel-head">
+          <h2>&#x1F464;
+            <span class="lang-fr">Tes informations</span>
+            <span class="lang-ar">&#x645;&#x639;&#x644;&#x648;&#x645;&#x627;&#x62A;&#x643;</span>
+            <span class="lang-en">Your info</span>
+          </h2>
         </div>
-
-        <label class="icon-field">
-          <span class="lang-fr">Code du professeur (optionnel)</span>
-          <span class="lang-ar">Ø±Ù…Ø² Ø§Ù„Ø£Ø³ØªØ§Ø° (Ø§Ø®ØªÙŠØ§Ø±ÙŠ)</span>
-          <span class="lang-en">Teacher code (optional)</span>
-          <span class="input-icon" aria-hidden="true">ðŸ”‘</span>
-          <input type="text" name="classCode" data-placeholder-fr="Exemple : CE-PLA-A1B2" data-placeholder-ar="Ù…Ø«Ø§Ù„: CE-PLA-A1B2" data-placeholder-en="Example: CE-PLA-A1B2">
-        </label>
-
-        <div class="field-block">
-          <span class="field-title">
-            <span class="lang-fr">Choisis ton niveau scolaire</span>
-            <span class="lang-ar">Ø§Ø®ØªØ± Ù…Ø³ØªÙˆØ§Ùƒ Ø§Ù„Ø¯Ø±Ø§Ø³ÙŠ</span>
-            <span class="lang-en">Choose your school level</span>
-          </span>
-
-          <div class="quick-level-grid visual-level-grid">
-            <button type="button" class="selection-card level-choice level-primary" data-level-choice="primaire">
-              <span class="level-icon-cluster" aria-hidden="true">ðŸ“š âœï¸ ðŸŽ¨</span>
-              <strong><span>Primaire</span><span dir="rtl" lang="ar">Ø§Ø¨ØªØ¯Ø§Ø¦ÙŠ</span><em>Primary school</em></strong>
-              <span><span class="lang-fr">ExpÃ©riences trÃ¨s simples</span><span class="lang-ar">ØªØ¬Ø§Ø±Ø¨ Ø¨Ø³ÙŠØ·Ø© Ø¬Ø¯Ø§</span><span class="lang-en">Very simple experiments</span></span>
-            </button>
-            <button type="button" class="selection-card level-choice level-cem" data-level-choice="cem">
-              <span class="level-icon-cluster" aria-hidden="true">ðŸ§ª âš—ï¸ ðŸ”­</span>
-              <strong><span>CEM</span><span dir="rtl" lang="ar">Ø§Ù„ØªØ¹Ù„ÙŠÙ… Ø§Ù„Ù…ØªÙˆØ³Ø·</span><em>Middle school</em></strong>
-              <span><span class="lang-fr">CollÃ¨ge / cycle moyen</span><span class="lang-ar">Ø§Ù„ØªØ¹Ù„ÙŠÙ… Ø§Ù„Ù…ØªÙˆØ³Ø·</span><span class="lang-en">Middle school</span></span>
-            </button>
-            <button type="button" class="selection-card level-choice level-lycee" data-level-choice="lycee">
-              <span class="level-icon-cluster" aria-hidden="true">ðŸŽ“ ðŸ”¬ ðŸ’¡</span>
-              <strong><span>LycÃ©e</span><span dir="rtl" lang="ar">Ø«Ø§Ù†ÙˆÙŠ</span><em>High school</em></strong>
-              <span><span class="lang-fr">ExpÃ©riences plus avancÃ©es</span><span class="lang-ar">ØªØ¬Ø§Ø±Ø¨ Ø£ÙƒØ«Ø± ØªÙ‚Ø¯Ù…Ø§</span><span class="lang-en">More advanced experiments</span></span>
-            </button>
+        <div class="stack-form">
+          <div class="student-form-grid">
+            <label class="icon-field">
+              <span class="lang-fr">Pr&eacute;nom</span>
+              <span class="lang-ar">&#x627;&#x644;&#x627;&#x633;&#x645;</span>
+              <span class="lang-en">First name</span>
+              <span class="input-icon" aria-hidden="true">&#x1F464;</span>
+              <input type="text" name="firstName" required
+                data-placeholder-fr="Exemple : Ahmed"
+                data-placeholder-ar="&#x645;&#x62B;&#x627;&#x644;: &#x623;&#x62D;&#x645;&#x62F;"
+                data-placeholder-en="Example: Ahmed">
+            </label>
+            <label class="icon-field">
+              <span class="lang-fr">Nom (optionnel)</span>
+              <span class="lang-ar">&#x627;&#x644;&#x644;&#x642;&#x628; (&#x627;&#x62E;&#x62A;&#x64A;&#x627;&#x631;&#x64A;)</span>
+              <span class="lang-en">Last name (optional)</span>
+              <span class="input-icon" aria-hidden="true">&#x1F465;</span>
+              <input type="text" name="lastName"
+                data-placeholder-fr="Exemple : Benali"
+                data-placeholder-ar="&#x645;&#x62B;&#x627;&#x644;: &#x628;&#x646; &#x639;&#x644;&#x64A;"
+                data-placeholder-en="Example: Benali">
+            </label>
           </div>
-
-          <input type="hidden" name="level">
-
-          <p class="choice-note">
-            <span class="lang-fr">Tu pourras changer ce choix ensuite si besoin.</span>
-            <span class="lang-ar">ÙŠÙ…ÙƒÙ†Ùƒ ØªØºÙŠÙŠØ± Ù‡Ø°Ø§ Ø§Ù„Ø§Ø®ØªÙŠØ§Ø± Ø¨Ø¹Ø¯ Ø°Ù„Ùƒ Ø¥Ø°Ø§ Ø§Ø­ØªØ¬Øª.</span>
-            <span class="lang-en">You can change this choice later if needed.</span>
+          <label class="icon-field">
+            <span class="lang-fr">Code du professeur (optionnel)</span>
+            <span class="lang-ar">&#x631;&#x645;&#x632; &#x627;&#x644;&#x623;&#x633;&#x62A;&#x627;&#x630; (&#x627;&#x62E;&#x62A;&#x64A;&#x627;&#x631;&#x64A;)</span>
+            <span class="lang-en">Teacher code (optional)</span>
+            <span class="input-icon" aria-hidden="true">&#x1F3EB;</span>
+            <input type="text" name="classCode"
+              data-placeholder-fr="Exemple : CE-PLA-A1B2"
+              data-placeholder-ar="&#x645;&#x62B;&#x627;&#x644;: CE-PLA-A1B2"
+              data-placeholder-en="Example: CE-PLA-A1B2">
+          </label>
+          <p class="form-note">
+            <span class="lang-fr">Les donn&eacute;es restent sur cet appareil pour la d&eacute;monstration.</span>
+            <span class="lang-ar">&#x62A;&#x628;&#x642;&#x649; &#x627;&#x644;&#x628;&#x64A;&#x627;&#x646;&#x627;&#x62A; &#x639;&#x644;&#x649; &#x647;&#x630;&#x627; &#x627;&#x644;&#x62C;&#x647;&#x627;&#x632; &#x644;&#x623;&#x63A;&#x631;&#x627;&#x636; &#x627;&#x644;&#x639;&#x631;&#x636;.</span>
+            <span class="lang-en">Data stays on this device for the demonstration.</span>
           </p>
         </div>
+      </section>
+
+      <!-- Right column: level selection + submit -->
+      <section class="form-card student-level-card">
+        <div class="panel-head">
+          <h2>&#x1F3EB;
+            <span class="lang-fr">Ton niveau scolaire</span>
+            <span class="lang-ar">&#x645;&#x633;&#x62A;&#x648;&#x627;&#x643; &#x627;&#x644;&#x62F;&#x631;&#x627;&#x633;&#x64A;</span>
+            <span class="lang-en">Your school level</span>
+          </h2>
+        </div>
+
+        <div class="quick-level-grid visual-level-grid">
+          <button type="button" class="selection-card level-choice level-primary" data-level-choice="primaire">
+            <span class="level-icon-cluster" aria-hidden="true">&#x1F4DA;&#x270F;&#xFE0F;&#x1F3A8;</span>
+            <strong>
+              <span>Primaire</span>
+              <span dir="rtl" lang="ar">&#x627;&#x628;&#x62A;&#x62F;&#x627;&#x626;&#x64A;</span>
+              <em>Primary school</em>
+            </strong>
+            <span>
+              <span class="lang-fr">Exp&eacute;riences tr&egrave;s simples</span>
+              <span class="lang-ar">&#x62A;&#x62C;&#x627;&#x631;&#x628; &#x628;&#x633;&#x64A;&#x637;&#x629; &#x62C;&#x62F;&#x627;</span>
+              <span class="lang-en">Very simple experiments</span>
+            </span>
+          </button>
+          <button type="button" class="selection-card level-choice level-cem" data-level-choice="cem">
+            <span class="level-icon-cluster" aria-hidden="true">&#x1F9EA;&#x2697;&#xFE0F;&#x1F52D;</span>
+            <strong>
+              <span>CEM</span>
+              <span dir="rtl" lang="ar">&#x627;&#x644;&#x62A;&#x639;&#x644;&#x64A;&#x645; &#x627;&#x644;&#x645;&#x62A;&#x648;&#x633;&#x637;</span>
+              <em>Middle school</em>
+            </strong>
+            <span>
+              <span class="lang-fr">Coll&egrave;ge / cycle moyen</span>
+              <span class="lang-ar">&#x627;&#x644;&#x62A;&#x639;&#x644;&#x64A;&#x645; &#x627;&#x644;&#x645;&#x62A;&#x648;&#x633;&#x637;</span>
+              <span class="lang-en">Middle school</span>
+            </span>
+          </button>
+          <button type="button" class="selection-card level-choice level-lycee" data-level-choice="lycee">
+            <span class="level-icon-cluster" aria-hidden="true">&#x1F393;&#x1F52C;&#x1F4A1;</span>
+            <strong>
+              <span>Lyc&eacute;e</span>
+              <span dir="rtl" lang="ar">&#x62B;&#x627;&#x646;&#x648;&#x64A;</span>
+              <em>High school</em>
+            </strong>
+            <span>
+              <span class="lang-fr">Exp&eacute;riences plus avanc&eacute;es</span>
+              <span class="lang-ar">&#x62A;&#x62C;&#x627;&#x631;&#x628; &#x623;&#x643;&#x62B;&#x631; &#x62A;&#x642;&#x62F;&#x645;&#x627;</span>
+              <span class="lang-en">More advanced experiments</span>
+            </span>
+          </button>
+        </div>
+
+        <input type="hidden" name="level">
+
+        <p class="choice-note">
+          <span class="lang-fr">Tu pourras changer ce choix ensuite si besoin.</span>
+          <span class="lang-ar">&#x64A;&#x645;&#x643;&#x646;&#x643; &#x62A;&#x63A;&#x64A;&#x64A;&#x631; &#x647;&#x630;&#x627; &#x627;&#x644;&#x627;&#x62E;&#x62A;&#x64A;&#x627;&#x631; &#x628;&#x639;&#x62F; &#x630;&#x644;&#x643; &#x625;&#x630;&#x627; &#x627;&#x62D;&#x62A;&#x62C;&#x62A;.</span>
+          <span class="lang-en">You can change this choice later if needed.</span>
+        </p>
 
         <button class="primary-btn student-continue-btn" type="submit" data-continue-button>
-          <span aria-hidden="true">ðŸš€</span>
+          <span aria-hidden="true">&#x1F680;</span>
           <span class="lang-fr">Continuer</span>
-          <span class="lang-ar">Ù…ØªØ§Ø¨Ø¹Ø©</span>
+          <span class="lang-ar">&#x645;&#x62A;&#x627;&#x628;&#x639;&#x629;</span>
           <span class="lang-en">Continue</span>
         </button>
+      </section>
 
-        <p class="form-note">
-          <span class="lang-fr">Les donnÃ©es restent sur cet appareil pour la dÃ©monstration.</span>
-          <span class="lang-ar">ØªØ¨Ù‚Ù‰ Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª Ø¹Ù„Ù‰ Ù‡Ø°Ø§ Ø§Ù„Ø¬Ù‡Ø§Ø² Ù„Ø£ØºØ±Ø§Ø¶ Ø§Ù„Ø¹Ø±Ø¶.</span>
-          <span class="lang-en">Data stays on this device for the demonstration.</span>
-        </p>
-      </form>
-    </section>
+    </form>
   </main>
 
   <div id="assistant-root"></div>

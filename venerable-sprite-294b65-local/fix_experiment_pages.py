@@ -1,15 +1,18 @@
-<!doctype html>
+
+# Fix plante.html and masse.html and add background CSS
+
+plante = """<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>EduVirtuel - Masses et balance</title>
+  <title>VirtuLab - Absorption de l'eau par la plante</title>
   <link rel="icon" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="experiment" data-lang="fr" data-experiment="masse" data-lab-mode="physics">
+<body data-page="experiment" data-lang="fr" data-experiment="plante" data-lab-mode="biology">
   <header class="topbar"><div class="topbar-inner">
-    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span><strong>EduVirtuel</strong><small><span class="lang-fr">Plateforme de laboratoire virtuel</span><span class="lang-ar">&#x645;&#x646;&#x635;&#x629; &#x627;&#x644;&#x645;&#x62E;&#x62A;&#x628;&#x631;</span><span class="lang-en">Virtual lab platform</span></small></span></a>
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span><strong>VirtuLab</strong><small><span class="lang-fr">Plateforme de laboratoire virtuel</span><span class="lang-ar">&#x645;&#x646;&#x635;&#x629; &#x627;&#x644;&#x645;&#x62E;&#x62A;&#x628;&#x631;</span><span class="lang-en">Virtual lab platform</span></small></span></a>
     <button class="menu-toggle" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
     <div class="topbar-nav">
       <div class="student-pill"><span class="lang-fr">Profil</span><span class="lang-ar">&#x627;&#x644;&#x645;&#x644;&#x641;</span><span class="lang-en">Profile</span><strong data-student-display></strong></div>
@@ -19,16 +22,16 @@
     </div>
   </div></header>
   <div class="page-bg-deco" aria-hidden="true">
-    <div class="bg-blob bg-blob-1">&#x2696;&#xFE0F;</div><div class="bg-blob bg-blob-2">&#x1F4CF;</div>
-    <div class="bg-blob bg-blob-3">&#x1F9EE;</div><div class="bg-blob bg-blob-4">&#x1F522;</div>
+    <div class="bg-blob bg-blob-1">&#x1F331;</div><div class="bg-blob bg-blob-2">&#x1F4A7;</div>
+    <div class="bg-blob bg-blob-3">&#x1F33F;</div><div class="bg-blob bg-blob-4">&#x1F30D;</div>
     <div class="bg-molecule bg-molecule-1"></div><div class="bg-molecule bg-molecule-2"></div><div class="bg-molecule bg-molecule-3"></div>
   </div>
   <main class="page-shell experiment-shell">
     <section class="experiment-header fade-up">
       <div>
         <a class="back-link" href="experiences.html"><span class="lang-fr">&#x2190; Retour aux exp&eacute;riences</span><span class="lang-ar">&#x627;&#x644;&#x639;&#x648;&#x62F;&#x629; &#x625;&#x644;&#x649; &#x627;&#x644;&#x62A;&#x62C;&#x627;&#x631;&#x628;</span><span class="lang-en">&#x2190; Back</span></a>
-        <h1><span class="lang-fr">Masses et balance</span><span class="lang-ar">&#x627;&#x644;&#x643;&#x62A;&#x644; &#x648;&#x627;&#x644;&#x645;&#x64A;&#x632;&#x627;&#x646;</span><span class="lang-en">Masses and balance</span></h1>
-        <div class="badge-row"><span class="badge badge-blue"><span class="lang-fr">Physique &#x2696;&#xFE0F;</span><span class="lang-ar">&#x627;&#x644;&#x641;&#x64A;&#x632;&#x64A;&#x627;&#x621;</span><span class="lang-en">Physics &#x2696;&#xFE0F;</span></span><span class="badge badge-light" data-step-indicator></span></div>
+        <h1><span class="lang-fr">Absorption de l&rsquo;eau par la plante</span><span class="lang-ar">&#x627;&#x645;&#x62A;&#x635;&#x627;&#x635; &#x627;&#x644;&#x645;&#x627;&#x621; &#x639;&#x646;&#x62F; &#x627;&#x644;&#x646;&#x628;&#x627;&#x62A;</span><span class="lang-en">Water absorption by the plant</span></h1>
+        <div class="badge-row"><span class="badge badge-blue"><span class="lang-fr">Sciences naturelles &#x1F331;</span><span class="lang-ar">&#x627;&#x644;&#x639;&#x644;&#x648;&#x645; &#x627;&#x644;&#x637;&#x628;&#x64A;&#x639;&#x64A;&#x629;</span><span class="lang-en">Natural sciences &#x1F331;</span></span><span class="badge badge-light" data-step-indicator></span></div>
       </div>
       <div class="progress-wrap"><div class="progress-meta"><span class="lang-fr">Progression</span><span class="lang-ar">&#x627;&#x644;&#x62A;&#x642;&#x62F;&#x645;</span><span class="lang-en">Progress</span></div><div class="progress-bar"><div class="progress-fill" data-progress-fill></div></div></div>
     </section>
@@ -36,18 +39,18 @@
       <section class="panel-card experiment-panel experiment-main-column fade-up delay-1">
         <div class="panel-head panel-head-wide">
           <div>
-            <h2><span class="lang-fr">&#x2696;&#xFE0F; Labo 3D reli&eacute;</span><span class="lang-ar">&#x627;&#x644;&#x645;&#x62E;&#x62A;&#x628;&#x631; &#x627;&#x644;&#x62B;&#x644;&#x627;&#x62B;&#x64A; &#x627;&#x644;&#x645;&#x631;&#x62A;&#x628;&#x637;</span><span class="lang-en">&#x2696;&#xFE0F; Linked 3D Lab</span></h2>
-            <p><span class="lang-fr">Le labo 3D de physique est reli&eacute; directement &agrave; cette exp&eacute;rience.</span><span class="lang-ar">&#x645;&#x62E;&#x62A;&#x628;&#x631; &#x639;&#x644;&#x648;&#x645; CEM &#x645;&#x631;&#x62A;&#x628;&#x637; &#x645;&#x628;&#x627;&#x634;&#x631;&#x629; &#x628;&#x647;&#x630;&#x647; &#x627;&#x644;&#x62A;&#x62C;&#x631;&#x628;&#x629;.</span><span class="lang-en">The CEM science 3D lab is directly linked to this experiment.</span></p>
+            <h2><span class="lang-fr">&#x1F331; Labo 3D reli&eacute;</span><span class="lang-ar">&#x627;&#x644;&#x645;&#x62E;&#x62A;&#x628;&#x631; &#x627;&#x644;&#x62B;&#x644;&#x627;&#x62B;&#x64A; &#x627;&#x644;&#x645;&#x631;&#x62A;&#x628;&#x637;</span><span class="lang-en">&#x1F331; Linked 3D Lab</span></h2>
+            <p><span class="lang-fr">Le labo 3D de sciences CEM est reli&eacute; directement &agrave; cette exp&eacute;rience.</span><span class="lang-ar">&#x645;&#x62E;&#x62A;&#x628;&#x631; &#x639;&#x644;&#x648;&#x645; CEM &#x645;&#x631;&#x62A;&#x628;&#x637; &#x645;&#x628;&#x627;&#x634;&#x631;&#x629; &#x628;&#x647;&#x630;&#x647; &#x627;&#x644;&#x62A;&#x62C;&#x631;&#x628;&#x629;.</span><span class="lang-en">The CEM science 3D lab is directly linked to this experiment.</span></p>
           </div>
           <div class="lab-link-summary">
-            <span class="badge badge-light"><span class="lang-fr">Labo : Physique 3D</span><span class="lang-ar">&#x627;&#x644;&#x645;&#x62E;&#x62A;&#x628;&#x631;: &#x641;&#x64A;&#x632;&#x64A;&#x627;&#x621; 3D</span><span class="lang-en">Lab: Physics</span></span>
+            <span class="badge badge-light"><span class="lang-fr">Labo : Sciences CEM</span><span class="lang-ar">&#x627;&#x644;&#x645;&#x62E;&#x62A;&#x628;&#x631;: &#x639;&#x644;&#x648;&#x645; CEM</span><span class="lang-en">Lab: CEM Science</span></span>
             <div class="lab-actions">
               <button type="button" class="primary-btn" data-load-lab><span class="lang-fr">D&eacute;marrer le labo 3D</span><span class="lang-ar">&#x628;&#x62F;&#x621; &#x627;&#x644;&#x645;&#x62E;&#x62A;&#x628;&#x631;</span><span class="lang-en">Start 3D lab</span></button>
               <button type="button" class="secondary-btn" data-open-lab-full><span class="lang-fr">Ouvrir en grand</span><span class="lang-ar">&#x641;&#x62A;&#x62D; &#x628;&#x62D;&#x62C;&#x645; &#x643;&#x628;&#x64A;&#x631;</span><span class="lang-en">Open fullscreen</span></button>
             </div>
           </div>
         </div>
-        <iframe class="lab-frame lab-frame-large" data-lab-frame src="about:blank" loading="lazy" title="EduVirtuel 3D"></iframe>
+        <iframe class="lab-frame lab-frame-large" data-lab-frame src="about:blank" loading="lazy" title="VirtuLab 3D"></iframe>
         <div class="status-box" data-experiment-status></div>
         <div class="finish-row finish-row-inline"><button type="button" class="primary-btn finish-btn" data-finish-experiment><span class="lang-fr">Terminer et voir le r&eacute;sultat</span><span class="lang-ar">&#x625;&#x646;&#x647;&#x627;&#x621; &#x648;&#x639;&#x631;&#x636; &#x627;&#x644;&#x646;&#x62A;&#x64A;&#x62C;&#x629;</span><span class="lang-en">Finish &amp; see result</span></button></div>
       </section>
@@ -68,7 +71,7 @@
           </div>
         </section>
         <section class="panel-card experiment-panel assistant-panel embedded-assistant fade-up delay-3">
-          <div class="assistant-header"><div><h2>&#x1F916; Assistant EduVirtuel</h2><p><span class="lang-fr">Utilisez les boutons rapides ou posez votre question.</span><span class="lang-ar">&#x627;&#x633;&#x62A;&#x639;&#x645;&#x644; &#x627;&#x644;&#x623;&#x632;&#x631;&#x627;&#x631; &#x623;&#x648; &#x627;&#x637;&#x631;&#x62D; &#x633;&#x624;&#x627;&#x644;&#x643;.</span><span class="lang-en">Use quick buttons or ask your question.</span></p></div></div>
+          <div class="assistant-header"><div><h2>&#x1F916; Assistant VirtuLab</h2><p><span class="lang-fr">Utilisez les boutons rapides ou posez votre question.</span><span class="lang-ar">&#x627;&#x633;&#x62A;&#x639;&#x645;&#x644; &#x627;&#x644;&#x623;&#x632;&#x631;&#x627;&#x631; &#x623;&#x648; &#x627;&#x637;&#x631;&#x62D; &#x633;&#x624;&#x627;&#x644;&#x643;.</span><span class="lang-en">Use quick buttons or ask your question.</span></p></div></div>
           <div class="assistant-messages" data-assistant-messages></div>
           <div class="assistant-shortcuts">
             <button type="button" class="shortcut-btn" data-assistant-shortcut="objectif"><span class="lang-fr">Objectif</span><span class="lang-ar">&#x627;&#x644;&#x647;&#x62F;&#x641;</span><span class="lang-en">Goal</span></button>
@@ -88,4 +91,49 @@
   <div id="assistant-root"></div>
   <script defer src="script.js"></script>
 </body>
-</html>
+</html>"""
+
+masse = plante.replace(
+    'data-experiment="plante" data-lab-mode="biology"',
+    'data-experiment="masse" data-lab-mode="physics"'
+).replace(
+    '<title>VirtuLab - Absorption de l\'eau par la plante</title>',
+    '<title>VirtuLab - Masses et balance</title>'
+).replace(
+    '<div class="bg-blob bg-blob-1">&#x1F331;</div><div class="bg-blob bg-blob-2">&#x1F4A7;</div>\n    <div class="bg-blob bg-blob-3">&#x1F33F;</div><div class="bg-blob bg-blob-4">&#x1F30D;</div>',
+    '<div class="bg-blob bg-blob-1">&#x2696;&#xFE0F;</div><div class="bg-blob bg-blob-2">&#x1F4CF;</div>\n    <div class="bg-blob bg-blob-3">&#x1F9EE;</div><div class="bg-blob bg-blob-4">&#x1F522;</div>'
+).replace(
+    'data-experiment="plante"', 'data-experiment="masse"'
+).replace(
+    'Absorption de l&rsquo;eau par la plante', 'Masses et balance'
+).replace(
+    '&#x627;&#x645;&#x62A;&#x635;&#x627;&#x635; &#x627;&#x644;&#x645;&#x627;&#x621; &#x639;&#x646;&#x62F; &#x627;&#x644;&#x646;&#x628;&#x627;&#x62A;', '&#x627;&#x644;&#x643;&#x62A;&#x644; &#x648;&#x627;&#x644;&#x645;&#x64A;&#x632;&#x627;&#x646;'
+).replace(
+    'Water absorption by the plant', 'Masses and balance'
+).replace(
+    'Sciences naturelles &#x1F331;', 'Physique &#x2696;&#xFE0F;'
+).replace(
+    '&#x627;&#x644;&#x639;&#x644;&#x648;&#x645; &#x627;&#x644;&#x637;&#x628;&#x64A;&#x639;&#x64A;&#x629;', '&#x627;&#x644;&#x641;&#x64A;&#x632;&#x64A;&#x627;&#x621;'
+).replace(
+    'Natural sciences &#x1F331;', 'Physics &#x2696;&#xFE0F;'
+).replace(
+    '&#x1F331; Labo 3D reli&eacute;', '&#x2696;&#xFE0F; Labo 3D reli&eacute;'
+).replace(
+    '&#x1F331; Linked 3D Lab', '&#x2696;&#xFE0F; Linked 3D Lab'
+).replace(
+    'sciences CEM', 'physique'
+).replace(
+    'CEM Science', 'Physics'
+).replace(
+    'Labo : Sciences CEM', 'Labo : Physique 3D'
+).replace(
+    '&#x627;&#x644;&#x645;&#x62E;&#x62A;&#x628;&#x631;: &#x639;&#x644;&#x648;&#x645; CEM', '&#x627;&#x644;&#x645;&#x62E;&#x62A;&#x628;&#x631;: &#x641;&#x64A;&#x632;&#x64A;&#x627;&#x621; 3D'
+).replace(
+    'Lab: CEM Science', 'Lab: Physics 3D'
+)
+
+with open('plante.html', 'w', encoding='utf-8') as f:
+    f.write(plante)
+with open('masse.html', 'w', encoding='utf-8') as f:
+    f.write(masse)
+print('plante.html and masse.html done')

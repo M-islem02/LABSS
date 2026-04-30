@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar">
 <head>
   <meta charset="UTF-8" />
@@ -8,6 +8,34 @@
   <link rel="stylesheet" href="./assets/css/lab-runtime.css" />
 </head>
 <body>
+  <!-- Back to site button — always visible when coming from an experiment page -->
+  <a id="back-to-site-btn" href="javascript:history.back()" title="Retour au site / العودة للموقع">
+    <span id="back-btn-arrow">&#x2190;</span>
+    <span id="back-btn-label">Retour au site</span>
+  </a>
+  <script>
+    // Update back button text/direction based on lang param
+    (function() {
+      var p = new URLSearchParams(window.location.search);
+      var lang = p.get('lang') || 'fr';
+      var btn = document.getElementById('back-to-site-btn');
+      var arrow = document.getElementById('back-btn-arrow');
+      var label = document.getElementById('back-btn-label');
+      if (lang === 'ar') {
+        if (arrow) arrow.textContent = '\u2192';
+        if (label) label.textContent = '\u0627\u0644\u0639\u0648\u062f\u0629 \u0625\u0644\u0649 \u0627\u0644\u0645\u0648\u0642\u0639';
+        if (btn) { btn.style.left = 'auto'; btn.style.right = '12px'; }
+      } else if (lang === 'en') {
+        if (label) label.textContent = '\u2190 Back to site';
+      } else {
+        if (label) label.textContent = '\u2190 Retour au site';
+      }
+      // If opened directly (no referrer), link to experiences.html
+      if (!document.referrer) {
+        if (btn) btn.href = 'experiences.html';
+      }
+    })();
+  </script>
   <script>
     (() => {
       const params = new URLSearchParams(window.location.search);
