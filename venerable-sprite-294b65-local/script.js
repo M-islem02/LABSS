@@ -419,9 +419,10 @@ function scoreToBadge(score) {
 function clearSession() {
   const language = currentLanguage();
   Object.values(STORAGE).forEach((key) => {
-    if (key !== STORAGE.language && key !== STORAGE.labCodes) localStorage.removeItem(key);
+    if (key !== STORAGE.language && key !== STORAGE.labCodes && key !== STORAGE.students) localStorage.removeItem(key);
   });
   localStorage.setItem(STORAGE.language, language);
+  sessionStorage.clear();
 }
 
 function updateStudentBadge() {
@@ -2172,8 +2173,1518 @@ function initTeacherDashboard() {
   applyFilters();
 }
 
-function initPage() {
+Object.keys(SUBJECTS).forEach((key) => {
+  delete SUBJECTS[key];
+});
+Object.assign(SUBJECTS, {
+  primaire: [
+    { id: "science-education", fr: "Education scientifique", ar: "التربية العلمية", en: "Science education" }
+  ],
+  primary: [
+    { id: "science-education", fr: "Education scientifique", ar: "التربية العلمية", en: "Science education" }
+  ],
+  cem: [
+    { id: "physics", fr: "Physique", ar: "الفيزياء", en: "Physics" }
+  ],
+  lycee: [
+    { id: "physics-chemistry", fr: "Physique", ar: "الفيزياء", en: "Physics" },
+    { id: "organic-chemistry", fr: "Chimie", ar: "الكيمياء", en: "Chemistry" }
+  ]
+});
+
+Object.assign(LEVEL_LABELS, {
+  primaire: { fr: "Primaire", ar: "ابتدائي", en: "Primary school" },
+  primary: { fr: "Primaire", ar: "ابتدائي", en: "Primary school" },
+  cem: { fr: "CEM", ar: "التعليم المتوسط", en: "Middle school" },
+  lycee: { fr: "Lycee", ar: "ثانوي", en: "High school" }
+});
+
+Object.keys(SUBJECT_HINTS).forEach((key) => {
+  delete SUBJECT_HINTS[key];
+});
+Object.assign(SUBJECT_HINTS, {
+  "science-education": {
+    fr: "Une experience simple pour observer la nature.",
+    ar: "تجربة بسيطة لملاحظة الطبيعة.",
+    en: "A simple experiment to observe nature."
+  },
+  physics: {
+    fr: "Une activite claire pour comprendre les circuits.",
+    ar: "نشاط واضح لفهم الدوائر الكهربائية.",
+    en: "A clear activity to understand circuits."
+  },
+  "physics-chemistry": {
+    fr: "Une experience de physique au niveau lycee.",
+    ar: "تجربة فيزياء لمستوى الثانوي.",
+    en: "A high school physics experiment."
+  },
+  "organic-chemistry": {
+    fr: "Une experience de chimie avec etapes de securite.",
+    ar: "تجربة كيمياء مع خطوات السلامة.",
+    en: "A chemistry experiment with safety steps."
+  }
+});
+
+Object.keys(EXPERIMENT_AUDIENCE).forEach((key) => {
+  delete EXPERIMENT_AUDIENCE[key];
+});
+Object.assign(EXPERIMENT_AUDIENCE, {
+  plante: { levels: ["primaire", "primary"], subjects: ["science-education"] },
+  circuit: { levels: ["cem"], subjects: ["physics"] },
+  masse: { levels: ["lycee"], subjects: ["physics-chemistry"] },
+  chimie: { levels: ["lycee"], subjects: ["organic-chemistry"] }
+});
+
+Object.assign(LEVEL_META, {
+  primaire: { accent: "#3fa95c", icons: "📚🌱☀️", className: "level-primary" },
+  cem: { accent: "#2588e8", icons: "🔬⚡📘", className: "level-cem" },
+  lycee: { accent: "#1f4d8f", icons: "🧪📐🎓", className: "level-lycee" }
+});
+
+Object.keys(SUBJECT_ICONS).forEach((key) => {
+  delete SUBJECT_ICONS[key];
+});
+Object.assign(SUBJECT_ICONS, {
+  "science-education": "🌱",
+  physics: "⚡",
+  "physics-chemistry": "⚖️",
+  "organic-chemistry": "⚗️"
+});
+
+Object.keys(LEVEL_EXPERIENCES).forEach((key) => {
+  delete LEVEL_EXPERIENCES[key];
+});
+Object.assign(LEVEL_EXPERIENCES, {
+  primaire: [
+    {
+      id: "prim-01",
+      status: "available",
+      icon: "🌱",
+      lab: "plante",
+      subjectId: "science-education",
+      subject: { fr: "Education scientifique", ar: "التربية العلمية", en: "Science education" },
+      title: { fr: "Absorption de l'eau par la plante", ar: "امتصاص الماء عند النبات", en: "Water absorption by plants" },
+      description: {
+        fr: "Observe comment la plante absorbe l'eau et la transporte vers les feuilles.",
+        ar: "لاحظ كيف يمتص النبات الماء وينقله نحو الأوراق.",
+        en: "Observe how the plant absorbs water and carries it to the leaves."
+      }
+    }
+  ],
+  primary: [],
+  cem: [
+    {
+      id: "cem-01",
+      status: "available",
+      icon: "⚡",
+      lab: "circuit",
+      subjectId: "physics",
+      subject: { fr: "Physique", ar: "الفيزياء", en: "Physics" },
+      title: { fr: "Circuit electrique simple", ar: "الدائرة الكهربائية البسيطة", en: "Simple electrical circuit" },
+      description: {
+        fr: "Monte une pile, une lampe et des fils pour comprendre le trajet du courant.",
+        ar: "ركب بطارية ومصباحا وأسلاكا لفهم مسار التيار الكهربائي.",
+        en: "Assemble a battery, a lamp, and wires to understand the path of electric current."
+      }
+    }
+  ],
+  lycee: [
+    {
+      id: "lyc-01",
+      status: "available",
+      icon: "⚖️",
+      lab: "masse",
+      subjectId: "physics-chemistry",
+      subject: { fr: "Physique", ar: "الفيزياء", en: "Physics" },
+      title: { fr: "Mesure d'une masse", ar: "قياس الكتلة", en: "Mass measurement" },
+      description: {
+        fr: "Utilise une balance pour determiner la masse d'un objet avec precision.",
+        ar: "استعمل ميزانا لتحديد كتلة جسم بدقة.",
+        en: "Use a balance to determine the mass of an object accurately."
+      }
+    },
+    {
+      id: "lyc-02",
+      status: "available",
+      icon: "⚗️",
+      lab: "chimie",
+      subjectId: "organic-chemistry",
+      subject: { fr: "Chimie", ar: "الكيمياء", en: "Chemistry" },
+      title: { fr: "Reaction chimique : production d'hydrogene", ar: "تفاعل كيميائي: إنتاج الهيدروجين", en: "Chemical reaction: hydrogen production" },
+      description: {
+        fr: "Observe la reaction entre le zinc et l'acide chlorhydrique avec rappel des regles de securite.",
+        ar: "لاحظ التفاعل بين الزنك وحمض كلور الماء مع التذكير بقواعد السلامة.",
+        en: "Observe the reaction between zinc and hydrochloric acid with safety guidance."
+      }
+    }
+  ]
+});
+
+Object.assign(EXPERIMENT_AUDIENCE, {
+  plante: { levels: ["cem"], subjects: ["natural-sciences"] },
+  circuit: { levels: ["primaire", "primary"], subjects: ["science-education"] },
+  masse: { levels: ["lycee"], subjects: ["physics-chemistry"] },
+  chimie: { levels: ["lycee"], subjects: ["organic-chemistry"] }
+});
+
+LEVEL_EXPERIENCES.primaire = [
+  {
+    id: "prim-01",
+    status: "available",
+    icon: "⚡",
+    lab: "circuit",
+    subjectId: "science-education",
+    subject: { fr: "Education scientifique", ar: "التربية العلمية", en: "Science education" },
+    title: { fr: "Circuit electrique simple", ar: "الدائرة الكهربائية البسيطة", en: "Simple electrical circuit" },
+    description: {
+      fr: "Monte une pile, une lampe et des fils pour comprendre le trajet du courant.",
+      ar: "ركب بطارية ومصباحا وأسلاكا لفهم مسار التيار الكهربائي.",
+      en: "Assemble a battery, a lamp, and wires to understand the path of electric current."
+    }
+  }
+];
+LEVEL_EXPERIENCES.primary = [];
+LEVEL_EXPERIENCES.cem = [
+  {
+    id: "cem-01",
+    status: "available",
+    icon: "🌱",
+    lab: "plante",
+    subjectId: "natural-sciences",
+    subject: { fr: "Sciences naturelles", ar: "علوم الطبيعة", en: "Natural sciences" },
+    title: { fr: "Absorption de l'eau par la plante", ar: "امتصاص الماء عند النبات", en: "Water absorption by plants" },
+    description: {
+      fr: "Observe comment la plante absorbe l'eau et la transporte vers les feuilles.",
+      ar: "لاحظ كيف يمتص النبات الماء وينقله نحو الأوراق.",
+      en: "Observe how the plant absorbs water and carries it to the leaves."
+    }
+  }
+];
+LEVEL_EXPERIENCES.lycee = [
+  {
+    id: "lyc-01",
+    status: "available",
+    icon: "⚖️",
+    lab: "masse",
+    subjectId: "physics-chemistry",
+    subject: { fr: "Physique", ar: "الفيزياء", en: "Physics" },
+    title: { fr: "Mesure d'une masse", ar: "قياس الكتلة", en: "Mass measurement" },
+    description: {
+      fr: "Utilise une balance pour determiner la masse d'un objet avec precision.",
+      ar: "استعمل ميزانا لتحديد كتلة جسم بدقة.",
+      en: "Use a balance to determine the mass of an object accurately."
+    }
+  },
+  {
+    id: "lyc-02",
+    status: "available",
+    icon: "⚗️",
+    lab: "chimie",
+    subjectId: "organic-chemistry",
+    subject: { fr: "Chimie", ar: "الكيمياء", en: "Chemistry" },
+    title: { fr: "Reaction chimique : production d'hydrogene", ar: "تفاعل كيميائي: إنتاج الهيدروجين", en: "Chemical reaction: hydrogen production" },
+    description: {
+      fr: "Observe la reaction entre le zinc et l'acide chlorhydrique avec rappel des regles de securite.",
+      ar: "لاحظ التفاعل بين الزنك وحمض كلور الماء مع التذكير بقواعد السلامة.",
+      en: "Observe the reaction between zinc and hydrochloric acid with safety guidance."
+    }
+  }
+];
+
+function assistantIntro(experimentId) {
+  const config = getExperimentConfig(experimentId);
+  return getText({
+    fr: `Posez une question sur ${config.title.fr}. Je peux expliquer l'objectif, les etapes, les erreurs frequentes et le resultat.`,
+    ar: `اطرح سؤالك حول ${config.title.ar}. يمكنني شرح الهدف والخطوات والأخطاء الشائعة والنتيجة بطريقة تعليمية.`
+  });
+}
+
+function assistantStorageKey(experimentId) {
+  return `eduvirtuel-chat:${experimentId || "general"}:${currentLanguage()}`;
+}
+
+function loadAssistantHistory(experimentId) {
+  try {
+    const raw = sessionStorage.getItem(assistantStorageKey(experimentId));
+    const parsed = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .filter((entry) => entry && typeof entry.role === "string" && typeof entry.text === "string")
+      .slice(-12);
+  } catch {
+    return [];
+  }
+}
+
+function saveAssistantHistory(experimentId, history) {
+  try {
+    sessionStorage.setItem(assistantStorageKey(experimentId), JSON.stringify(history.slice(-12)));
+  } catch {
+    // Keep chat usable even if storage is unavailable.
+  }
+}
+
+function getAssistantPlaceholder() {
+  return currentLanguage() === "ar"
+    ? "اسأل عن التجربة أو الخطوات أو النتيجة"
+    : currentLanguage() === "en"
+      ? "Ask about the experiment, steps, or result"
+      : "Posez une question sur l'experience ou les etapes";
+}
+
+function setAssistantBusyState(scope, busy) {
+  if (!scope) return;
+  const input = scope.querySelector("[data-assistant-input]") || document.getElementById("assistant-widget-input");
+  const submit = scope.querySelector('button[type="submit"]');
+  if (input) input.disabled = busy;
+  if (submit) submit.disabled = busy;
+  if (scope.dataset) scope.dataset.assistantBusy = busy ? "1" : "0";
+}
+
+function appendAssistantTyping(container) {
+  const message = document.createElement("div");
+  message.className = "assistant-message bot assistant-typing";
+  message.innerHTML = "<span></span><span></span><span></span>";
+  container.appendChild(message);
+  container.scrollTop = container.scrollHeight;
+  return message;
+}
+
+async function requestAssistantReply(message, experimentId, history) {
+  const lab = getLabDetails(experimentId);
+  const response = await fetch("/api/chat", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      message,
+      history,
+      labName: lab.name.fr
+    })
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(typeof data.error === "string" ? data.error : "Chat request failed.");
+  }
+  if (!data.reply || typeof data.reply !== "string") {
+    throw new Error("Empty assistant reply.");
+  }
+  return data.reply.trim();
+}
+
+function getAssistantErrorMessage() {
+  return getText({
+    fr: "Le service de chat est indisponible pour le moment. Verifiez GEMINI_API_KEY ou reessayez dans un instant.",
+    ar: "خدمة المحادثة غير متاحة الآن. تحقق من GEMINI_API_KEY أو أعد المحاولة بعد قليل."
+  });
+}
+
+function assistantGreeting(experimentId) {
+  const config = getExperimentConfig(experimentId);
+  const lab = getLabDetails(experimentId);
+  return getText({
+    fr: `Bonjour. Je peux vous guider dans ${config.title.fr}. Ce parcours est relie a ${lab.name.fr}.`,
+    ar: `مرحبا. يمكنني مساعدتك في تجربة ${config.title.ar}. هذا المسار مرتبط بـ ${lab.name.ar}.`
+  });
+}
+
+function getAssistantReply(input, experimentId) {
+  const normalized = input.trim().toLowerCase();
+  const config = getExperimentConfig(experimentId);
+  const lab = getLabDetails(experimentId);
+  if (!normalized) return getText(assistantFallback());
+  const greetingWords = ["hello", "hi", "bonjour", "salut", "مرحبا", "السلام", "salam"];
+  const helpWords = ["help", "aide", "مساعدة"];
+  const nextWords = ["next", "suivant", "التالي"];
+  const errorWords = ["error", "wrong", "erreur", "خطأ"];
+  const objectiveWords = ["objectif", "goal", "objective", "هدف"];
+  const labWords = ["lab", "labo", "laboratoire", "مختبر"];
+  const quizWords = ["quiz", "test", "اختبار"];
+  const finishWords = ["finish", "terminer", "end", "انهاء", "إنهاء"];
+  if (greetingWords.some((word) => normalized.includes(word))) return assistantGreeting(experimentId);
+  if (helpWords.some((word) => normalized.includes(word))) return getText(config.help);
+  if (objectiveWords.some((word) => normalized.includes(word))) return getText(config.intro);
+  if (nextWords.some((word) => normalized.includes(word))) {
+    return getText({
+      fr: `${config.next.fr} Et maintenant : ${currentStepHint(experimentId)}`,
+      ar: `${config.next.ar} والخطوة الحالية هي: ${currentStepHint(experimentId)}`
+    });
+  }
+  if (errorWords.some((word) => normalized.includes(word))) return getText(config.error);
+  if (labWords.some((word) => normalized.includes(word))) {
+    return getText({
+      fr: `${lab.summary.fr} Ouvrez-le en grand si vous voulez travailler plus confortablement.`,
+      ar: `${lab.summary.ar} ويمكنك فتحه بحجم كبير إذا أردت العمل براحة أكبر.`
+    });
+  }
+  if (quizWords.some((word) => normalized.includes(word))) {
+    return getText({
+      fr: "Quand vous avez termine la manipulation, cliquez sur le bouton de fin. Le quiz apparait ensuite avec 5 questions simples.",
+      ar: "عندما تنهي التجربة اضغط على زر الإنهاء. بعد ذلك يظهر الاختبار وفيه 5 أسئلة بسيطة."
+    });
+  }
+  if (finishWords.some((word) => normalized.includes(word))) {
+    return getText({
+      fr: "Validez les etapes que vous avez faites, puis utilisez le bouton de fin sous le labo pour passer au resultat.",
+      ar: "أكد الخطوات التي أنجزتها ثم استعمل زر الإنهاء الموجود تحت المختبر للانتقال إلى النتيجة."
+    });
+  }
+  return getText({
+    fr: `Je peux vous aider sur l'objectif, l'etape suivante, les erreurs frequentes ou le quiz de ${config.title.fr}.`,
+    ar: `يمكنني مساعدتك في الهدف والخطوة التالية والأخطاء الشائعة أو اختبار ${config.title.ar}.`
+  });
+}
+
+function appendAssistantMessage(container, text, role) {
+  const message = document.createElement("div");
+  message.className = `assistant-message ${role}`;
+  message.textContent = text;
+  container.appendChild(message);
+  container.scrollTop = container.scrollHeight;
+  return message;
+}
+
+function createAssistantWidget() {
+  if (isExperimentPage()) return;
+  const root = document.getElementById("assistant-root");
+  if (!root) return;
+  root.innerHTML = `
+    <div class="assistant-widget">
+      <div class="assistant-popover" id="assistant-popover">
+        <div class="assistant-header">
+          <div>
+            <h2>${dualText("Assistant EduVirtuel", "مساعد EduVirtuel")}</h2>
+            <p>${dualText("Assistant educatif pour les experiences et les lecons.", "مساعد تعليمي للتجارب والدروس.")}</p>
+          </div>
+        </div>
+        <div class="assistant-messages" id="assistant-widget-messages"></div>
+        ${buildAssistantQuickActions()}
+        <form class="assistant-form" id="assistant-widget-form">
+          <input type="text" id="assistant-widget-input" data-assistant-input data-placeholder-fr="Posez une question sur l'experience ou les etapes" data-placeholder-ar="اسأل عن التجربة أو الخطوات أو النتيجة" data-placeholder-en="Ask about the experiment, steps, or result">
+          <button type="submit" class="primary-btn">${dualText("Envoyer", "إرسال")}</button>
+        </form>
+      </div>
+      <button class="assistant-launcher" id="assistant-launcher" type="button">
+        <span>AI</span>
+        <span>${dualText("Assistant EduVirtuel", "مساعد EduVirtuel")}</span>
+      </button>
+    </div>
+  `;
+
+  const popover = document.getElementById("assistant-popover");
+  const launcher = document.getElementById("assistant-launcher");
+  const form = document.getElementById("assistant-widget-form");
+  const input = document.getElementById("assistant-widget-input");
+  const messages = document.getElementById("assistant-widget-messages");
+  if (!popover || !launcher || !form || !input || !messages) return;
+  const experimentId = currentExperimentContextId();
+  const history = loadAssistantHistory(experimentId);
+
+  input.placeholder = getAssistantPlaceholder();
+  if (history.length) {
+    history.forEach((entry) => appendAssistantMessage(messages, entry.text, entry.role === "assistant" ? "bot" : "user"));
+  } else {
+    appendAssistantMessage(messages, assistantGreeting(experimentId), "bot");
+    appendAssistantMessage(messages, assistantIntro(experimentId), "bot");
+  }
+
+  launcher.addEventListener("click", () => {
+    popover.classList.toggle("open");
+    if (popover.classList.contains("open")) input.focus();
+  });
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const value = input.value.trim();
+    if (!value) return;
+    appendAssistantMessage(messages, value, "user");
+    input.value = "";
+    const typing = appendAssistantTyping(messages);
+    setAssistantBusyState(popover, true);
+
+    history.push({ role: "user", text: value });
+    saveAssistantHistory(experimentId, history);
+
+    try {
+      const reply = await requestAssistantReply(value, experimentId, history.slice(-8));
+      typing.remove();
+      appendAssistantMessage(messages, reply, "bot");
+      history.push({ role: "assistant", text: reply });
+      saveAssistantHistory(experimentId, history);
+    } catch {
+      typing.remove();
+      const fallbackReply = getAssistantReply(value, experimentId) || getAssistantErrorMessage();
+      appendAssistantMessage(messages, fallbackReply, "bot");
+      history.push({ role: "assistant", text: fallbackReply });
+      saveAssistantHistory(experimentId, history);
+    } finally {
+      setAssistantBusyState(popover, false);
+    }
+  });
+
+  root.querySelectorAll("[data-assistant-shortcut]").forEach((button) => {
+    button.addEventListener("click", () => {
+      input.value = button.textContent.trim();
+      form.dispatchEvent(new Event("submit"));
+    });
+  });
+}
+
+function bindEmbeddedAssistant(experimentId) {
+  const form = document.querySelector("[data-assistant-form]");
+  const input = document.querySelector("[data-assistant-input]");
+  const messages = document.querySelector("[data-assistant-messages]");
+  const scope = form ? (form.closest(".assistant-panel") || form.parentElement) : null;
+  if (!form || !input || !messages || !scope) return;
+  const history = loadAssistantHistory(experimentId);
+  input.placeholder = getAssistantPlaceholder();
+
+  if (history.length) {
+    history.forEach((entry) => appendAssistantMessage(messages, entry.text, entry.role === "assistant" ? "bot" : "user"));
+  } else {
+    appendAssistantMessage(messages, assistantGreeting(experimentId), "bot");
+    appendAssistantMessage(messages, getText(getLabDetails(experimentId).summary), "bot");
+    appendAssistantMessage(messages, assistantIntro(experimentId), "bot");
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const value = input.value.trim();
+    if (!value) return;
+    appendAssistantMessage(messages, value, "user");
+    input.value = "";
+    const typing = appendAssistantTyping(messages);
+    setAssistantBusyState(scope, true);
+
+    history.push({ role: "user", text: value });
+    saveAssistantHistory(experimentId, history);
+
+    try {
+      const reply = await requestAssistantReply(value, experimentId, history.slice(-8));
+      typing.remove();
+      appendAssistantMessage(messages, reply, "bot");
+      history.push({ role: "assistant", text: reply });
+      saveAssistantHistory(experimentId, history);
+    } catch {
+      typing.remove();
+      const fallbackReply = getAssistantReply(value, experimentId) || getAssistantErrorMessage();
+      appendAssistantMessage(messages, fallbackReply, "bot");
+      history.push({ role: "assistant", text: fallbackReply });
+      saveAssistantHistory(experimentId, history);
+    } finally {
+      setAssistantBusyState(scope, false);
+    }
+  });
+
+  scope.querySelectorAll("[data-assistant-shortcut]").forEach((button) => {
+    button.addEventListener("click", () => {
+      input.value = button.textContent.trim();
+      form.dispatchEvent(new Event("submit"));
+    });
+  });
+}
+
+function experienceHeroText(level, count) {
+  const label = LEVEL_LABELS[level] || LEVEL_LABELS.cem;
+  return {
+    fr: `${count} experience(s) pour ${label.fr}.`,
+    ar: `${count} تجربة مناسبة لـ ${label.ar}.`,
+    en: `${count} experiment(s) for ${label.en}.`
+  };
+}
+
+function renderExperienceCard(item, level, available) {
+  const meta = LEVEL_META[level] || LEVEL_META.cem;
+  const title = item.title || { fr: "", ar: "", en: "" };
+  const description = item.description || {
+    fr: "Bientot disponible",
+    ar: "قريبا",
+    en: "Coming soon"
+  };
+
+  if (!available) {
+    return `
+      <article class="experiment-card level-experience-card coming-soon-card" aria-disabled="true">
+        <div class="experience-art locked-art"><span aria-hidden="true">🔒</span></div>
+        <h2>${escapeHtml(getText(title))}</h2>
+        <span class="badge badge-muted">${escapeHtml(getText({ fr: "Bientot disponible", ar: "قريبا", en: "Coming soon" }))}</span>
+      </article>
+    `;
+  }
+
+  const visual = item.visual || item.icon || "🔬";
+  return `
+    <article class="experiment-card level-experience-card available-card" style="--level-accent:${meta.accent}">
+      <div class="experience-art science-photo ${meta.className}">
+        <span aria-hidden="true">${escapeHtml(visual)}</span>
+      </div>
+      <span class="badge subject-badge">${escapeHtml(getText(item.subject || { fr: "Sciences", ar: "العلوم", en: "Science" }))}</span>
+      <h2>${localizedTextMarkup(title, "trilingual-card-title")}</h2>
+      <p>${escapeHtml(getText(description))}</p>
+      <div class="stars" aria-hidden="true">★★★</div>
+      <button type="button" class="primary-btn" data-start-lab="${escapeHtml(item.lab || "circuit")}">
+        <span aria-hidden="true">🚀</span>
+        ${escapeHtml(getText({ fr: "Commencer", ar: "ابدأ", en: "Start" }))}
+      </button>
+    </article>
+  `;
+}
+
+function renderLevelExperiencePage(level, list) {
+  const lang = currentLanguage();
+  const meta = LEVEL_META[level] || LEVEL_META.cem;
+  const label = LEVEL_LABELS[level] || LEVEL_LABELS.cem;
+  const grid = document.getElementById("experiment-grid");
+  const banner = document.querySelector("[data-level-banner]");
+  const title = document.querySelector("[data-level-title]");
+  const icon = document.querySelector("[data-level-icon]");
+  const backIcon = document.querySelector("[data-back-icon]");
+
+  document.body.dataset.level = level;
+  if (banner) {
+    banner.style.setProperty("--level-accent", meta.accent);
+    banner.classList.remove("level-primary", "level-cem", "level-lycee");
+    banner.classList.add(meta.className);
+  }
+  if (title) title.innerHTML = localizedTextMarkup(label, "level-title-line");
+  if (icon) icon.textContent = meta.icons;
+  if (backIcon) backIcon.textContent = lang === "ar" ? "→" : "←";
+  if (!grid) return;
+
+  const available = list.filter((item) => item.status === "available");
+  if (!available.length) {
+    grid.innerHTML = `
+      <article class="experiment-card level-experience-card empty-experience-card">
+        <div class="experience-art">📘</div>
+        <h2>${escapeHtml(getText({ fr: "Aucune experience disponible", ar: "لا توجد تجربة متاحة", en: "No available experiment" }))}</h2>
+        <p>${escapeHtml(getText({
+          fr: "Choisissez une autre matiere ou revenez au tableau de bord.",
+          ar: "اختر مادة أخرى أو ارجع إلى لوحة التحكم.",
+          en: "Choose another subject or go back to the dashboard."
+        }))}</p>
+      </article>
+    `;
+    return;
+  }
+
+  grid.innerHTML = available.map((item) => renderExperienceCard(item, level, true)).join("");
+  grid.querySelectorAll("[data-start-lab]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const lab = button.dataset.startLab;
+      localStorage.setItem(STORAGE.lastExperiment, lab);
+      window.location.href = `${lab}.html`;
+    });
+  });
+}
+
+function initLevelExperiences() {
+  const summary = document.querySelector("[data-experiences-summary]");
+  if (!summary) return;
+  const params = new URLSearchParams(window.location.search);
+  const assignment = findLabCodeAssignment(params.get("code")) || getActiveLabAssignment();
+  const level = normalizeLevelKey(assignment ? assignment.level : (params.get("level") || localStorage.getItem(STORAGE.currentLevel) || "cem"));
+  let subject = parseSavedSubject();
+  const subjectId = assignment ? (subjectForExperiment(assignment.experimentId, level)?.id || "") : params.get("subject");
+  if (subjectId) subject = (SUBJECTS[level] || []).find((item) => item.id === subjectId) || subject;
+  if (!subject) subject = (SUBJECTS[level] || [])[0] || { fr: "Physique", ar: "الفيزياء", en: "Physics" };
+
+  localStorage.setItem(STORAGE.currentLevel, level);
+  localStorage.setItem(STORAGE.currentSubject, JSON.stringify(subject));
+  if (assignment) localStorage.setItem(STORAGE.activeLabCode, assignment.code);
+
+  const selectedSubjectId = subject.id || subjectId || "";
+  const list = assignment
+    ? (LEVEL_EXPERIENCES[level] || []).filter((item) => item.lab === assignment.experimentId)
+    : (LEVEL_EXPERIENCES[level] || []).filter((item) => !selectedSubjectId || item.subjectId === selectedSubjectId);
+
+  renderLevelExperiencePage(level, list);
+
+  if (assignment) {
+    const experiment = getExperimentConfig(assignment.experimentId);
+    summary.innerHTML = dualText(
+      `Code ${assignment.code} : une seule activite assignee par le professeur, ${experiment.title.fr}.`,
+      `الرمز ${assignment.code}: نشاط واحد فقط حدده الأستاذ، ${experiment.title.ar}.`,
+      `Code ${assignment.code}: one activity assigned by the teacher, ${experiment.title.en || experiment.title.fr}.`
+    );
+  } else {
+    summary.innerHTML = dualText(
+      `Voici ${list.length} experience(s) pour ${LEVEL_LABELS[level].fr} - ${subject.fr}.`,
+      `هذه ${list.length} تجربة مناسبة لـ ${LEVEL_LABELS[level].ar} - ${subject.ar}.`,
+      `Here are ${list.length} experiment(s) for ${LEVEL_LABELS[level].en} - ${subject.en || subject.fr}.`
+    );
+  }
+}
+
+function applyPageTitles() {
+  const titles = {
+    index: "EduVirtuel - Accueil",
+    student: "EduVirtuel - Eleve",
+    dashboard: "EduVirtuel - Tableau de bord",
+    experiences: "EduVirtuel - Experiences",
+    experiment: "EduVirtuel - Experience",
+    result: "EduVirtuel - Resultat",
+    quiz: "EduVirtuel - Quiz",
+    "teacher-login": "EduVirtuel - Connexion enseignant",
+    "teacher-dashboard": "EduVirtuel - Espace enseignant"
+  };
+  const pageId = document.body.dataset.page;
+  if (pageId && titles[pageId]) document.title = titles[pageId];
+}
+
+function updateStudentBadge() {
+  const teacherLogged = localStorage.getItem(STORAGE.teacherLogged) === "true";
+  const studentName = localStorage.getItem(STORAGE.studentName) || "";
+  const hasSession = teacherLogged || Boolean(studentName);
+  const target = document.querySelector("[data-student-display]");
+  document.querySelectorAll(".logout-btn").forEach((button) => {
+    button.style.display = hasSession ? "inline-flex" : "none";
+    button.setAttribute("aria-hidden", hasSession ? "false" : "true");
+  });
+  if (!target) return;
+  if (teacherLogged) {
+    target.textContent = "Espace enseignant";
+    return;
+  }
+  target.textContent = studentName || "Profil prive";
+}
+
+function initStudentForm() {
+  const form = document.getElementById("student-form");
+  if (!form) return;
+  const levelInput = form.querySelector('input[name="level"]');
+  const levelButtons = form.querySelectorAll("[data-level-choice]");
+  const savedLevel = normalizeLevelKey(localStorage.getItem(STORAGE.currentLevel) || "cem");
+  const continueButton = form.querySelector("[data-continue-button]");
+
+  function selectLevel(level) {
+    level = normalizeLevelKey(level);
+    if (levelInput) levelInput.value = level;
+    levelButtons.forEach((button) => {
+      button.classList.toggle("active", normalizeLevelKey(button.dataset.levelChoice) === level);
+    });
+    if (continueButton) continueButton.dataset.level = level;
+  }
+
+  levelButtons.forEach((button) => {
+    button.addEventListener("click", () => selectLevel(button.dataset.levelChoice));
+  });
+  selectLevel(savedLevel);
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const firstName = String(data.get("firstName") || "").trim();
+    const lastName = String(data.get("lastName") || "").trim();
+    const password = String(data.get("password") || "").trim();
+    const selectedLevel = normalizeLevelKey(data.get("level") || "cem");
+
+    if (!firstName) {
+      alert(getText({ fr: "Ecris ton prenom pour continuer.", ar: "اكتب اسمك للمتابعة.", en: "Write your first name to continue." }));
+      return;
+    }
+    if (!password) {
+      alert(getText({ fr: "Choisissez un mot de passe pour creer ou ouvrir votre compte.", ar: "اختر كلمة مرور لإنشاء الحساب أو فتحه.", en: "Choose a password to create or open your account." }));
+      return;
+    }
+
+    const fullName = `${firstName} ${lastName}`.trim();
+    const students = readJson(STORAGE.students, []);
+    const existingIdx = students.findIndex((student) => String(student.name || "").toLowerCase() === fullName.toLowerCase());
+    const existingStudent = existingIdx >= 0 ? students[existingIdx] : null;
+
+    if (existingStudent && existingStudent.password !== password) {
+      alert(getText({ fr: "Mot de passe incorrect pour cet eleve.", ar: "كلمة المرور غير صحيحة لهذا الحساب.", en: "Incorrect password for this student." }));
+      return;
+    }
+
+    const nextStudent = {
+      name: fullName,
+      password,
+      classCode: existingStudent?.classCode || "DIRECT",
+      level: normalizeLevelKey(existingStudent?.level || selectedLevel),
+      activeCode: "",
+      createdAt: existingStudent?.createdAt || new Date().toISOString(),
+      lastLoginAt: new Date().toISOString()
+    };
+
+    if (existingIdx === -1) students.unshift(nextStudent);
+    else students[existingIdx] = { ...existingStudent, ...nextStudent };
+
+    localStorage.setItem(STORAGE.students, JSON.stringify(students));
+    localStorage.setItem(STORAGE.studentName, fullName);
+    localStorage.setItem(STORAGE.studentClass, nextStudent.classCode);
+    localStorage.setItem(STORAGE.currentLevel, nextStudent.level);
+    localStorage.removeItem(STORAGE.currentSubject);
+    localStorage.removeItem(STORAGE.activeLabCode);
+
+    window.location.href = "dashboard.html";
+  });
+}
+
+function renderRegisteredStudents() {
+  const target = document.getElementById("registered-students-list");
+  if (!target) return;
+  const students = readJson(STORAGE.students, []);
+  if (!students.length) {
+    target.innerHTML = `<div class="empty-card">${dualText("Aucun compte eleve pour le moment.", "لا يوجد حساب تلميذ حاليا.", "No student account yet.")}</div>`;
+    return;
+  }
+
+  target.innerHTML = students
+    .slice()
+    .sort((a, b) => new Date(b.lastLoginAt || b.createdAt || 0) - new Date(a.lastLoginAt || a.createdAt || 0))
+    .map((student) => {
+      const level = LEVEL_LABELS[normalizeLevelKey(student.level)] || LEVEL_LABELS.cem;
+      const linkedAssignment = findLabCodeAssignment(student.activeCode);
+      const linkedLabel = linkedAssignment
+        ? getText(getExperimentConfig(linkedAssignment.experimentId).title)
+        : getText({ fr: "Compte libre", ar: "حساب عادي", en: "Regular account" });
+      return `
+        <article class="registered-student-card">
+          <div class="registered-student-head">
+            <strong>${escapeHtml(student.name || "-")}</strong>
+            <span class="badge badge-light">${escapeHtml(getText(level))}</span>
+          </div>
+          <p>${escapeHtml(student.classCode || "DIRECT")}</p>
+          <p>${escapeHtml(linkedLabel)}</p>
+          <div class="registered-student-secret">
+            <code>${escapeHtml(student.password || "-")}</code>
+            <button type="button" class="secondary-btn registered-student-copy" data-copy-student-password="${escapeHtml(student.password || "")}">
+              <span aria-hidden="true">📋</span>
+              <span>${getText({ fr: "Copier", ar: "نسخ", en: "Copy" })}</span>
+            </button>
+          </div>
+        </article>
+      `;
+    }).join("");
+
+  target.querySelectorAll("[data-copy-student-password]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const secret = button.dataset.copyStudentPassword || "";
+      if (!secret) return;
+      const copied = await copyTextValue(secret).catch(() => false);
+      button.querySelector("span:last-child").textContent = copied
+        ? getText({ fr: "Copie", ar: "تم النسخ", en: "Copied" })
+        : getText({ fr: "Erreur", ar: "خطأ", en: "Error" });
+      window.setTimeout(() => {
+        const label = button.querySelector("span:last-child");
+        if (label) label.textContent = getText({ fr: "Copier", ar: "نسخ", en: "Copy" });
+      }, 1400);
+    });
+  });
+}
+
+function getAvailableSubjectsForLevel(level) {
+  const experiences = LEVEL_EXPERIENCES[normalizeLevelKey(level)] || [];
+  const availableSubjectIds = [...new Set(
+    experiences
+      .filter((item) => item.status === "available" && item.subjectId)
+      .map((item) => item.subjectId)
+  )];
+  return (SUBJECTS[normalizeLevelKey(level)] || []).filter((subject) => availableSubjectIds.includes(subject.id));
+}
+
+function renderSubjects(level) {
+  level = normalizeLevelKey(level);
+  const subjectGrid = document.getElementById("subject-grid");
+  if (!subjectGrid) return;
+  const assignment = getActiveLabAssignment();
+
+  if (assignment && normalizeLevelKey(assignment.level) === level) {
+    const subject = subjectForExperiment(assignment.experimentId, assignment.level);
+    const experiment = getExperimentConfig(assignment.experimentId);
+    subjectGrid.classList.remove("empty-state");
+    subjectGrid.innerHTML = `
+      <button type="button" class="selection-card subject-card active" data-code="${escapeHtml(assignment.code)}">
+        <strong>${dualText("Activite de ton professeur", "نشاط أستاذك", "Teacher activity")}</strong>
+        <span class="subject-hint">${escapeHtml(getText(experiment.title))}</span>
+        <span>${dualText(`Code : ${assignment.code}`, `الرمز: ${assignment.code}`, `Code: ${assignment.code}`)}</span>
+      </button>
+    `;
+    const card = subjectGrid.querySelector("[data-code]");
+    if (card) {
+      card.addEventListener("click", () => {
+        if (subject) localStorage.setItem(STORAGE.currentSubject, JSON.stringify(subject));
+        window.location.href = `experiences.html?code=${encodeURIComponent(assignment.code)}`;
+      });
+    }
+    return;
+  }
+
+  const subjects = getAvailableSubjectsForLevel(level);
+  const meta = LEVEL_META[level] || LEVEL_META.cem;
+  subjectGrid.classList.remove("empty-state");
+
+  if (!subjects.length) {
+    subjectGrid.innerHTML = `
+      <div class="empty-card">
+        ${dualText("Aucune matiere disponible pour ce niveau.", "لا توجد مادة متاحة لهذا المستوى.", "No available subject for this level.")}
+      </div>
+    `;
+    return;
+  }
+
+  subjectGrid.innerHTML = subjects.map((subject) => {
+    const hint = SUBJECT_HINTS[subject.id] || {
+      fr: "Choisissez cette matiere pour continuer.",
+      ar: "اختر هذه المادة للمتابعة.",
+      en: "Choose this subject to continue."
+    };
+    const icon = SUBJECT_ICONS[subject.id] || "🔬";
+    return `
+      <button type="button" class="selection-card subject-card visual-subject-card" data-level="${level}" data-subject="${subject.id}" style="--level-accent:${meta.accent}">
+        <span class="subject-photo" aria-hidden="true">${icon}</span>
+        <strong>${dualText(subject.fr, subject.ar, subject.en || subject.fr)}</strong>
+        <span class="subject-hint">${dualText(hint.fr, hint.ar, hint.en || hint.fr)}</span>
+        <span class="subject-action">${dualText("Voir mes experiences", "عرض تجاربي", "See my experiments")}</span>
+      </button>
+    `;
+  }).join("");
+
+  subjectGrid.querySelectorAll(".subject-card").forEach((button) => {
+    button.addEventListener("click", () => {
+      const selectedSubject = subjects.find((subject) => subject.id === button.dataset.subject);
+      localStorage.setItem(STORAGE.currentLevel, level);
+      localStorage.setItem(STORAGE.currentSubject, JSON.stringify(selectedSubject));
+      window.location.href = `experiences.html?level=${encodeURIComponent(level)}&subject=${encodeURIComponent(button.dataset.subject)}`;
+    });
+  });
+}
+
+function initDashboard() {
+  const welcome = document.querySelector("[data-dashboard-welcome]");
+  const studentName = localStorage.getItem(STORAGE.studentName) || "";
+  const savedLevel = normalizeLevelKey(localStorage.getItem(STORAGE.currentLevel) || "cem");
+  const levelLabel = LEVEL_LABELS[savedLevel] || LEVEL_LABELS.cem;
+  if (welcome) {
+    welcome.innerHTML = studentName
+      ? dualText(`Bienvenue ${studentName}. Ton niveau ${levelLabel.fr} est deja selectionne.`, `مرحبا ${studentName}. مستوى ${levelLabel.ar} محدد مسبقا.`, `Welcome ${studentName}. Your ${levelLabel.en} level is already selected.`)
+      : dualText(`Ton niveau ${levelLabel.fr} est deja selectionne.`, `مستوى ${levelLabel.ar} محدد مسبقا.`, `Your ${levelLabel.en} level is already selected.`);
+  }
+  renderDashboardLevelSummary(savedLevel);
+  renderSubjects(savedLevel);
+}
+
+function initStudentForm() {
+  const form = document.getElementById("student-form");
+  if (!form) return;
+  const levelInput = form.querySelector('input[name="level"]');
+  const levelButtons = form.querySelectorAll("[data-level-choice]");
+  const savedLevel = normalizeLevelKey(localStorage.getItem(STORAGE.currentLevel) || "cem");
+  const continueButton = form.querySelector("[data-continue-button]");
+  const codeInput = form.querySelector('input[name="classCode"]');
+
+  function selectLevel(level) {
+    level = normalizeLevelKey(level);
+    if (levelInput) levelInput.value = level;
+    levelButtons.forEach((button) => {
+      button.classList.toggle("active", normalizeLevelKey(button.dataset.levelChoice) === level);
+    });
+    if (continueButton) continueButton.dataset.level = level;
+  }
+
+  levelButtons.forEach((button) => {
+    button.addEventListener("click", () => selectLevel(button.dataset.levelChoice));
+  });
+  selectLevel(savedLevel);
+
+  if (codeInput) {
+    codeInput.addEventListener("input", () => {
+      const assignment = findLabCodeAssignment(codeInput.value);
+      if (assignment) selectLevel(assignment.level);
+    });
+  }
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const firstName = String(data.get("firstName") || "").trim();
+    const lastName = String(data.get("lastName") || "").trim();
+    const password = String(data.get("password") || "").trim();
+    const enteredCode = normalizeLabCode(data.get("classCode"));
+    const assignment = findLabCodeAssignment(enteredCode);
+    const selectedLevel = normalizeLevelKey(data.get("level") || "cem");
+
+    if (!firstName) {
+      alert(getText({ fr: "Ecris ton prenom pour continuer.", ar: "اكتب اسمك للمتابعة.", en: "Write your first name to continue." }));
+      return;
+    }
+    if (!password) {
+      alert(getText({ fr: "Choisissez un mot de passe pour creer ou ouvrir votre compte.", ar: "اختر كلمة مرور لإنشاء الحساب أو فتحه.", en: "Choose a password to create or open your account." }));
+      return;
+    }
+
+    const fullName = `${firstName} ${lastName}`.trim();
+    const students = readJson(STORAGE.students, []);
+    const existingIdx = students.findIndex((student) => String(student.name || "").toLowerCase() === fullName.toLowerCase());
+    const existingStudent = existingIdx >= 0 ? students[existingIdx] : null;
+
+    if (existingStudent && existingStudent.password !== password) {
+      alert(getText({ fr: "Mot de passe incorrect pour cet eleve.", ar: "كلمة المرور غير صحيحة لهذا الحساب.", en: "Incorrect password for this student." }));
+      return;
+    }
+
+    const resolvedLevel = normalizeLevelKey(assignment ? assignment.level : (existingStudent?.level || selectedLevel));
+    const classCode = assignment ? assignment.code : (existingStudent?.classCode || enteredCode || "DIRECT");
+    const activeCode = assignment ? assignment.code : (existingStudent?.activeCode || "");
+    const nextStudent = {
+      name: fullName,
+      password,
+      classCode,
+      level: resolvedLevel,
+      activeCode,
+      createdAt: existingStudent?.createdAt || new Date().toISOString(),
+      lastLoginAt: new Date().toISOString()
+    };
+
+    if (existingIdx === -1) students.unshift(nextStudent);
+    else students[existingIdx] = { ...existingStudent, ...nextStudent };
+
+    localStorage.setItem(STORAGE.students, JSON.stringify(students));
+    localStorage.setItem(STORAGE.studentName, fullName);
+    localStorage.setItem(STORAGE.studentClass, classCode);
+    localStorage.setItem(STORAGE.currentLevel, resolvedLevel);
+    localStorage.removeItem(STORAGE.currentSubject);
+    localStorage.removeItem(STORAGE.activeLabCode);
+
+    const loginAssignment = assignment || findLabCodeAssignment(activeCode);
+    if (loginAssignment) {
+      const subject = subjectForExperiment(loginAssignment.experimentId, loginAssignment.level);
+      if (subject) localStorage.setItem(STORAGE.currentSubject, JSON.stringify(subject));
+      localStorage.setItem(STORAGE.activeLabCode, loginAssignment.code);
+      localStorage.setItem(STORAGE.currentLevel, normalizeLevelKey(loginAssignment.level));
+      window.location.href = `experiences.html?code=${encodeURIComponent(loginAssignment.code)}`;
+      return;
+    }
+
+    window.location.href = "dashboard.html";
+  });
+}
+
+function initTeacherDashboard() {
+  if (localStorage.getItem(STORAGE.teacherLogged) !== "true") {
+    window.location.href = "prof-login.html";
+    return;
+  }
+
+  let rows = getTeacherRows();
+  let descending = true;
+  const filterInput = document.getElementById("class-filter");
+  const sortButton = document.getElementById("sort-score-btn");
+
+  function applyFilters() {
+    rows = getTeacherRows();
+    const query = filterInput ? filterInput.value.trim().toLowerCase() : "";
+    let filtered = rows.filter((row) => String(row.classCode || "").toLowerCase().includes(query));
+    filtered = filtered.sort((a, b) => descending ? b.score - a.score : a.score - b.score);
+    renderTeacherTable(filtered);
+    renderTeacherInsights(filtered);
+    renderRegisteredStudents();
+    updateTeacherStats(rows);
+  }
+
+  if (filterInput) filterInput.addEventListener("input", applyFilters);
+  if (sortButton) {
+    sortButton.addEventListener("click", () => {
+      descending = !descending;
+      applyFilters();
+    });
+  }
+
+  initLabCodeGenerator();
+  renderRegisteredStudents();
+  applyFilters();
+}
+
+function prepareEmbeddedResult(experimentId) {
+  if (!experimentRuntime) return;
+  const frame = document.querySelector("[data-lab-frame]");
+  const loaded = !frame || frame.dataset.labLoaded === "true";
+  if (!loaded) return;
+
+  for (let step = 1; step <= 5; step += 1) {
+    experimentRuntime.completed.add(step);
+  }
+
+  if (experimentRuntime.seconds < 45) {
+    experimentRuntime.seconds = 45;
+  }
+}
+
+function finishExperiment() {
+  const experimentId = experimentRuntime?.id || document.body.dataset.experiment || currentExperimentContextId();
+  prepareEmbeddedResult(experimentId);
+  storeExperimentResult();
+  if (experimentRuntime && experimentRuntime.timerHandle) window.clearInterval(experimentRuntime.timerHandle);
+  window.location.href = "result.html";
+}
+
+function initResultPage() {
+  const result = readJson(STORAGE.lastResult, null);
+  if (!result) {
+    window.location.href = "experiences.html";
+    return;
+  }
+
+  const title = document.querySelector("[data-result-title]");
+  const score = document.querySelector("[data-result-score]");
+  const badge = document.querySelector("[data-result-badge]");
+  const summary = document.querySelector("[data-result-summary]");
+  const tip = document.querySelector("[data-result-tip]");
+  const steps = document.querySelector("[data-result-steps]");
+  const errors = document.querySelector("[data-result-errors]");
+
+  if (title) title.textContent = getText(result.title);
+  if (score) score.textContent = String(result.score);
+  if (badge) badge.textContent = getText(result.badge);
+  if (summary) {
+    summary.textContent = getText({
+      fr: `Vous avez termine ${result.stepsCompleted} etapes sur 5 avec un score de ${result.score}/100.`,
+      ar: `أنهيت ${result.stepsCompleted} خطوات من أصل 5 بنتيجة ${result.score}/100.`,
+      en: `You completed ${result.stepsCompleted} out of 5 steps with a score of ${result.score}/100.`
+    });
+  }
+  if (tip) tip.textContent = getText(result.tip);
+  if (steps) steps.textContent = String(result.stepsCompleted);
+  if (errors) errors.textContent = String(result.errors.length);
+}
+
+function normalizeStudentFullName(firstName, lastName) {
+  return `${String(firstName || "").trim()} ${String(lastName || "").trim()}`
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function generateStudentPassword(fullName, level, students) {
+  const levelCode = (normalizeLevelKey(level) || "cem").slice(0, 3).toUpperCase();
+  const baseName = String(fullName || "ELEVE")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9]+/g, "")
+    .toUpperCase()
+    .slice(0, 6) || "ELEVE";
+  let password = "";
+
+  do {
+    const randomCode = Math.random().toString(36).slice(2, 6).toUpperCase();
+    password = `${levelCode}-${baseName}-${randomCode}`;
+  } while (students.some((student) => student && student.password === password));
+
+  return password;
+}
+
+function ensureStudentPasswordModal() {
+  let modal = document.getElementById("student-password-modal");
+  if (modal) return modal;
+
+  modal = document.createElement("div");
+  modal.id = "student-password-modal";
+  modal.className = "student-password-modal";
+  modal.hidden = true;
+  modal.innerHTML = `
+    <div class="student-password-modal__backdrop" data-password-close></div>
+    <div class="student-password-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="student-password-modal-title">
+      <button type="button" class="student-password-modal__close" data-password-close aria-label="Close">×</button>
+      <div class="student-password-modal__icon" aria-hidden="true">🔑</div>
+      <h2 id="student-password-modal-title">${dualText("Ton code est pret", "رمزك جاهز", "Your code is ready")}</h2>
+      <p id="student-password-modal-text" class="student-password-modal__text"></p>
+      <div class="student-password-modal__codebox">
+        <strong id="student-password-modal-code"></strong>
+        <button type="button" class="secondary-btn student-password-modal__copy" id="student-password-modal-copy">
+          <span aria-hidden="true">📋</span>
+          <span>${getText({ fr: "Copier", ar: "نسخ", en: "Copy" })}</span>
+        </button>
+      </div>
+      <p id="student-password-modal-status" class="student-password-modal__status" aria-live="polite"></p>
+      <button type="button" class="primary-btn student-password-modal__confirm" id="student-password-modal-confirm">${getText({ fr: "Continuer", ar: "متابعة", en: "Continue" })}</button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  return modal;
+}
+
+async function copyTextValue(value) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return true;
+  }
+  const input = document.createElement("input");
+  input.value = value;
+  document.body.appendChild(input);
+  input.select();
+  const copied = document.execCommand("copy");
+  input.remove();
+  return copied;
+}
+
+function showStudentPasswordModal(studentName, password) {
+  const modal = ensureStudentPasswordModal();
+  const text = modal.querySelector("#student-password-modal-text");
+  const code = modal.querySelector("#student-password-modal-code");
+  const status = modal.querySelector("#student-password-modal-status");
+  const confirm = modal.querySelector("#student-password-modal-confirm");
+  const copyButton = modal.querySelector("#student-password-modal-copy");
+  const closeButtons = modal.querySelectorAll("[data-password-close]");
+
+  if (!text || !code || !status || !confirm || !copyButton) return Promise.resolve();
+
+  text.innerHTML = localizedTextMarkup({
+    fr: `Compte cree pour ${studentName}. Garde bien ce code pour la prochaine connexion.`,
+    ar: `تم إنشاء الحساب باسم ${studentName}. احتفظ بهذا الرمز جيدا من أجل الدخول في المرة القادمة.`,
+    en: `Account created for ${studentName}. Keep this code for your next login.`
+  });
+  code.textContent = password;
+  status.textContent = "";
+  modal.hidden = false;
+  document.body.classList.add("modal-open");
+
+  return new Promise((resolve) => {
+    const cleanup = () => {
+      modal.hidden = true;
+      document.body.classList.remove("modal-open");
+      copyButton.removeEventListener("click", onCopy);
+      confirm.removeEventListener("click", onConfirm);
+      closeButtons.forEach((button) => button.removeEventListener("click", onConfirm));
+    };
+
+    const onCopy = async () => {
+      const copied = await copyTextValue(password).catch(() => false);
+      status.textContent = copied
+        ? getText({ fr: "Code copie.", ar: "تم نسخ الرمز.", en: "Code copied." })
+        : getText({ fr: "Impossible de copier automatiquement.", ar: "تعذر النسخ تلقائيا.", en: "Unable to copy automatically." });
+    };
+
+    const onConfirm = () => {
+      cleanup();
+      resolve();
+    };
+
+    copyButton.addEventListener("click", onCopy);
+    confirm.addEventListener("click", onConfirm);
+    closeButtons.forEach((button) => button.addEventListener("click", onConfirm));
+  });
+}
+
+function initStudentForm() {
+  const form = document.getElementById("student-form");
+  if (!form) return;
+  const levelInput = form.querySelector('input[name="level"]');
+  const levelButtons = form.querySelectorAll("[data-level-choice]");
+  const continueButton = form.querySelector("[data-continue-button]");
+  const passwordInput = form.querySelector('input[name="password"]');
+  const formNote = form.querySelector(".form-note");
+  const savedLevel = normalizeLevelKey(localStorage.getItem(STORAGE.currentLevel) || "cem");
+
+  function selectLevel(level) {
+    level = normalizeLevelKey(level);
+    if (levelInput) levelInput.value = level;
+    levelButtons.forEach((button) => {
+      button.classList.toggle("active", normalizeLevelKey(button.dataset.levelChoice) === level);
+    });
+    if (continueButton) continueButton.dataset.level = level;
+  }
+
+  if (passwordInput) {
+    passwordInput.required = false;
+    passwordInput.setAttribute("data-placeholder-fr", "Laisse vide pour un mot de passe automatique");
+    passwordInput.setAttribute("data-placeholder-ar", "اترك الحقل فارغا لإنشاء كلمة مرور تلقائية");
+    passwordInput.setAttribute("data-placeholder-en", "Leave empty for an automatic password");
+  }
+
+  if (formNote) {
+    formNote.innerHTML = `
+      <span class="lang-fr">Si tu laisses ce champ vide, EduVirtuel cree un mot de passe unique pour toi. Garde-le pour rouvrir le meme compte plus tard.</span>
+      <span class="lang-ar">إذا تركت هذا الحقل فارغا، سينشئ EduVirtuel كلمة مرور فريدة لك. احتفظ بها للدخول مرة أخرى.</span>
+      <span class="lang-en">If you leave this empty, EduVirtuel creates a unique password for you. Keep it so you can sign in again later.</span>
+    `;
+  }
+
+  levelButtons.forEach((button) => {
+    button.addEventListener("click", () => selectLevel(button.dataset.levelChoice));
+  });
+  selectLevel(savedLevel);
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const firstName = String(data.get("firstName") || "").trim();
+    const lastName = String(data.get("lastName") || "").trim();
+    const selectedLevel = normalizeLevelKey(data.get("level") || savedLevel || "cem");
+    const fullName = normalizeStudentFullName(firstName, lastName);
+
+    if (!firstName) {
+      alert(getText({
+        fr: "Ecris ton prenom pour continuer.",
+        ar: "اكتب اسمك للمتابعة.",
+        en: "Write your first name to continue."
+      }));
+      return;
+    }
+
+    const students = readJson(STORAGE.students, []);
+    const existingIdx = students.findIndex((student) => String(student.name || "").toLowerCase() === fullName.toLowerCase());
+    const existingStudent = existingIdx >= 0 ? students[existingIdx] : null;
+    let password = String(data.get("password") || "").trim();
+
+    if (existingStudent) {
+      if (!password) {
+        alert(getText({
+          fr: "Entre ton mot de passe pour rouvrir ce compte.",
+          ar: "أدخل كلمة المرور لفتح هذا الحساب من جديد.",
+          en: "Enter your password to open this account again."
+        }));
+        return;
+      }
+      if (existingStudent.password !== password) {
+        alert(getText({
+          fr: "Mot de passe incorrect pour cet eleve.",
+          ar: "كلمة المرور غير صحيحة لهذا الحساب.",
+          en: "Incorrect password for this student."
+        }));
+        return;
+      }
+    } else if (!password) {
+      password = generateStudentPassword(fullName, selectedLevel, students);
+      alert(getText({
+        fr: `Compte cree pour ${fullName}. Ton mot de passe est : ${password}`,
+        ar: `تم إنشاء حساب ${fullName}. كلمة المرور الخاصة بك هي: ${password}`,
+        en: `Account created for ${fullName}. Your password is: ${password}`
+      }));
+    }
+
+    const nextStudent = {
+      name: fullName,
+      password,
+      classCode: existingStudent?.classCode || "DIRECT",
+      level: normalizeLevelKey(existingStudent?.level || selectedLevel),
+      activeCode: existingStudent?.activeCode || "",
+      createdAt: existingStudent?.createdAt || new Date().toISOString(),
+      lastLoginAt: new Date().toISOString()
+    };
+
+    if (existingIdx === -1) students.unshift(nextStudent);
+    else students[existingIdx] = { ...existingStudent, ...nextStudent };
+
+    localStorage.setItem(STORAGE.students, JSON.stringify(students));
+    localStorage.setItem(STORAGE.studentName, fullName);
+    localStorage.setItem(STORAGE.studentClass, nextStudent.classCode);
+    localStorage.setItem(STORAGE.currentLevel, nextStudent.level);
+    localStorage.removeItem(STORAGE.currentSubject);
+    localStorage.removeItem(STORAGE.activeLabCode);
+    window.location.href = "dashboard.html";
+  });
+}
+
+function initStudentForm() {
+  const signupForm = document.getElementById("student-signup-form");
+  const loginForm = document.getElementById("student-login-form");
+  if (!signupForm || !loginForm) return;
+  const levelInput = signupForm.querySelector('input[name="level"]');
+  const levelButtons = document.querySelectorAll("[data-level-choice]");
+  const authTabs = document.querySelectorAll("[data-auth-mode]");
+  const panels = document.querySelectorAll("[data-auth-panel]");
+  const levelPanel = document.getElementById("student-level-panel");
+  const savedLevel = normalizeLevelKey(localStorage.getItem(STORAGE.currentLevel) || "cem");
+
+  function selectLevel(level) {
+    level = normalizeLevelKey(level);
+    if (levelInput) levelInput.value = level;
+    levelButtons.forEach((button) => {
+      button.classList.toggle("active", normalizeLevelKey(button.dataset.levelChoice) === level);
+    });
+  }
+
+  function setMode(mode) {
+    authTabs.forEach((button) => {
+      button.classList.toggle("active", button.dataset.authMode === mode);
+    });
+    panels.forEach((panel) => {
+      panel.hidden = panel.dataset.authPanel !== mode;
+    });
+    if (levelPanel) levelPanel.hidden = mode !== "signup";
+  }
+
+  levelButtons.forEach((button) => {
+    button.addEventListener("click", () => selectLevel(button.dataset.levelChoice));
+  });
+  selectLevel(savedLevel);
+  authTabs.forEach((button) => {
+    button.addEventListener("click", () => setMode(button.dataset.authMode || "signup"));
+  });
+  setMode("signup");
+
+  signupForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const data = new FormData(signupForm);
+    const firstName = String(data.get("firstName") || "").trim();
+    const lastName = String(data.get("lastName") || "").trim();
+    const fullName = normalizeStudentFullName(firstName, lastName);
+    const selectedLevel = normalizeLevelKey(data.get("level") || savedLevel || "cem");
+    const students = readJson(STORAGE.students, []);
+    const existingStudent = students.find((student) => String(student.name || "").toLowerCase() === fullName.toLowerCase());
+
+    if (!firstName) {
+      alert(getText({
+        fr: "Ecris ton prenom pour continuer.",
+        ar: "اكتب اسمك للمتابعة.",
+        en: "Write your first name to continue."
+      }));
+      return;
+    }
+
+    if (existingStudent) {
+      alert(getText({
+        fr: "Ce nom a deja un compte. Utilise l'onglet connexion avec ton code personnel.",
+        ar: "هذا الاسم لديه حساب بالفعل. استعمل قسم الدخول مع رمزك الشخصي.",
+        en: "This name already has an account. Use the login section with your personal code."
+      }));
+      setMode("login");
+      return;
+    }
+
+    const password = generateStudentPassword(fullName, selectedLevel, students);
+    const nextStudent = {
+      name: fullName,
+      password,
+      classCode: "DIRECT",
+      level: selectedLevel,
+      activeCode: "",
+      createdAt: new Date().toISOString(),
+      lastLoginAt: new Date().toISOString()
+    };
+
+    students.unshift(nextStudent);
+    localStorage.setItem(STORAGE.students, JSON.stringify(students));
+    localStorage.setItem(STORAGE.studentName, fullName);
+    localStorage.setItem(STORAGE.studentClass, "DIRECT");
+    localStorage.setItem(STORAGE.currentLevel, selectedLevel);
+    localStorage.removeItem(STORAGE.currentSubject);
+    localStorage.removeItem(STORAGE.activeLabCode);
+
+    await showStudentPasswordModal(fullName, password);
+    window.location.href = "dashboard.html";
+  });
+
+  loginForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(loginForm);
+    const password = String(data.get("loginPassword") || "").trim();
+    const students = readJson(STORAGE.students, []);
+    const existingIdx = students.findIndex((student) => String(student.password || "") === password);
+    if (!password) {
+      alert(getText({
+        fr: "Entre ton code de connexion.",
+        ar: "أدخل رمز الدخول الخاص بك.",
+        en: "Enter your login code."
+      }));
+      return;
+    }
+    if (existingIdx === -1) {
+      alert(getText({
+        fr: "Code introuvable. Verifie le code genere lors de l'inscription.",
+        ar: "الرمز غير موجود. تحقق من الرمز الذي تم إنشاؤه عند التسجيل.",
+        en: "Code not found. Check the code generated during signup."
+      }));
+      return;
+    }
+    const existingStudent = students[existingIdx];
+    const nextStudent = {
+      ...existingStudent,
+      lastLoginAt: new Date().toISOString()
+    };
+    students[existingIdx] = nextStudent;
+    localStorage.setItem(STORAGE.students, JSON.stringify(students));
+    localStorage.setItem(STORAGE.studentName, nextStudent.name);
+    localStorage.setItem(STORAGE.studentClass, nextStudent.classCode || "DIRECT");
+    localStorage.setItem(STORAGE.currentLevel, normalizeLevelKey(nextStudent.level || "cem"));
+    localStorage.removeItem(STORAGE.currentSubject);
+    localStorage.removeItem(STORAGE.activeLabCode);
+    if (nextStudent.activeCode) {
+      localStorage.setItem(STORAGE.activeLabCode, nextStudent.activeCode);
+      const linkedAssignment = findLabCodeAssignment(nextStudent.activeCode);
+      if (linkedAssignment) {
+        const subject = subjectForExperiment(linkedAssignment.experimentId, linkedAssignment.level);
+        if (subject) localStorage.setItem(STORAGE.currentSubject, JSON.stringify(subject));
+      }
+    }
+    window.location.href = "dashboard.html";
+  });
+}
+
+function getAssistantReply(input, experimentId) {
+  const normalized = input.trim().toLowerCase();
+  const config = getExperimentConfig(experimentId);
+  const lab = getLabDetails(experimentId);
+  if (!normalized) return getText(assistantFallback());
+
+  const greetingWords = ["hello", "hi", "bonjour", "salut", "مرحبا", "السلام", "salam", "اهلا"];
+  const helpWords = ["help", "aide", "مساعدة"];
+  const nextWords = ["next", "suivant", "التالي"];
+  const errorWords = ["error", "wrong", "erreur", "خطأ"];
+  const objectiveWords = ["objectif", "goal", "objective", "هدف"];
+  const labWords = ["lab", "labo", "laboratoire", "مختبر"];
+  const quizWords = ["quiz", "test", "اختبار"];
+  const finishWords = ["finish", "terminer", "end", "إنهاء", "انهاء"];
+  const statusWords = ["how are you", "how r u", "comment ça va", "comment ca va", "كيف حال", "كيفك"];
+  const normalTalkWords = ["talk with me normal", "speak normally", "parle normalement", "تكلم معي بشكل عادي", "احكي معي عادي"];
+
+  if (greetingWords.some((word) => normalized.includes(word))) return assistantGreeting(experimentId);
+  if (statusWords.some((word) => normalized.includes(word))) {
+    return getText({
+      fr: "Je vais bien, merci. Je peux parler avec vous normalement, et je peux aussi vous aider dans votre cours ou votre experience.",
+      ar: "أنا بخير، شكرا لك. يمكنني التحدث معك بشكل طبيعي، ويمكنني أيضا مساعدتك في الدرس أو في التجربة.",
+      en: "I'm doing well, thank you. I can talk with you normally, and I can also help with your lesson or experiment."
+    });
+  }
+  if (normalTalkWords.some((word) => normalized.includes(word))) {
+    return getText({
+      fr: "Bien sur. Je peux parler normalement avec vous. Dites-moi simplement ce que vous voulez savoir ou discuter.",
+      ar: "بالطبع. يمكنني التحدث معك بشكل طبيعي. قل لي ببساطة ماذا تريد أن تعرف أو تناقش.",
+      en: "Of course. I can talk with you normally. Just tell me what you want to know or discuss."
+    });
+  }
+  if (helpWords.some((word) => normalized.includes(word))) return getText(config.help);
+  if (objectiveWords.some((word) => normalized.includes(word))) return getText(config.intro);
+  if (nextWords.some((word) => normalized.includes(word))) {
+    return getText({
+      fr: `${config.next.fr} Et maintenant : ${currentStepHint(experimentId)}`,
+      ar: `${config.next.ar} والخطوة الحالية هي: ${currentStepHint(experimentId)}`,
+      en: `${config.next.en || config.next.fr} And now: ${currentStepHint(experimentId)}`
+    });
+  }
+  if (errorWords.some((word) => normalized.includes(word))) return getText(config.error);
+  if (labWords.some((word) => normalized.includes(word))) {
+    return getText({
+      fr: `${lab.summary.fr} Ouvrez-le en grand si vous voulez travailler plus confortablement.`,
+      ar: `${lab.summary.ar} ويمكنك فتحه بحجم كبير إذا أردت العمل براحة أكبر.`,
+      en: `${lab.summary.en || lab.summary.fr} You can open it larger if you want to work more comfortably.`
+    });
+  }
+  if (quizWords.some((word) => normalized.includes(word))) {
+    return getText({
+      fr: "Quand vous avez termine la manipulation, cliquez sur le bouton de fin. Le quiz apparait ensuite avec 5 questions simples.",
+      ar: "عندما تنهي التجربة اضغط على زر الإنهاء. بعد ذلك يظهر الاختبار وفيه 5 أسئلة بسيطة.",
+      en: "When you finish the experiment, click the finish button. Then the quiz appears with 5 simple questions."
+    });
+  }
+  if (finishWords.some((word) => normalized.includes(word))) {
+    return getText({
+      fr: "Validez les etapes que vous avez faites, puis utilisez le bouton de fin sous le labo pour passer au resultat.",
+      ar: "أكد الخطوات التي أنجزتها ثم استعمل زر الإنهاء الموجود تحت المختبر للانتقال إلى النتيجة.",
+      en: "Confirm the steps you completed, then use the finish button under the lab to move to the result."
+    });
+  }
+  return getText({
+    fr: `Je peux parler avec vous normalement et aussi vous aider dans ${config.title.fr}, l'objectif, les etapes, les erreurs frequentes ou le quiz.`,
+    ar: `يمكنني التحدث معك بشكل عادي، ويمكنني أيضا مساعدتك في ${config.title.ar} والهدف والخطوات والأخطاء الشائعة والاختبار.`,
+    en: `I can talk with you normally and also help you with ${config.title.en || config.title.fr}, the goal, the steps, common mistakes, or the quiz.`
+  });
+}
+
+ function initPage() {
   bindGlobalUi();
+  applyPageTitles();
   applyLanguage(currentLanguage());
   if (!ensureStudentSession()) return;
   const pageId = document.body.dataset.page;
