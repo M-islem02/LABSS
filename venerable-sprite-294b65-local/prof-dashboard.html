@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>EduVirtuel - Tableau de bord enseignant</title>
   <link rel="icon" href="favicon.svg">
-  <link rel="stylesheet" href="style.css?v=20260501-fix2">
+  <link rel="stylesheet" href="style.css?v=20260504-quiz-ui">
 </head>
 <body data-page="teacher-dashboard" data-lang="fr" class="teacher-page">
   <header class="topbar"><div class="topbar-inner">
@@ -200,6 +200,15 @@
           </div>
           <form id="lab-code-form" class="code-generator-form">
             <label>
+              <span class="lang-fr">Type de code</span>
+              <span class="lang-ar">&#x646;&#x648;&#x639; &#x627;&#x644;&#x631;&#x645;&#x632;</span>
+              <span class="lang-en">Code type</span>
+              <select name="codeType">
+                <option value="single" selected>Activit&eacute; unique</option>
+                <option value="promo">Code promo de classe</option>
+              </select>
+            </label>
+            <label>
               <span class="lang-fr">Niveau</span>
               <span class="lang-ar">&#x627;&#x644;&#x645;&#x633;&#x62A;&#x648;&#x649;</span>
               <span class="lang-en">Level</span>
@@ -220,6 +229,19 @@
                 <option value="chimie">R&eacute;action produisant l&rsquo;hydrog&egrave;ne</option>
               </select>
             </label>
+            <fieldset class="promo-labs-field" id="promo-labs-field" hidden>
+              <legend>
+                <span class="lang-fr">Laboratoires disponibles avec ce code</span>
+                <span class="lang-ar">&#x627;&#x644;&#x645;&#x62E;&#x62A;&#x628;&#x631;&#x627;&#x62A; &#x627;&#x644;&#x645;&#x62A;&#x627;&#x62D;&#x629; &#x628;&#x647;&#x630;&#x627; &#x627;&#x644;&#x631;&#x645;&#x632;</span>
+                <span class="lang-en">Labs available with this code</span>
+              </legend>
+              <div class="promo-labs-grid" id="promo-labs-grid"></div>
+              <p class="form-note">
+                <span class="lang-fr">Cochez seulement les laboratoires autorises pour cette classe.</span>
+                <span class="lang-ar">&#x62D;&#x62F;&#x62F; &#x641;&#x642;&#x637; &#x627;&#x644;&#x645;&#x62E;&#x62A;&#x628;&#x631;&#x627;&#x62A; &#x627;&#x644;&#x645;&#x633;&#x645;&#x648;&#x62D;&#x629; &#x644;&#x647;&#x630;&#x627; &#x627;&#x644;&#x642;&#x633;&#x645;.</span>
+                <span class="lang-en">Select only the labs allowed for this class.</span>
+              </p>
+            </fieldset>
             <button type="submit" class="primary-btn">
               <span>&#x1F511;</span>
               <span class="lang-fr">Cr&eacute;er le code</span>
@@ -250,6 +272,6 @@
   </main>
 
   <div id="assistant-root"></div>
-  <script defer src="script.js?v=20260501-fix2"></script>
+  <script defer src="script.js?v=20260504-quiz-ui"></script>
 </body>
 </html>

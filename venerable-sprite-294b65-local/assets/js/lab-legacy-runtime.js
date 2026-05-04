@@ -666,7 +666,7 @@
 
       const dyeTint = THREE.MathUtils.clamp(biologyState.dyeMix, 0, 1);
       const absorption = THREE.MathUtils.clamp(biologyState.absorption, 0, 1);
-      // Water stays lightly tinted � just enough to show the dye is present
+      // Water stays lightly tinted - just enough to show the dye is present
       biologyLab.waterMaterial.color.copy(biologyLab.palette.waterBase.clone().lerp(biologyLab.palette.waterTint, dyeTint * 0.45));
       biologyLab.waterMaterial.opacity = THREE.MathUtils.lerp(0.35, 0.52, dyeTint);
       biologyLab.waterMaterial.needsUpdate = true;
@@ -682,7 +682,7 @@
       biologyLab.stemFlow.material.color.copy(biologyLab.palette.dyeColor.clone());
       biologyLab.stemFlow.material.needsUpdate = true;
 
-      // LEAVES change color dramatically � vivid red is the main visual effect
+      // LEAVES change color dramatically - vivid red is the main visual effect
       biologyLab.leafMaterials.forEach((material, i) => {
         const delay = i * 0.1;
         const t = THREE.MathUtils.smoothstep(absorption, 0.10 + delay, 0.55 + delay);
@@ -691,7 +691,7 @@
         material.emissive.copy(biologyLab.palette.leafTint).multiplyScalar(t * 0.15);
         material.needsUpdate = true;
       });
-      // PETALS change color fully � the most visible effect
+      // PETALS change color fully - the most visible effect
       biologyLab.petalMaterials.forEach((material, i) => {
         const delay = i * 0.05;
         const t = THREE.MathUtils.smoothstep(absorption, 0.2 + delay, 0.75 + delay);
@@ -781,7 +781,7 @@
       if (biologyState.dyeMix > 0.05) return;
       gsap.killTweensOf(biologyState);
 
-      // Animate bottle pour: lift ? tilt ? pour (???? ??????) ? return
+      // Animate bottle pour: lift, tilt, pour, then return.
       if (biologyLab && biologyLab.dropperBottle) {
         const bottle = biologyLab.dropperBottle;
         gsap.killTweensOf(bottle.position);
@@ -1060,7 +1060,7 @@
         { x: 0.18, y: 2.42, z: -0.03, ry: -0.68, rz: 0.22, s: 0.56 }
       ];
       leafSpecs.forEach((spec) => {
-        const leaf = createLeafMesh(0xf5f3ec);  // Start WHITE as requested (???? ?????)
+        const leaf = createLeafMesh(0xf5f3ec);  // Start white as requested.
         leaf.mesh.position.set(spec.x, spec.y, spec.z);
         leaf.mesh.rotation.set(0.08, spec.ry, spec.rz);
         leaf.mesh.scale.set(spec.s, spec.s, spec.s);
@@ -1277,7 +1277,7 @@
           // Simple click OR dragged close enough ? activate
           activateBiologyObject(id);
         } else {
-          // Dragged but missed the beaker � snap back to dock
+          // Dragged but missed the beaker - snap back to dock
           let dockPos = null;
           if (id === 'biology-dye') dockPos = new THREE.Vector3(2.84, 0.2, 0.24);
           if (id === 'biology-plant') dockPos = biologyLab.dockPosition.clone();
@@ -2997,7 +2997,7 @@
     function updateFreeFallUi(result) {
       freeFallData.lastResult = result;
       if (!result) {
-        ui.freefallResult.innerHTML = `<strong>${t('physics.freefall.height')}:</strong> 1.50 ${t('physics.units.meter')}<br><strong>${t('physics.freefall.time')}:</strong> �<br><strong>g:</strong> �`;
+        ui.freefallResult.innerHTML = `<strong>${t('physics.freefall.height')}:</strong> 1.50 ${t('physics.units.meter')}<br><strong>${t('physics.freefall.time')}:</strong> --<br><strong>g:</strong> --`;
         return;
       }
       ui.freefallResult.innerHTML = `<strong>${t('physics.freefall.height')}:</strong> 1.50 ${t('physics.units.meter')}<br><strong>${t('physics.freefall.time')}:</strong> ${result.time.toFixed(3)} ${t('physics.units.second')}<br><strong>g:</strong> ${result.g.toFixed(2)} ${t('physics.units.acceleration')}`;
@@ -3005,8 +3005,8 @@
 
     function updateInclineUi() {
       const acceleration = 9.82 * Math.sin(rampData.angleRad);
-      ui.angleLabel.textContent = `${rampData.angleDeg}�`;
-      ui.inclineResult.innerHTML = `<strong>${t('physics.incline.theory')}:</strong> a = g sin(${rampData.angleDeg}�) = ${acceleration.toFixed(2)} ${t('physics.units.acceleration')}`;
+      ui.angleLabel.textContent = `${rampData.angleDeg} deg`;
+      ui.inclineResult.innerHTML = `<strong>${t('physics.incline.theory')}:</strong> a = g sin(${rampData.angleDeg} deg) = ${acceleration.toFixed(2)} ${t('physics.units.acceleration')}`;
     }
 
     function updatePendulumUi() {
@@ -3017,7 +3017,7 @@
       );
       const period = 2 * Math.PI * Math.sqrt(pendulumData.length / 9.82);
       ui.pendulumPeriod.innerHTML = `<strong>${t('physics.pendulum.period')}:</strong> ${period.toFixed(2)} ${t('physics.units.second')}`;
-      ui.pendulumAngle.innerHTML = `<strong>${t('physics.pendulum.angle')}:</strong> ${THREE.MathUtils.radToDeg(angle).toFixed(1)}�`;
+      ui.pendulumAngle.innerHTML = `<strong>${t('physics.pendulum.angle')}:</strong> ${THREE.MathUtils.radToDeg(angle).toFixed(1)} deg`;
     }
 
     function setPointerFromEvent(event) {
@@ -4264,7 +4264,7 @@
       if (circuitUi.switchReadout) {
         circuitUi.switchReadout.textContent = switchComponent
           ? t(switchComponent.closed ? 'circuit.readouts.switchClosed' : 'circuit.readouts.switchOpen')
-          : '�';
+          : '--';
         setCircuitReadoutActive(circuitUi.switchReadout, Boolean(switchComponent && switchComponent.closed));
       }
 

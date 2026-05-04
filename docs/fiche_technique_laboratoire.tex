@@ -1,0 +1,315 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\geometry{margin=2.5cm}
+\setstretch{1.2}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+\definecolor{mainblue}{RGB}{26,87,132}
+\definecolor{mainline}{RGB}{112,44,44}
+\definecolor{softgray}{RGB}{245,245,245}
+\definecolor{linegray}{RGB}{220,220,220}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\textit{\textcolor{mainblue}{Fiche technique : Plateforme de laboratoire virtuel}}}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\titleformat{\chapter}[display]
+  {\centering\bfseries}
+  {}
+  {0pt}
+  {\Huge\itshape}
+
+\titleformat{\section}
+  {\large\bfseries}
+  {\thesection.}
+  {0.6em}
+  {}
+
+\titleformat{\subsection}
+  {\normalsize\bfseries}
+  {\thesubsection.}
+  {0.6em}
+  {}
+
+\newcommand{\sectionline}{
+  \vspace{0.3em}
+  \noindent\color{mainline}\rule{\textwidth}{1.5pt}
+  \vspace{0.6em}
+}
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  \vspace*{2.5cm}
+
+  {\Huge\itshape Fiche technique\par}
+  \vspace{0.8cm}
+  {\Large\itshape de la plateforme de laboratoire virtuel\par}
+
+  \vspace{2.2cm}
+
+  {\Large\textbf{Projet :} EduVirtuel / Laboratoire virtuel interactif\par}
+  \vspace{0.4cm}
+  {\large Application web pédagogique avec intégration Unity WebGL\par}
+
+  \vfill
+
+  \begin{flushleft}
+    \textbf{Contenu du document :}
+    \begin{itemize}[leftmargin=1.2cm]
+      \item Présentation générale du projet
+      \item Architecture technique
+      \item Outils et technologies utilisés
+      \item Fonctionnalités réalisées
+      \item Organisation des fichiers
+      \item Travaux récents effectués
+    \end{itemize}
+  \end{flushleft}
+
+  \vfill
+
+  {\large Année universitaire : 2025--2026\par}
+\end{titlepage}
+
+\chapter{Plan de production et d'organisation}
+
+\sectionline
+
+\section{Présentation du projet}
+
+Le projet réalisé est une plateforme de laboratoire virtuel destinée à un usage pédagogique.
+Elle permet à l'élève d'accéder à plusieurs expériences interactives selon son niveau
+scolaire, tout en offrant à l'enseignant un espace de gestion des classes, des codes
+d'accès et du suivi des élèves.
+
+La solution s'appuie sur deux composantes principales :
+
+\begin{itemize}[leftmargin=1.2cm]
+  \item une application web locale et déployable, construite en HTML, CSS et JavaScript ;
+  \item un contenu immersif Unity WebGL réutilisé pour certains laboratoires 3D.
+\end{itemize}
+
+Le système comporte actuellement plusieurs laboratoires orientés vers la physique, les
+circuits électriques, les sciences naturelles et la chimie, avec une interface élève et
+une interface professeur.
+
+\section{Objectif technique}
+
+L'objectif de production a consisté à concevoir une plateforme simple à exécuter en local,
+facile à maintenir, et adaptée à une démonstration pédagogique. Le projet devait permettre :
+
+\begin{itemize}[leftmargin=1.2cm]
+  \item l'accès aux laboratoires selon le niveau de l'élève ;
+  \item la connexion et l'inscription des utilisateurs ;
+  \item la gestion d'un tableau de bord enseignant ;
+  \item l'intégration d'expériences interactives et d'un build Unity WebGL ;
+  \item l'ajout d'un système de codes promotionnels de classe limitant certains laboratoires.
+\end{itemize}
+
+\section{Architecture générale de la solution}
+
+\subsection{Partie web}
+
+La partie principale du système est développée sous forme d'application web statique. Elle
+comprend les pages d'accueil, les formulaires d'authentification, le tableau de bord élève,
+le tableau de bord enseignant, les pages d'expériences et les pages de laboratoire.
+
+\subsection{Partie simulation 3D}
+
+Le projet réutilise également un build Unity WebGL ainsi qu'un projet Unity source plus ancien
+destiné à la simulation de laboratoire virtuel. Cette partie complète l'expérience immersive
+du système.
+
+\subsection{Exécution locale}
+
+Pour le lancement local, un serveur Python léger est utilisé afin de servir correctement les
+fichiers WebGL, les ressources compressées \texttt{.gz} et les bons types MIME nécessaires.
+
+\section{Organisation des fichiers du projet}
+
+\sectionline
+
+L'organisation du projet s'appuie principalement sur les dossiers suivants :
+
+\begin{longtable}{|p{4cm}|p{10cm}|}
+\hline
+\rowcolor{softgray}
+\textbf{Élément} & \textbf{Rôle} \\
+\hline
+\texttt{venerable-sprite-294b65-local/} & Application web principale du laboratoire virtuel. \\
+\hline
+\texttt{Laboratory-Simulator-sparse/} & Projet Unity source et build historique de simulation virtuelle. \\
+\hline
+\texttt{student.html} & Interface d'inscription et de connexion des élèves. \\
+\hline
+\texttt{prof-dashboard.html} & Tableau de bord enseignant pour le suivi et la génération des codes. \\
+\hline
+\texttt{script.js} & Logique principale de l'application : sessions, laboratoires, comptes, codes, tableaux de bord. \\
+\hline
+\texttt{style.css} & Mise en forme générale de l'interface. \\
+\hline
+\texttt{serve-local.py} & Serveur Python local adapté au chargement Unity WebGL. \\
+\hline
+\texttt{start-local.ps1} & Script PowerShell de démarrage rapide du projet en local. \\
+\hline
+\texttt{assets/unity-webgl/} & Build WebGL intégré dans la plateforme web. \\
+\hline
+\texttt{netlify.toml} & Configuration de déploiement de la partie web. \\
+\hline
+\end{longtable}
+
+\section{Technologies et outils utilisés}
+
+\sectionline
+
+\subsection{Environnement logiciel}
+
+Pour produire, modifier, tester et exécuter le projet, les outils suivants ont été utilisés
+ou référencés dans le dépôt :
+
+\begin{longtable}{|p{3.2cm}|p{3cm}|p{8.3cm}|}
+\hline
+\rowcolor{softgray}
+\textbf{Outil / technologie} & \textbf{Version} & \textbf{Utilisation dans le projet} \\
+\hline
+Git & 2.43.0.windows.1 & Gestion de versions et suivi des modifications du projet. \\
+\hline
+Python & 3.11.4 & Exécution du serveur local \texttt{serve-local.py}. \\
+\hline
+Node.js & 22.14.0 & Vérifications rapides du code JavaScript et environnement de développement. \\
+\hline
+PowerShell & Environnement Windows & Lancement local, scripts et automatisation. \\
+\hline
+HTML5 & --- & Structure des pages de l'application web. \\
+\hline
+CSS3 & --- & Mise en forme graphique des interfaces. \\
+\hline
+JavaScript & --- & Logique métier, tableaux de bord, authentification locale et navigation. \\
+\hline
+Unity 3D & 2017.4.14f1 LTS & Moteur utilisé pour la simulation de laboratoire virtuelle historique. \\
+\hline
+Blender 3D & --- & Logiciel mentionné pour la modélisation 3D dans la partie Unity. \\
+\hline
+C\# & --- & Langage du projet Unity source. \\
+\hline
+Unity WebGL & --- & Export 3D intégré à la plateforme web. \\
+\hline
+Netlify & --- & Configuration de publication de la partie web. \\
+\hline
+\end{longtable}
+
+\subsection{Bibliothèques et composants applicatifs}
+
+La documentation du projet web mentionne également l'usage de bibliothèques spécialisées
+pour certaines scènes interactives :
+
+\begin{itemize}[leftmargin=1.2cm]
+  \item \textbf{Three.js} pour le rendu 3D dans certaines vues web ;
+  \item \textbf{cannon-es} pour la gestion de comportements physiques ;
+  \item \textbf{GSAP} pour les animations et transitions de l'interface.
+\end{itemize}
+
+\section{Fonctionnalités réalisées}
+
+\sectionline
+
+Les principales fonctionnalités disponibles ou développées dans le cadre du projet sont les suivantes :
+
+\begin{enumerate}[leftmargin=1.2cm]
+  \item portail d'accès élève et enseignant ;
+  \item inscription élève avec génération automatique d'un code personnel ;
+  \item connexion ultérieure avec ce code personnel ;
+  \item sélection et filtrage des expériences selon le niveau ;
+  \item affichage d'expériences pour plusieurs domaines : physique, circuits, sciences, chimie ;
+  \item tableau de bord enseignant avec suivi des comptes élèves ;
+  \item création de codes d'accès par le professeur ;
+  \item intégration de laboratoires 3D et d'un module Unity WebGL ;
+  \item stockage local des données utilisateurs pour les démonstrations.
+\end{enumerate}
+
+\section{Travaux récents effectués sur le projet}
+
+\sectionline
+
+Durant la phase récente de développement, une amélioration importante a été apportée au flux
+d'inscription et de gestion de classe.
+
+\subsection{Ajout du système de code promo de classe}
+
+Une nouvelle fonctionnalité a été développée afin de permettre au professeur de créer un
+\textbf{code promo de classe}. Ce code ne correspond plus à une seule activité, mais à une
+classe entière associée à un niveau donné.
+
+Cette amélioration permet désormais :
+
+\begin{itemize}[leftmargin=1.2cm]
+  \item de créer un code de classe lié à un niveau (\textit{primaire}, \textit{CEM}, \textit{lycée}) ;
+  \item d'autoriser uniquement certains laboratoires pour cette classe ;
+  \item de faire entrer l'élève par un formulaire spécifique de type \textit{Code promo} ;
+  \item de détecter automatiquement le niveau à partir du code fourni ;
+  \item de créer ensuite un mot de passe personnel pour la connexion future de l'élève ;
+  \item d'afficher uniquement les laboratoires autorisés par ce code dans l'espace élève.
+\end{itemize}
+
+\subsection{Compatibilité avec l'ancien fonctionnement}
+
+Le nouveau système a été ajouté sans supprimer le comportement initial. Ainsi, deux modes
+restent disponibles côté enseignant :
+
+\begin{itemize}[leftmargin=1.2cm]
+  \item \textbf{code d'activité unique} : ancien fonctionnement, limité à une seule activité ;
+  \item \textbf{code promo de classe} : nouveau fonctionnement, avec plusieurs laboratoires autorisés.
+\end{itemize}
+
+\section{Organisation technique de la maintenance}
+
+\sectionline
+
+Pour faciliter la maintenance et l'évolution du projet, les règles suivantes ont été suivies :
+
+\begin{itemize}[leftmargin=1.2cm]
+  \item les pages HTML restent séparées selon les rôles et les vues ;
+  \item le style global est centralisé dans \texttt{style.css} ;
+  \item la logique applicative est regroupée dans \texttt{script.js} ;
+  \item le serveur local est séparé dans \texttt{serve-local.py} ;
+  \item les fichiers Unity WebGL sont isolés dans leur propre dossier d'assets ;
+  \item la configuration de publication est séparée via \texttt{netlify.toml}.
+\end{itemize}
+
+\section{Conclusion}
+
+Cette fiche technique montre que le projet repose sur une architecture hybride combinant
+une interface web interactive, une logique JavaScript locale, un serveur Python de test,
+et un contenu Unity WebGL pour les simulations immersives.
+
+Le travail réalisé couvre non seulement la mise en place de l'application, mais aussi son
+évolution fonctionnelle avec l'ajout d'un système de code promo de classe, mieux adapté à
+un usage réel dans un contexte pédagogique.
+
+\vspace{1em}
+
+\textbf{Remarque :} ce document LaTeX est prêt à être compilé, mais l'outil \texttt{pdflatex}
+n'est pas installé actuellement sur cette machine. Il est donc possible de générer le PDF
+ultérieurement dès qu'une distribution LaTeX sera disponible.
+
+\end{document}

@@ -1,7 +1,6 @@
 [build]
-  base = "venerable-sprite-294b65-local"
-  publish = "."
-  functions = "netlify/functions"
+  publish = "venerable-sprite-294b65-local"
+  functions = "venerable-sprite-294b65-local/netlify/functions"
 
 [[headers]]
   for = "/*"
@@ -54,6 +53,11 @@
 
 [functions]
   node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/api/chat"
+  to = "/.netlify/functions/gemini-chat"
+  status = 200
 
 [dev]
   port = 8888

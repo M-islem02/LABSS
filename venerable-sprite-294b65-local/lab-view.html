@@ -75,145 +75,145 @@
   <div id="ui-panel">
     <div class="panel-header">
       <div>
-        <div class="eyebrow" data-i18n="physics.eyebrow">????? ??? ???????</div>
-        <h1 data-i18n="physics.title">????? ????????</h1>
-        <p class="subtitle" data-i18n="physics.subtitle">???? ??????? ????? ??????? ????? ????? ????? ????? ??????? ?????? ?????? ???? ???????.</p>
+        <div class="eyebrow" data-i18n="physics.eyebrow">Virtual lab</div>
+        <h1 data-i18n="physics.title">Experiment</h1>
+        <p class="subtitle" data-i18n="physics.subtitle">Interactive educational simulation.</p>
       </div>
       <div class="status-pill">
-        <strong data-i18n="physics.display.label">?????</strong>
-        <span data-i18n="physics.display.value">??? ??? ??????</span>
+        <strong data-i18n="physics.display.label">Label</strong>
+        <span data-i18n="physics.display.value">Value</span>
       </div>
     </div>
 
     <section class="experiment-section">
       <div class="section-head">
-        <h2 data-i18n="physics.freefall.title">?????? ????</h2>
-        <span class="chip" data-i18n="physics.freefall.chip">?????</span>
+        <h2 data-i18n="physics.freefall.title">Experiment</h2>
+        <span class="chip" data-i18n="physics.freefall.chip">Activity</span>
       </div>
       <div class="row">
-        <button onclick="startFreeFall()" data-i18n="physics.freefall.drop">???? ?????</button>
-        <button class="secondary" onclick="resetLab()" data-i18n="physics.resetLab">????? ??? ???????</button>
+        <button onclick="startFreeFall()" data-i18n="physics.freefall.drop">Drop object</button>
+        <button class="secondary" onclick="resetLab()" data-i18n="physics.resetLab">Reset lab</button>
       </div>
-      <div id="freefall-result" class="metric"><strong>????????:</strong> 1.50 ?<br><strong>?????:</strong> ï¿½<br><strong>g:</strong> ï¿½</div>
+      <div id="freefall-result" class="metric"><strong>Hauteur :</strong> 1.50 m<br><strong>Temps :</strong> --<br><strong>g :</strong> --</div>
     </section>
 
     <section class="experiment-section">
       <div class="section-head">
-        <h2 data-i18n="physics.incline.title">??????? ??????</h2>
-        <span class="chip" data-i18n="physics.incline.chip">???????</span>
+        <h2 data-i18n="physics.incline.title">Experiment</h2>
+        <span class="chip" data-i18n="physics.incline.chip">Activity</span>
       </div>
       <label for="angle-slider" class="metric angle-metric" style="display:block; margin-top:0; margin-bottom:10px;">
-        <strong data-i18n="physics.incline.angleLabel">???????</strong>
-        <span id="angle-label" class="angle-value">30ï¿½</span>
+        <strong data-i18n="physics.incline.angleLabel">Angle</strong>
+        <span id="angle-label" class="angle-value">30°</span>
       </label>
       <input id="angle-slider" type="range" min="10" max="60" value="30" oninput="setAngle(this.value)" />
-      <div id="incline-result" class="metric"><strong>???????:</strong> a = g sin(30ï¿½) = 4.91 m/sï¿½</div>
+      <div id="incline-result" class="metric"><strong>Accélération :</strong> a = g sin(30°) = 4.91 m/s²</div>
     </section>
 
     <section class="experiment-section">
       <div class="section-head">
-        <h2 data-i18n="physics.scale.title">??????? ??????</h2>
-        <span class="chip" data-i18n="physics.scale.chip">??????</span>
+        <h2 data-i18n="physics.scale.title">Experiment</h2>
+        <span class="chip" data-i18n="physics.scale.chip">Activity</span>
       </div>
       <div class="metric" style="margin-top:0;">
-        <strong data-i18n="physics.scale.readingLabel">???????</strong>
+        <strong data-i18n="physics.scale.readingLabel">Reading</strong>
         <div id="scale-reading" class="scale-readout">0.00 g</div>
       </div>
     </section>
 
     <section class="experiment-section">
       <div class="section-head">
-        <h2 data-i18n="physics.pendulum.title">???????</h2>
-        <span class="chip" data-i18n="physics.pendulum.chip">???????</span>
+        <h2 data-i18n="physics.pendulum.title">Experiment</h2>
+        <span class="chip" data-i18n="physics.pendulum.chip">Activity</span>
       </div>
       <div class="row">
-        <button onclick="resetPendulum()" data-i18n="physics.pendulum.reset">????? ??? ???????</button>
+        <button onclick="resetPendulum()" data-i18n="physics.pendulum.reset">Reset</button>
       </div>
-      <div id="pendulum-period" class="metric"><strong>????? ??????:</strong> ï¿½</div>
-      <div id="pendulum-angle" class="metric"><strong>???????:</strong> 0.0ï¿½</div>
+      <div id="pendulum-period" class="metric"><strong>Période estimée :</strong> --</div>
+      <div id="pendulum-angle" class="metric"><strong>Angle :</strong> 0.0°</div>
     </section>
 
     <section class="experiment-section">
       <div class="section-head">
-        <h2 data-i18n="physics.collision.title">????? ?????? ???????</h2>
-        <span class="chip" data-i18n="physics.collision.chip">?????</span>
+        <h2 data-i18n="physics.collision.title">Experiment</h2>
+        <span class="chip" data-i18n="physics.collision.chip">Activity</span>
       </div>
       <div class="row">
-        <button onclick="launchCollision()" data-i18n="physics.collision.launch">?????</button>
+        <button onclick="launchCollision()" data-i18n="physics.collision.launch">Launch</button>
       </div>
-      <div id="collision-result" class="metric"><strong>??????:</strong> ???? ?????? ????????.</div>
+      <div id="collision-result" class="metric"><strong>R?sultat :</strong> Lancez la collision pour observer.</div>
     </section>
 
     <div class="footer-notes" data-i18n-html="physics.controlsHtml">
-      <strong>??????</strong><br />
-      ???? ??? ?????? ?????? ?????? ???????.<br />
-      ???? ??? ?????? ?????? ??? ??????? ??????? ?????? ????????.<br />
-      ?????? ???? ?????? ??????? ??? ???????.
+      <strong>----</strong><br />
+      --? -- ---- ---- ---- ----?.<br />
+      --? -- ---- ---- -- ----? ----? ---- ----??.<br />
+      Observation guid?e de la manipulation.
     </div>
   </div>
 
   <div id="hint-ribbon" data-i18n-html="physics.hintHtml">
-    <strong>???? ???:</strong> ???? ????? ??????? ??????? ??? ????? ??? ???????? ?? ???? ??? ??????? ??????? ??? ???????.
+    <strong>--? --:</strong> --? --?? ----? ----? -- --?? -- ----?? ?? --? -- ----? ----? -- ----?.
   </div>
 
   <section id="circuit-shell" aria-hidden="true">
     <div id="circuit-main">
       <div id="circuit-toolbar">
         <div id="circuit-status"></div>
-        <button id="circuit-delete" class="secondary danger" data-i18n="circuit.delete" type="button">??? ?????? ??????</button>
-        <button id="circuit-reset" data-i18n="circuit.reset" type="button">????? ????? ???????</button>
+        <button id="circuit-delete" class="secondary danger" data-i18n="circuit.delete" type="button">Delete selection</button>
+        <button id="circuit-reset" data-i18n="circuit.reset" type="button">Reset</button>
       </div>
 
       <div id="circuit-board-wrap">
         <div class="circuit-stage-card">
           <div class="circuit-brand">
-            <div class="circuit-label" data-i18n="circuit.eyebrow">???? ??????</div>
-            <h2 data-i18n="circuit.title">????? ??????? ??????????</h2>
-            <p data-i18n="circuit.subtitle">???? ??? ?? ????? ?????? ??????: ???????? ??????? ???????? ??????? ??? ?????? ?????? ????? ????????? ??????.</p>
+            <div class="circuit-label" data-i18n="circuit.eyebrow">Virtual lab</div>
+            <h2 data-i18n="circuit.title">Experiment</h2>
+            <p data-i18n="circuit.subtitle">Interactive educational simulation.</p>
           </div>
 
           <div class="circuit-practical-card">
-            <strong data-i18n="circuit.briefTitle">?????? ???????</strong>
-            <p data-i18n="circuit.briefText">???? ???? ??????? ??? ???????: ??? ????? ?????? ???????? ???????? ?? ????????? ???? ?????? ??? ????? ??????.</p>
+            <strong data-i18n="circuit.briefTitle">Mission brief</strong>
+            <p data-i18n="circuit.briefText">Build the setup and observe the result.</p>
           </div>
 
           <div class="circuit-board-guide">
-            <strong data-i18n="circuit.boardGuide.title">???? ??? ???????</strong>
+            <strong data-i18n="circuit.boardGuide.title">Experiment</strong>
             <div class="circuit-board-guide-grid">
               <div class="circuit-board-guide-item">
                 <span data-i18n="circuit.boardGuide.powerLabel">POWER UNIT</span>
-                <small data-i18n="circuit.boardGuide.powerText">???? ?? ??? ???????? ?? ???? ?? ??????? ??? ????? ?????? ?????? ??????.</small>
+                <small data-i18n="circuit.boardGuide.powerText">Power Text</small>
               </div>
               <div class="circuit-board-guide-item">
                 <span data-i18n="circuit.boardGuide.switchLabel">SWITCH</span>
-                <small data-i18n="circuit.boardGuide.switchText">???? ??? ?????? ??? ??????? ?????? ?????? ??? ????? ????????.</small>
+                <small data-i18n="circuit.boardGuide.switchText">Switch Text</small>
               </div>
               <div class="circuit-board-guide-item">
                 <span data-i18n="circuit.boardGuide.lampLabel">LAMP</span>
-                <small data-i18n="circuit.boardGuide.lampText">??????? ???? ??? ??? ??? ?????? ?????? ??????? ?? ?????? ??? ??????.</small>
+                <small data-i18n="circuit.boardGuide.lampText">Lamp Text</small>
               </div>
               <div class="circuit-board-guide-item">
                 <span data-i18n="circuit.boardGuide.wireLabel">WIRING</span>
-                <small data-i18n="circuit.boardGuide.wireText">???? ??? ???? ?? ???? ??? ???? ???. ?? ?????? ?????? ???? ?????.</small>
+                <small data-i18n="circuit.boardGuide.wireText">Wire Text</small>
               </div>
             </div>
           </div>
 
           <div class="circuit-readouts">
             <div class="circuit-readout">
-              <span data-i18n="circuit.readouts.lamp">???????</span>
-              <strong id="circuit-lamp-readout">ï¿½</strong>
+              <span data-i18n="circuit.readouts.lamp">Lamp</span>
+              <strong id="circuit-lamp-readout">--</strong>
             </div>
             <div class="circuit-readout">
-              <span data-i18n="circuit.readouts.switch">??????</span>
-              <strong id="circuit-switch-readout">ï¿½</strong>
+              <span data-i18n="circuit.readouts.switch">Switch</span>
+              <strong id="circuit-switch-readout">--</strong>
             </div>
             <div class="circuit-readout">
-              <span data-i18n="circuit.readouts.wires">???????</span>
+              <span data-i18n="circuit.readouts.wires">Wires</span>
               <strong id="circuit-wires-readout">0</strong>
             </div>
             <div class="circuit-readout">
-              <span data-i18n="circuit.readouts.components">???????</span>
+              <span data-i18n="circuit.readouts.components">Components</span>
               <strong id="circuit-components-readout">0</strong>
             </div>
           </div>
@@ -225,10 +225,10 @@
       <aside id="circuit-sidebar">
         <div class="circuit-card-head">
           <div>
-            <div class="circuit-mini-label" data-i18n="circuit.kitLabel">????? ???????</div>
-            <h3 data-i18n="circuit.kitTitle">??????? ??????</h3>
+            <div class="circuit-mini-label" data-i18n="circuit.kitLabel">Experiment kit</div>
+            <h3 data-i18n="circuit.kitTitle">Available objects</h3>
           </div>
-          <span class="chip" data-i18n="circuit.kitChip">???? ???????</span>
+          <span class="chip" data-i18n="circuit.kitChip">Drag objects</span>
         </div>
 
         <div class="palette-list">
@@ -259,9 +259,9 @@
                 </svg>
               </div>
               <div class="palette-copy">
-                <strong data-i18n="circuit.battery.name">??????</strong>
-                <span data-i18n="circuit.battery.desc">6V ?? ????? + ? -</span>
-                <small data-i18n="circuit.battery.tip">?????? ??? ????? ?????? ???????.</small>
+                <strong data-i18n="circuit.battery.name">Object</strong>
+                <span data-i18n="circuit.battery.desc">Description</span>
+                <small data-i18n="circuit.battery.tip">Tip</small>
               </div>
             </div>
           </button>
@@ -293,9 +293,9 @@
                 </svg>
               </div>
               <div class="palette-copy">
-                <strong data-i18n="circuit.bulb.name">?????</strong>
-                <span data-i18n="circuit.bulb.desc">????? ??? ???? ??????</span>
-                <small data-i18n="circuit.bulb.tip">????? ?????? ???? ???? ????? ????? ???????.</small>
+                <strong data-i18n="circuit.bulb.name">Object</strong>
+                <span data-i18n="circuit.bulb.desc">Description</span>
+                <small data-i18n="circuit.bulb.tip">Tip</small>
               </div>
             </div>
           </button>
@@ -320,24 +320,24 @@
                 </svg>
               </div>
               <div class="palette-copy">
-                <strong data-i18n="circuit.switch.name">????</strong>
-                <span data-i18n="circuit.switch.desc">???? ????? ?????? ??????</span>
-                <small data-i18n="circuit.switch.tip">???? ??? ????? ????? ???????? ?? ????? ???????.</small>
+                <strong data-i18n="circuit.switch.name">Object</strong>
+                <span data-i18n="circuit.switch.desc">Description</span>
+                <small data-i18n="circuit.switch.tip">Tip</small>
               </div>
             </div>
           </button>
         </div>
 
         <div class="circuit-note" data-i18n="circuit.note">
-          ???? ??? ????? ??????? (??????) ???? ???? ?? ??? ???? ??? ??????? ï¿½ ???? ????? ??? ??????? ?????? ???????? ï¿½ ?? ?????? ?????? ???? ?????.
+          Observation guid?e de la manipulation.
         </div>
       </aside>
 
       <div id="circuit-hint-ribbon" data-i18n-html="circuit.hintHtml">
-        <strong>??? ?????? ???????:</strong>
-        ?? <strong>???????:</strong> ???? ??????/????/????? ?? ?????? ??? ????? ï¿½ ?? ???? ??? ????? ??????? (??????) ????? ?????? ??? ???? ???.
+        <strong>-- ---- ----?:</strong>
+        <strong>Conseil :</strong> reliez les composants puis observez le résultat.
         &nbsp;&nbsp;
-        ? <strong>???????:</strong> ???? ??? ??????? ?? ?????? 3D ?????? ?? ??????? ???? ??????? ????.
+        ? <strong>----?:</strong> --? -- ----? ?? ---- 3D ---- ?? ----? --? ----? --?.
       </div>
     </div>
   </section>
@@ -345,33 +345,33 @@
   <section id="biology-shell" class="immersive-shell" aria-hidden="true">
     <div class="immersive-main">
       <aside class="immersive-overlay">
-        <div class="eyebrow" data-i18n="biology.eyebrow">???? CEM</div>
-        <h2 data-i18n="biology.title">?????? ?????? ????? ???????</h2>
-        <p data-i18n="biology.subtitle">??? ????? ??????? ?? ???? ??? ?????? ??????? ??????? ???????? ???? ?????? ??? ?? ???? ?????? ????? ??? ?????.</p>
+        <div class="eyebrow" data-i18n="biology.eyebrow">Virtual lab</div>
+        <h2 data-i18n="biology.title">Experiment</h2>
+        <p data-i18n="biology.subtitle">Interactive educational simulation.</p>
 
         <div class="immersive-stat-grid">
           <div class="immersive-stat">
-            <span data-i18n="biology.stats.levelLabel">???????</span>
-            <strong data-i18n="biology.stats.levelValue">???? CEM</strong>
+            <span data-i18n="biology.stats.levelLabel">Level</span>
+            <strong data-i18n="biology.stats.levelValue">Level</strong>
           </div>
           <div class="immersive-stat">
-            <span data-i18n="biology.stats.sceneLabel">??????</span>
-            <strong data-i18n="biology.stats.sceneValue">??? ??? + ???? ?????</strong>
+            <span data-i18n="biology.stats.sceneLabel">Scene</span>
+            <strong data-i18n="biology.stats.sceneValue">3D scene</strong>
           </div>
           <div class="immersive-stat">
-            <span data-i18n="biology.progress.waterLabel">?????</span>
-            <strong id="biology-water-readout">????</strong>
+            <span data-i18n="biology.progress.waterLabel">Water</span>
+            <strong id="biology-water-readout">--?</strong>
           </div>
           <div class="immersive-stat">
-            <span data-i18n="biology.progress.leafLabel">???????</span>
-            <strong id="biology-leaf-readout">?????</strong>
+            <span data-i18n="biology.progress.leafLabel">Leaves</span>
+            <strong id="biology-leaf-readout">--??</strong>
           </div>
         </div>
 
         <div class="immersive-tool-shelf">
           <div class="immersive-tool-head">
-            <span data-i18n="biology.palette.title">????? ???????</span>
-            <small data-i18n="biology.palette.hint">???? ?????? ??????? ???? ??????</small>
+            <span data-i18n="biology.palette.title">Objects palette</span>
+            <small data-i18n="biology.palette.hint">Drag objects into the scene</small>
           </div>
           <div class="immersive-object-grid">
             <button class="immersive-object-card" id="biology-tool-dye" data-lab-object="biology-dye" type="button" draggable="true">
@@ -397,8 +397,8 @@
                 </svg>
               </div>
               <div class="immersive-object-meta">
-                <strong data-i18n="biology.objects.dye">???? ?????</strong>
-                <span data-i18n="common.dragDrop">???? ?????</span>
+                <strong data-i18n="biology.objects.dye">Dye</strong>
+                <span data-i18n="common.dragDrop">Drag and drop</span>
               </div>
             </button>
             <button class="immersive-object-card" id="biology-tool-plant" data-lab-object="biology-plant" type="button" draggable="true">
@@ -413,42 +413,42 @@
                 </svg>
               </div>
               <div class="immersive-object-meta">
-                <strong data-i18n="biology.objects.plant">???? ?????</strong>
-                <span data-i18n="common.dragDrop">???? ?????</span>
+                <strong data-i18n="biology.objects.plant">Plant</strong>
+                <span data-i18n="common.dragDrop">Drag and drop</span>
               </div>
             </button>
           </div>
-          <button id="biology-reset" class="secondary immersive-reset-button" data-i18n="biology.actions.reset" type="button">????? ???????</button>
+          <button id="biology-reset" class="secondary immersive-reset-button" data-i18n="biology.actions.reset" type="button">Reset experiment</button>
         </div>
 
         <div class="immersive-info-card">
-          <span data-i18n="biology.tools.label">???????</span>
-          <p data-i18n="biology.tools.value">???? ????? ?? ???? ?????? ??? ???? ????? ????? ???? ?? ????.</p>
+          <span data-i18n="biology.tools.label">Tools</span>
+          <p data-i18n="biology.tools.value">Use the objects to complete the experiment.</p>
         </div>
 
         <div class="immersive-columns">
           <div class="immersive-note-block">
-            <h3 data-i18n="biology.observation.title">???? ??????</h3>
-            <p id="biology-observation">??????? ??????? ?? ???? ?????.</p>
+            <h3 data-i18n="biology.observation.title">Observation</h3>
+            <p id="biology-observation">----? ----? ?? --? --??.</p>
           </div>
           <div class="immersive-note-block">
-            <h3 data-i18n="biology.result.title">???????</h3>
-            <p id="biology-result">??? ?????? ??? ????? ?? ?? ?????? ???? ??????? ??????? ??????.</p>
+            <h3 data-i18n="biology.result.title">Result</h3>
+            <p id="biology-result">-- ---- -- --?? ?? ?? ---- --? ----? ----? ----.</p>
           </div>
         </div>
 
         <div class="immersive-note" data-i18n-html="biology.explanationHtml">
-          <strong>???????:</strong> ???? ????? ????? ????? ???? ????? ?? ?????? ??? ??????. ?????? ???? ?? ????? ???? ??? ??????? ??????? ??????? ???????? ???? ??????.
+          <strong>----?:</strong> --? --?? --?? --?? --? --?? ?? ---- -- ----. ---- --? ?? --?? --? -- ----? ----? ----? ----?? --? ----.
         </div>
       </aside>
 
       <div class="immersive-stage biology-stage" id="biology-stage">
         <div id="biology-viewport" class="immersive-viewport"></div>
-        <div class="immersive-drop-banner" data-i18n="biology.dropBanner">???? ??????? ??? ????? ???????</div>
+        <div class="immersive-drop-banner" data-i18n="biology.dropBanner">Drop objects on the experiment area</div>
         <div class="immersive-stage-copy">
-          <div class="immersive-stage-label" data-i18n="biology.stageLabel">???? ????? ???????</div>
-          <h3 data-i18n="biology.stageTitle">??? ???? ????? ???? ?????</h3>
-          <p id="biology-status">???? ????? ?? ??? ?????? ??? ?????? ???? ??????? ??????.</p>
+          <div class="immersive-stage-label" data-i18n="biology.stageLabel">Experiment area</div>
+          <h3 data-i18n="biology.stageTitle">Interactive scene</h3>
+          <p id="biology-status">--? --?? ?? -- ---- -- ---- --? ----? ----.</p>
         </div>
       </div>
     </div>
@@ -457,33 +457,33 @@
   <section id="chemistry-shell" class="immersive-shell" aria-hidden="true">
     <div class="immersive-main">
       <aside class="immersive-overlay">
-        <div class="eyebrow" data-i18n="chemistry.eyebrow">?????? ?????</div>
-        <h2 data-i18n="chemistry.title">????? ???? ?? ???</h2>
-        <p data-i18n="chemistry.subtitle">???? ????? ?? ??? ??? ???? ????? ????? ???? ???????? ???? ?????????? ?? ????? ?????? lycï¿½e ?????? ????.</p>
+        <div class="eyebrow" data-i18n="chemistry.eyebrow">Virtual lab</div>
+        <h2 data-i18n="chemistry.title">Experiment</h2>
+        <p data-i18n="chemistry.subtitle">Interactive educational simulation.</p>
 
         <div class="immersive-stat-grid">
           <div class="immersive-stat">
-            <span data-i18n="chemistry.stats.levelLabel">???????</span>
-            <strong data-i18n="chemistry.stats.levelValue">?????? ?????</strong>
+            <span data-i18n="chemistry.stats.levelLabel">Level</span>
+            <strong data-i18n="chemistry.stats.levelValue">Level</strong>
           </div>
           <div class="immersive-stat">
-            <span data-i18n="chemistry.stats.reactionLabel">???????</span>
+            <span data-i18n="chemistry.stats.reactionLabel">Reaction</span>
             <strong data-i18n="chemistry.stats.reactionValue">Zn + HCl</strong>
           </div>
           <div class="immersive-stat">
-            <span data-i18n="chemistry.progress.gasLabel">?????</span>
-            <strong id="chemistry-gas-readout">??? ????</strong>
+            <span data-i18n="chemistry.progress.gasLabel">Gas</span>
+            <strong id="chemistry-gas-readout">-- --?</strong>
           </div>
           <div class="immersive-stat">
-            <span data-i18n="chemistry.progress.flameLabel">?????? ?????</span>
-            <strong id="chemistry-flame-readout">??????? ????????</strong>
+            <span data-i18n="chemistry.progress.flameLabel">Flame</span>
+            <strong id="chemistry-flame-readout">----? ----??</strong>
           </div>
         </div>
 
         <div class="immersive-tool-shelf">
           <div class="immersive-tool-head">
-            <span data-i18n="chemistry.palette.title">????? ???????</span>
-            <small data-i18n="chemistry.palette.hint">???? ?????? ?? ???? ???????? ?? ?????? ???? ??????</small>
+            <span data-i18n="chemistry.palette.title">Objects palette</span>
+            <small data-i18n="chemistry.palette.hint">Drag objects into the scene</small>
           </div>
           <div class="immersive-object-grid">
             <button class="immersive-object-card" id="chemistry-tool-zinc" data-lab-object="chemistry-zinc" type="button" draggable="true">
@@ -499,8 +499,8 @@
                 </svg>
               </div>
               <div class="immersive-object-meta">
-                <strong data-i18n="chemistry.objects.zinc">???? ???</strong>
-                <span data-i18n="common.dragDrop">???? ?????</span>
+                <strong data-i18n="chemistry.objects.zinc">Zinc</strong>
+                <span data-i18n="common.dragDrop">Drag and drop</span>
               </div>
             </button>
             <button class="immersive-object-card" id="chemistry-tool-acid" data-lab-object="chemistry-acid" type="button" draggable="true">
@@ -515,8 +515,8 @@
                 </svg>
               </div>
               <div class="immersive-object-meta">
-                <strong data-i18n="chemistry.objects.acid">??? HCl</strong>
-                <span data-i18n="common.dragDrop">???? ?????</span>
+                <strong data-i18n="chemistry.objects.acid">HCl acid</strong>
+                <span data-i18n="common.dragDrop">Drag and drop</span>
               </div>
             </button>
             <button class="immersive-object-card" id="chemistry-tool-flame" data-lab-object="chemistry-flame" type="button" draggable="true">
@@ -529,42 +529,42 @@
                 </svg>
               </div>
               <div class="immersive-object-meta">
-                <strong data-i18n="chemistry.objects.flame">??? ????????</strong>
-                <span data-i18n="common.dragDrop">???? ?????</span>
+                <strong data-i18n="chemistry.objects.flame">Flame test</strong>
+                <span data-i18n="common.dragDrop">Drag and drop</span>
               </div>
             </button>
           </div>
-          <button id="chemistry-reset" class="secondary immersive-reset-button" data-i18n="chemistry.actions.reset" type="button">????? ???????</button>
+          <button id="chemistry-reset" class="secondary immersive-reset-button" data-i18n="chemistry.actions.reset" type="button">Reset experiment</button>
         </div>
 
         <div class="immersive-info-card">
-          <span data-i18n="chemistry.tools.label">???????</span>
-          <p data-i18n="chemistry.tools.value">???? ??? Zn? ??? ???? ????? HCl? ?????? ?????? ?? ????.</p>
+          <span data-i18n="chemistry.tools.label">Tools</span>
+          <p data-i18n="chemistry.tools.value">Use the objects to complete the experiment.</p>
         </div>
 
         <div class="immersive-columns">
           <div class="immersive-note-block">
-            <h3 data-i18n="chemistry.observation.title">???? ??????</h3>
-            <p id="chemistry-observation">?? ???? ?????? ???? ??? ??????? ?? ????.</p>
+            <h3 data-i18n="chemistry.observation.title">Observation</h3>
+            <p id="chemistry-observation">?? --? ---- --? -- ----? ?? --?.</p>
           </div>
           <div class="immersive-note-block">
-            <h3 data-i18n="chemistry.result.title">??????</h3>
-            <p id="chemistry-result">??? ????? ????? ?????? ??? ?????????? H2 ???? ?????? ????? ZnCl2.</p>
+            <h3 data-i18n="chemistry.result.title">Result</h3>
+            <p id="chemistry-result">-- --?? --?? ---- -- ------? H2 --? ---- --?? ZnCl2.</p>
           </div>
         </div>
 
         <div class="immersive-note chemistry-equation" id="chemistry-equation" data-i18n-html="chemistry.equationHtml">
-          <strong>????????:</strong> Zn + 2HCl ? H2 + ZnCl2
+          <strong>?quation :</strong> Zn + 2HCl ? H2 + ZnCl2
         </div>
       </aside>
 
       <div class="immersive-stage chemistry-stage" id="chemistry-stage">
         <div id="chemistry-viewport" class="immersive-viewport"></div>
-        <div class="immersive-drop-banner" data-i18n="chemistry.dropBanner">???? ?????? ??? ???? ???????</div>
+        <div class="immersive-drop-banner" data-i18n="chemistry.dropBanner">Drop objects on the experiment area</div>
         <div class="immersive-stage-copy">
-          <div class="immersive-stage-label" data-i18n="chemistry.stageLabel">???? ??????</div>
-          <h3 data-i18n="chemistry.stageTitle">????? ?????? ??????? ???</h3>
-          <p id="chemistry-status">???? ???? ????? ???? ??????? ?? ??? ????? ??????? ???????.</p>
+          <div class="immersive-stage-label" data-i18n="chemistry.stageLabel">Experiment area</div>
+          <h3 data-i18n="chemistry.stageTitle">Interactive scene</h3>
+          <p id="chemistry-status">--? --? --?? --? ----? ?? -- --?? ----? ----?.</p>
         </div>
       </div>
     </div>
@@ -582,5 +582,4 @@
   <script type="module" src="./assets/js/lab-runtime.js?v=20260430-embedded-fix"></script>
 </body>
 </html>
-
 

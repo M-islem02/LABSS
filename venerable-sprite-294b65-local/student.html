@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>EduVirtuel - Eleve</title>
   <link rel="icon" href="favicon.svg">
-  <link rel="stylesheet" href="style.css?v=20260501-fix2">
+  <link rel="stylesheet" href="style.css?v=20260504-quiz-ui">
 </head>
 <body data-page="student" data-lang="fr">
   <header class="topbar">
@@ -74,6 +74,11 @@
             <span class="lang-ar">انشاء حساب</span>
             <span class="lang-en">Sign up</span>
           </button>
+          <button type="button" class="student-auth-tab" data-auth-mode="promo">
+            <span class="lang-fr">Code promo</span>
+            <span class="lang-ar">رمز القسم</span>
+            <span class="lang-en">Promo code</span>
+          </button>
           <button type="button" class="student-auth-tab" data-auth-mode="login">
             <span class="lang-fr">Connexion</span>
             <span class="lang-ar">تسجيل الدخول</span>
@@ -122,6 +127,60 @@
             <span class="lang-fr">Creer mon code</span>
             <span class="lang-ar">انشاء رمزي</span>
             <span class="lang-en">Create my code</span>
+          </button>
+        </form>
+
+        <form id="student-promo-form" class="stack-form student-auth-form" data-auth-panel="promo" hidden>
+          <div class="panel-head">
+            <h2>
+              <span class="lang-fr">Rejoindre avec un code promo</span>
+              <span class="lang-ar">الانضمام برمز القسم</span>
+              <span class="lang-en">Join with a promo code</span>
+            </h2>
+          </div>
+          <label class="icon-field">
+            <span class="lang-fr">Code promo / classe</span>
+            <span class="lang-ar">رمز القسم</span>
+            <span class="lang-en">Promo / class code</span>
+            <span class="input-icon" aria-hidden="true">🏷️</span>
+            <input type="text" name="promoCode" required
+              data-placeholder-fr="Exemple : CE-PRO-AB12"
+              data-placeholder-ar="مثال: CE-PRO-AB12"
+              data-placeholder-en="Example: CE-PRO-AB12">
+          </label>
+          <div class="student-form-grid">
+            <label class="icon-field">
+              <span class="lang-fr">Prenom</span>
+              <span class="lang-ar">الاسم</span>
+              <span class="lang-en">First name</span>
+              <span class="input-icon" aria-hidden="true">👤</span>
+              <input type="text" name="firstName" required
+                data-placeholder-fr="Exemple : Ahmed"
+                data-placeholder-ar="مثال: أحمد"
+                data-placeholder-en="Example: Ahmed">
+            </label>
+            <label class="icon-field">
+              <span class="lang-fr">Nom (optionnel)</span>
+              <span class="lang-ar">اللقب (اختياري)</span>
+              <span class="lang-en">Last name (optional)</span>
+              <span class="input-icon" aria-hidden="true">👥</span>
+              <input type="text" name="lastName"
+                data-placeholder-fr="Exemple : Benali"
+                data-placeholder-ar="مثال: بن علي"
+                data-placeholder-en="Example: Benali">
+            </label>
+          </div>
+          <div class="promo-level-preview" id="student-promo-level" hidden></div>
+          <p class="form-note">
+            <span class="lang-fr">Entre le code donne par le professeur. Le niveau et les laboratoires disponibles seront recuperes automatiquement.</span>
+            <span class="lang-ar">أدخل الرمز الذي قدمه الأستاذ. سيتم تحديد المستوى والمختبرات المتاحة تلقائيا.</span>
+            <span class="lang-en">Enter the teacher code. The level and available labs will be loaded automatically.</span>
+          </p>
+          <button class="primary-btn student-continue-btn" type="submit">
+            <span aria-hidden="true">🚀</span>
+            <span class="lang-fr">Creer mon code avec le promo</span>
+            <span class="lang-ar">إنشاء رمزي برمز القسم</span>
+            <span class="lang-en">Create my code with promo</span>
           </button>
         </form>
 
@@ -192,6 +251,6 @@
   </main>
 
   <div id="assistant-root"></div>
-  <script defer src="script.js?v=20260501-fix2"></script>
+  <script defer src="script.js?v=20260504-quiz-ui"></script>
 </body>
 </html>

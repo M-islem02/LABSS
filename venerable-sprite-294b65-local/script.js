@@ -536,6 +536,48 @@ function findLabCodeAssignment(code) {
   return readLabCodes().find((item) => normalizeLabCode(item.code) === normalized) || null;
 }
 
+function getAssignmentType(assignment) {
+  return assignment && assignment.type === "promo" ? "promo" : "single";
+}
+
+function assignmentAllowedExperiments(assignment) {
+  if (!assignment) return [];
+  const raw = Array.isArray(assignment.allowedExperiments) && assignment.allowedExperiments.length
+    ? assignment.allowedExperiments
+    : (assignment.experimentId ? [assignment.experimentId] : []);
+  return [...new Set(raw.filter((experimentId) => EXPERIMENT_AUDIENCE[experimentId]))];
+}
+
+function assignmentAllowsExperiment(assignment, experimentId) {
+  return assignmentAllowedExperiments(assignment).includes(experimentId);
+}
+
+function availableLabsForLevel(level) {
+  return (LEVEL_EXPERIENCES[normalizeLevelKey(level)] || [])
+    .filter((item) => item.status === "available" && item.lab)
+    .filter((item, index, list) => list.findIndex((entry) => entry.lab === item.lab) === index);
+}
+
+function assignmentAvailableSubjects(assignment) {
+  if (!assignment) return [];
+  const level = normalizeLevelKey(assignment.level);
+  const allowedExperiments = assignmentAllowedExperiments(assignment);
+  const availableSubjectIds = [...new Set(
+    (LEVEL_EXPERIENCES[level] || [])
+      .filter((item) => item.status === "available" && allowedExperiments.includes(item.lab) && item.subjectId)
+      .map((item) => item.subjectId)
+  )];
+  return (SUBJECTS[level] || []).filter((subject) => availableSubjectIds.includes(subject.id));
+}
+
+function defaultSubjectForAssignment(assignment) {
+  if (!assignment) return null;
+  if (getAssignmentType(assignment) === "single" && assignment.experimentId) {
+    return subjectForExperiment(assignment.experimentId, assignment.level);
+  }
+  return assignmentAvailableSubjects(assignment)[0] || null;
+}
+
 function getActiveLabAssignment() {
   return findLabCodeAssignment(localStorage.getItem(STORAGE.activeLabCode));
 }
@@ -1122,7 +1164,9 @@ function initLevelExperiences() {
   const assignment = findLabCodeAssignment(params.get("code")) || getActiveLabAssignment();
   const level = normalizeLevelKey(assignment ? assignment.level : (params.get("level") || localStorage.getItem(STORAGE.currentLevel) || "cem"));
   let subject = parseSavedSubject();
-  const subjectId = assignment ? (subjectForExperiment(assignment.experimentId, level)?.id || "") : params.get("subject");
+  const subjectId = assignment
+    ? (params.get("subject") || subject?.id || defaultSubjectForAssignment(assignment)?.id || "")
+    : params.get("subject");
   if (subjectId) subject = (SUBJECTS[level] || []).find((item) => item.id === subjectId) || subject;
   if (!subject) subject = (SUBJECTS[level] || [])[0] || { fr: "Physique", ar: "الفيزياء", en: "Physics" };
   localStorage.setItem(STORAGE.currentLevel, level);
@@ -1903,6 +1947,169 @@ function initQuizPage() {
   renderQuizQuestion({ experimentId, questions: config.quiz, index: 0, score: 0, answers: [] });
 }
 
+const EDUVIRTUEL_QUIZ_BANK = {
+  circuit: [
+    quizQuestion("Quel composant fournit l'énergie dans un circuit simple ?", "ما العنصر الذي يزوّد الدارة بالطاقة؟", "Which component supplies energy in a simple circuit?", ["La pile", "L'interrupteur", "Le fil", "La lampe"], ["البطارية", "القاطع", "السلك", "المصباح"], ["The battery", "The switch", "The wire", "The bulb"], 0, "La pile fournit l'énergie électrique nécessaire au circuit.", "البطارية تزوّد الدارة بالطاقة الكهربائية اللازمة.", "The battery provides the electrical energy needed by the circuit."),
+    quizQuestion("Que faut-il pour qu'une lampe s'allume ?", "ماذا نحتاج حتى يضيء المصباح؟", "What is needed for a bulb to light up?", ["Une boucle fermée", "Un fil coupé", "Un interrupteur ouvert", "Aucune pile"], ["دارة مغلقة", "سلك مقطوع", "قاطع مفتوح", "بدون بطارية"], ["A closed loop", "A cut wire", "An open switch", "No battery"], 0, "Le courant circule seulement si la boucle est fermée.", "يمر التيار فقط عندما تكون الدارة مغلقة.", "Current flows only when the loop is closed."),
+    quizQuestion("Quel appareil mesure la tension électrique ?", "أي جهاز يقيس التوتر الكهربائي؟", "Which instrument measures voltage?", ["Le voltmètre", "L'ampèremètre", "La balance", "Le thermomètre"], ["الفولتميتر", "الأمبيرمتر", "الميزان", "المحرار"], ["The voltmeter", "The ammeter", "The scale", "The thermometer"], 0, "Le voltmètre mesure la tension entre deux points du circuit.", "الفولتميتر يقيس التوتر بين نقطتين في الدارة.", "A voltmeter measures voltage between two points in a circuit."),
+    quizQuestion("Dans un montage en série, que se passe-t-il si une lampe est retirée ?", "في التركيب على التسلسل، ماذا يحدث إذا نزعنا مصباحا؟", "In a series circuit, what happens if one bulb is removed?", ["Tout le circuit s'arrête", "Les autres lampes brillent plus", "Rien ne change", "La pile disparaît"], ["تتوقف الدارة كلها", "تضيء المصابيح الأخرى أكثر", "لا يتغير شيء", "تختفي البطارية"], ["The whole circuit stops", "The other bulbs glow brighter", "Nothing changes", "The battery disappears"], 0, "En série, ouvrir un point de la boucle arrête le courant.", "في التسلسل، فتح نقطة من الحلقة يوقف التيار.", "In series, opening one point of the loop stops the current."),
+    quizQuestion("Quel matériau laisse facilement passer le courant ?", "أي مادة تسمح بمرور التيار بسهولة؟", "Which material lets current pass easily?", ["Le cuivre", "Le plastique", "Le bois sec", "Le verre"], ["النحاس", "البلاستيك", "الخشب الجاف", "الزجاج"], ["Copper", "Plastic", "Dry wood", "Glass"], 0, "Le cuivre est un conducteur électrique.", "النحاس ناقل للكهرباء.", "Copper is an electrical conductor."),
+    quizQuestion("À quoi sert un interrupteur ?", "ما وظيفة القاطع؟", "What is the role of a switch?", ["Ouvrir ou fermer le circuit", "Mesurer la masse", "Colorer l'eau", "Chauffer la lampe"], ["فتح أو غلق الدارة", "قياس الكتلة", "تلوين الماء", "تسخين المصباح"], ["To open or close the circuit", "To measure mass", "To color water", "To heat the bulb"], 0, "L'interrupteur contrôle le passage du courant.", "القاطع يتحكم في مرور التيار.", "The switch controls current flow.")
+  ],
+  plante: [
+    quizQuestion("Que montre l'expérience de l'eau colorée avec la plante ?", "ماذا تُظهر تجربة الماء الملوّن مع النبات؟", "What does the colored-water plant experiment show?", ["L'eau monte dans la tige", "La plante produit du verre", "La fleur repousse l'eau", "La tige devient métallique"], ["يصعد الماء داخل الساق", "النبات ينتج الزجاج", "الزهرة تطرد الماء", "الساق تصبح معدنية"], ["Water rises through the stem", "The plant makes glass", "The flower rejects water", "The stem becomes metallic"], 0, "La coloration montre le transport de l'eau par les vaisseaux conducteurs.", "التلوّن يوضح انتقال الماء عبر الأوعية الناقلة.", "The coloring shows water transport through conducting vessels."),
+    quizQuestion("Quelle partie absorbe principalement l'eau dans une vraie plante ?", "أي جزء يمتص الماء أساسا في النبات الحقيقي؟", "Which part mainly absorbs water in a real plant?", ["Les racines", "Les pétales", "Les graines seulement", "Le fruit"], ["الجذور", "البتلات", "البذور فقط", "الثمرة"], ["The roots", "The petals", "Only the seeds", "The fruit"], 0, "Les racines absorbent l'eau et les sels minéraux.", "تمتص الجذور الماء والأملاح المعدنية.", "Roots absorb water and mineral salts."),
+    quizQuestion("Comment appelle-t-on les tubes qui transportent l'eau ?", "كيف نسمي الأنابيب التي تنقل الماء؟", "What are the tubes that carry water called?", ["Vaisseaux conducteurs", "Nerfs électriques", "Cristaux", "Aimants"], ["أوعية ناقلة", "أعصاب كهربائية", "بلورات", "مغناطيسات"], ["Conducting vessels", "Electrical nerves", "Crystals", "Magnets"], 0, "Les vaisseaux conducteurs transportent la sève brute vers les feuilles.", "الأوعية الناقلة تنقل النسغ الخام نحو الأوراق.", "Conducting vessels carry raw sap toward the leaves."),
+    quizQuestion("Pourquoi utilise-t-on un colorant ?", "لماذا نستعمل ملوّنا؟", "Why is dye used?", ["Pour rendre le trajet de l'eau visible", "Pour nourrir la plante uniquement", "Pour empêcher l'absorption", "Pour mesurer la masse"], ["لجعل مسار الماء مرئيا", "لتغذية النبات فقط", "لمنع الامتصاص", "لقياس الكتلة"], ["To make the water path visible", "Only to feed the plant", "To prevent absorption", "To measure mass"], 0, "Le colorant permet d'observer le chemin de l'eau.", "يسمح الملوّن بملاحظة مسار الماء.", "The dye lets us observe the path taken by water."),
+    quizQuestion("Quelle observation confirme l'absorption ?", "أي ملاحظة تؤكد الامتصاص؟", "Which observation confirms absorption?", ["Les feuilles ou la fleur se colorent", "Le verre disparaît", "La plante devient plus lourde sans eau", "Le colorant reste au fond"], ["تتلوّن الأوراق أو الزهرة", "يختفي الكأس", "يزداد وزن النبات دون ماء", "يبقى الملوّن في القاع"], ["Leaves or the flower become colored", "The glass disappears", "The plant becomes heavier without water", "The dye stays at the bottom"], 0, "La couleur dans la plante prouve que l'eau a circulé.", "ظهور اللون في النبات دليل على انتقال الماء.", "Color in the plant proves water has moved."),
+    quizQuestion("Pourquoi faut-il attendre pendant l'expérience ?", "لماذا يجب الانتظار أثناء التجربة؟", "Why is waiting necessary during the experiment?", ["Le transport de l'eau prend du temps", "Le verre doit sécher", "La lampe doit chauffer", "Le colorant doit disparaître"], ["انتقال الماء يحتاج إلى وقت", "يجب أن يجف الكأس", "يجب أن يسخن المصباح", "يجب أن يختفي الملوّن"], ["Water transport takes time", "The glass must dry", "The lamp must heat up", "The dye must disappear"], 0, "L'eau colorée progresse progressivement dans la tige.", "يتقدم الماء الملوّن تدريجيا في الساق.", "Colored water gradually moves through the stem.")
+  ],
+  masse: [
+    quizQuestion("Quel instrument sert à mesurer une masse ?", "ما الأداة المستعملة لقياس الكتلة؟", "Which instrument is used to measure mass?", ["La balance", "Le voltmètre", "Le thermomètre", "La règle"], ["الميزان", "الفولتميتر", "المحرار", "المسطرة"], ["The scale", "The voltmeter", "The thermometer", "The ruler"], 0, "La balance mesure ou compare la masse d'un objet.", "الميزان يقيس أو يقارن كتلة جسم.", "A scale measures or compares an object's mass."),
+    quizQuestion("Quelle est l'unité courante de la masse ?", "ما الوحدة الشائعة للكتلة؟", "What is a common unit of mass?", ["Le gramme", "Le volt", "Le litre", "Le degré"], ["الغرام", "الفولت", "اللتر", "الدرجة"], ["Gram", "Volt", "Liter", "Degree"], 0, "Le gramme et le kilogramme sont des unités de masse.", "الغرام والكيلوغرام وحدتان لقياس الكتلة.", "Gram and kilogram are units of mass."),
+    quizQuestion("Que faut-il faire avant une mesure précise ?", "ماذا يجب فعله قبل قياس دقيق؟", "What should be done before an accurate measurement?", ["Mettre la balance à zéro", "Mouiller l'objet", "Cacher l'affichage", "Secouer la table"], ["تصفير الميزان", "تبليل الجسم", "إخفاء الشاشة", "هز الطاولة"], ["Set the scale to zero", "Wet the object", "Hide the display", "Shake the table"], 0, "La remise à zéro évite une erreur de mesure.", "التصفير يمنع خطأ في القياس.", "Zeroing prevents a measurement error."),
+    quizQuestion("Si le plateau descend, que peut-on conclure ?", "إذا نزلت كفة الميزان، ماذا نستنتج؟", "If one pan goes down, what can we conclude?", ["Ce côté est plus lourd", "Ce côté est plus chaud", "Ce côté est vide", "La masse est nulle"], ["ذلك الجانب أثقل", "ذلك الجانب أسخن", "ذلك الجانب فارغ", "الكتلة منعدمة"], ["That side is heavier", "That side is hotter", "That side is empty", "The mass is zero"], 0, "Dans une balance à plateaux, le côté le plus lourd descend.", "في الميزان ذي الكفتين تنخفض الكفة الأثقل.", "On a balance, the heavier side moves downward."),
+    quizQuestion("Quelle relation existe entre 1 kilogramme et les grammes ?", "ما العلاقة بين 1 كيلوغرام والغرامات؟", "What is the relation between 1 kilogram and grams?", ["1 kg = 1000 g", "1 kg = 10 g", "1 kg = 100 g", "1 kg = 1 g"], ["1 كغ = 1000 غ", "1 كغ = 10 غ", "1 كغ = 100 غ", "1 كغ = 1 غ"], ["1 kg = 1000 g", "1 kg = 10 g", "1 kg = 100 g", "1 kg = 1 g"], 0, "Un kilogramme contient mille grammes.", "الكيلوغرام الواحد يساوي ألف غرام.", "One kilogram equals one thousand grams."),
+    quizQuestion("Pourquoi note-t-on le résultat avec une unité ?", "لماذا نكتب النتيجة مع الوحدة؟", "Why do we write the result with a unit?", ["Pour donner un sens à la valeur", "Pour décorer la réponse", "Pour cacher le nombre", "Pour changer la masse"], ["لإعطاء معنى للقيمة", "لتزيين الإجابة", "لإخفاء العدد", "لتغيير الكتلة"], ["To give meaning to the value", "To decorate the answer", "To hide the number", "To change the mass"], 0, "Sans unité, le nombre mesuré est incomplet.", "بدون وحدة تكون القيمة المقاسة غير كاملة.", "Without a unit, the measured value is incomplete.")
+  ],
+  chimie: [
+    quizQuestion("Quel gaz est mis en évidence dans cette expérience ?", "أي غاز تبرزه هذه التجربة؟", "Which gas is identified in this experiment?", ["Le dihydrogène", "Le dioxygène", "La vapeur d'eau", "L'azote"], ["ثنائي الهيدروجين", "ثنائي الأكسجين", "بخار الماء", "الآزوت"], ["Hydrogen gas", "Oxygen gas", "Water vapor", "Nitrogen"], 0, "La réaction peut libérer du dihydrogène, un gaz inflammable.", "يمكن أن يحرر التفاعل ثنائي الهيدروجين، وهو غاز قابل للاشتعال.", "The reaction can release hydrogen, a flammable gas."),
+    quizQuestion("Quel signe indique souvent la formation d'un gaz ?", "ما العلامة التي تدل غالبا على تشكل غاز؟", "Which sign often indicates gas formation?", ["Des bulles", "Un silence total", "Une masse invisible", "Un fil électrique"], ["فقاعات", "صمت تام", "كتلة غير مرئية", "سلك كهربائي"], ["Bubbles", "Complete silence", "An invisible mass", "An electrical wire"], 0, "Les bulles montrent qu'un gaz se dégage du mélange.", "تدل الفقاعات على انطلاق غاز من الخليط.", "Bubbles show that a gas is being released from the mixture."),
+    quizQuestion("Pourquoi faut-il manipuler avec prudence ?", "لماذا يجب التعامل بحذر؟", "Why must we handle the experiment carefully?", ["Certains produits ou gaz peuvent être dangereux", "Le verre devient toujours mou", "L'eau colorée explose toujours", "La balance disparaît"], ["بعض المواد أو الغازات قد تكون خطيرة", "الزجاج يصبح دائما لينا", "الماء الملوّن ينفجر دائما", "الميزان يختفي"], ["Some products or gases may be dangerous", "Glass always becomes soft", "Colored water always explodes", "The scale disappears"], 0, "Les règles de sécurité protègent l'élève pendant les réactions chimiques.", "قواعد السلامة تحمي التلميذ أثناء التفاعلات الكيميائية.", "Safety rules protect the student during chemical reactions."),
+    quizQuestion("Quel test simple peut indiquer la présence de dihydrogène ?", "أي اختبار بسيط قد يدل على وجود ثنائي الهيدروجين؟", "Which simple test can indicate hydrogen gas?", ["Une petite détonation avec une flamme", "Une mesure de longueur", "Un changement de police", "Une pesée de la souris"], ["فرقعة صغيرة مع لهب", "قياس طول", "تغيير الخط", "وزن الفأرة"], ["A small pop with a flame", "A length measurement", "A font change", "Weighing the mouse"], 0, "Le dihydrogène produit un petit bruit caractéristique près d'une flamme.", "ينتج ثنائي الهيدروجين صوت فرقعة مميزا قرب اللهب.", "Hydrogen makes a characteristic small pop near a flame."),
+    quizQuestion("Que doit-on porter dans un laboratoire réel ?", "ماذا يجب ارتداؤه في مختبر حقيقي؟", "What should be worn in a real lab?", ["Des lunettes de protection", "Des écouteurs uniquement", "Des chaussures de plage", "Aucun équipement"], ["نظارات واقية", "سماعات فقط", "حذاء شاطئ", "لا شيء"], ["Safety goggles", "Only headphones", "Beach shoes", "No equipment"], 0, "Les lunettes protègent les yeux contre les projections.", "النظارات تحمي العينين من الرذاذ.", "Goggles protect the eyes from splashes."),
+    quizQuestion("Que signifie observer dans une expérience ?", "ما معنى الملاحظة في تجربة؟", "What does observing mean in an experiment?", ["Décrire ce que l'on voit réellement", "Inventer un résultat", "Fermer les yeux", "Supprimer les étapes"], ["وصف ما نراه فعلا", "اختراع نتيجة", "إغلاق العينين", "حذف الخطوات"], ["Describe what we actually see", "Invent a result", "Close the eyes", "Delete the steps"], 0, "Une observation scientifique doit être fidèle à ce qui se produit.", "يجب أن تكون الملاحظة العلمية مطابقة لما يحدث.", "A scientific observation should match what really happens.")
+  ]
+};
+
+function quizQuestion(frPrompt, arPrompt, enPrompt, frOptions, arOptions, enOptions, correct, frExplanation, arExplanation, enExplanation) {
+  return {
+    prompt: { fr: frPrompt, ar: arPrompt, en: enPrompt },
+    options: frOptions.map((fr, index) => ({ fr, ar: arOptions[index], en: enOptions[index] })),
+    correct,
+    explanation: { fr: frExplanation, ar: arExplanation, en: enExplanation }
+  };
+}
+
+Object.entries(EDUVIRTUEL_QUIZ_BANK).forEach(([experimentId, quiz]) => {
+  if (EXPERIMENTS[experimentId]) EXPERIMENTS[experimentId].quiz = quiz;
+});
+
+function renderQuizQuestion(state) {
+  const stage = document.getElementById("quiz-stage");
+  const progress = document.querySelector("[data-quiz-progress]");
+  const config = getExperimentConfig(state.experimentId);
+  const question = state.questions[state.index];
+  if (!stage || !progress || !question) return;
+  progress.textContent = getText({
+    fr: `Question ${state.index + 1} sur ${state.questions.length}`,
+    ar: `السؤال ${state.index + 1} من ${state.questions.length}`,
+    en: `Question ${state.index + 1} of ${state.questions.length}`
+  });
+  stage.innerHTML = `
+    <div class="quiz-question">
+      <h2>${escapeHtml(getText(question.prompt))}</h2>
+      <div class="quiz-options">
+        ${question.options.map((option, index) => `<button type="button" class="quiz-option" data-option-index="${index}">${escapeHtml(getText(option))}</button>`).join("")}
+      </div>
+      <div class="quiz-feedback" id="quiz-feedback">${escapeHtml(getText({
+        fr: "Choisissez une réponse pour obtenir un retour immédiat.",
+        ar: "اختر إجابة للحصول على ملاحظة فورية.",
+        en: "Choose an answer to get instant feedback."
+      }))}</div>
+    </div>
+  `;
+  const feedback = document.getElementById("quiz-feedback");
+  stage.querySelectorAll(".quiz-option").forEach((button) => {
+    button.addEventListener("click", () => {
+      const selected = Number(button.dataset.optionIndex);
+      const correct = selected === question.correct;
+      state.answers.push({ selected, correct, question });
+      if (correct) state.score += 1;
+      stage.querySelectorAll(".quiz-option").forEach((optionButton) => {
+        optionButton.disabled = true;
+        const optionIndex = Number(optionButton.dataset.optionIndex);
+        if (optionIndex === question.correct) optionButton.classList.add("correct");
+        else if (optionIndex === selected && !correct) optionButton.classList.add("wrong");
+      });
+      feedback.innerHTML = `<strong>${escapeHtml(getText(correct
+        ? { fr: "Bonne réponse.", ar: "إجابة صحيحة.", en: "Correct answer." }
+        : { fr: "Réponse à revoir.", ar: "إجابة تحتاج إلى مراجعة.", en: "Answer to review." }
+      ))}</strong><p>${escapeHtml(getText(question.explanation))}</p>`;
+      const nextButton = document.createElement("button");
+      nextButton.type = "button";
+      nextButton.className = "primary-btn";
+      nextButton.textContent = getText(state.index === state.questions.length - 1
+        ? { fr: "Voir le résultat final", ar: "عرض النتيجة النهائية", en: "See final result" }
+        : { fr: "Question suivante", ar: "السؤال التالي", en: "Next question" }
+      );
+      nextButton.addEventListener("click", () => {
+        state.index += 1;
+        if (state.index >= state.questions.length) renderQuizResult(state, config);
+        else renderQuizQuestion(state);
+      });
+      feedback.appendChild(nextButton);
+    }, { once: true });
+  });
+}
+
+function renderQuizResult(state, config) {
+  const stage = document.getElementById("quiz-stage");
+  const progress = document.querySelector("[data-quiz-progress]");
+  if (!stage || !progress) return;
+  const finalScore = Math.round((state.score / Math.max(state.questions.length, 1)) * 100);
+  const badge = scoreToBadge(finalScore);
+  const quizScores = readJson(STORAGE.quizScores, {});
+  quizScores[state.experimentId] = finalScore;
+  writeJson(STORAGE.quizScores, quizScores);
+  progress.textContent = getText({ fr: "Quiz terminé", ar: "تم إنهاء الاختبار", en: "Quiz completed" });
+  stage.innerHTML = `
+    <div class="quiz-result">
+      <h2>${escapeHtml(getText(config.title))}</h2>
+      <p>${escapeHtml(getText({
+        fr: `Score final : ${finalScore}/100 (${state.score}/${state.questions.length} réponses justes)`,
+        ar: `النتيجة النهائية: ${finalScore}/100 (${state.score}/${state.questions.length} إجابات صحيحة)`,
+        en: `Final score: ${finalScore}/100 (${state.score}/${state.questions.length} correct answers)`
+      }))}</p>
+      <p class="result-badge">${escapeHtml(getText(badge))}</p>
+      <div class="quiz-review-card">
+        <h3>${escapeHtml(getText({ fr: "Mode révision", ar: "وضع المراجعة", en: "Review mode" }))}</h3>
+        ${state.answers.map((answer, index) => `
+          <div class="quiz-feedback">
+            <strong>${escapeHtml(getText({ fr: `Question ${index + 1}`, ar: `السؤال ${index + 1}`, en: `Question ${index + 1}` }))}</strong>
+            <p>${escapeHtml(getText(answer.question.prompt))}</p>
+            <p>${escapeHtml(getText({
+              fr: `Bonne réponse : ${getText(answer.question.options[answer.question.correct])}`,
+              ar: `الإجابة الصحيحة: ${getText(answer.question.options[answer.question.correct])}`,
+              en: `Correct answer: ${getText(answer.question.options[answer.question.correct])}`
+            }))}</p>
+            <p>${escapeHtml(getText(answer.question.explanation))}</p>
+          </div>
+        `).join("")}
+      </div>
+      <div class="hero-actions">
+        <a class="primary-btn" href="dashboard.html">${escapeHtml(getText({ fr: "Retour au tableau de bord", ar: "العودة إلى اللوحة", en: "Back to dashboard" }))}</a>
+        <a class="secondary-btn" href="experiences.html">${escapeHtml(getText({ fr: "Retour aux expériences", ar: "العودة إلى التجارب", en: "Back to experiments" }))}</a>
+      </div>
+    </div>
+  `;
+}
+
+function initQuizPage() {
+  const experimentId = localStorage.getItem(STORAGE.lastExperiment) || "circuit";
+  const config = getExperimentConfig(experimentId);
+  const questions = Array.isArray(config.quiz) && config.quiz.length ? config.quiz : EDUVIRTUEL_QUIZ_BANK.circuit;
+  const title = document.querySelector("[data-quiz-title]");
+  if (title) {
+    title.textContent = getText({
+      fr: `Quiz lié à l'expérience : ${getText(config.title)}.`,
+      ar: `اختبار مرتبط بالتجربة: ${getText(config.title)}.`,
+      en: `Quiz linked to the experiment: ${getText(config.title)}.`
+    });
+  }
+  renderQuizQuestion({ experimentId, questions, index: 0, score: 0, answers: [] });
+}
+
 function initTeacherLogin() {
   const form = document.getElementById("teacher-login-form");
   if (!form) return;
@@ -2058,14 +2265,21 @@ function renderLabCodeList() {
     return;
   }
   list.innerHTML = codes.map((item) => {
-    const experiment = getExperimentConfig(item.experimentId);
+    const experiment = item.experimentId ? getExperimentConfig(item.experimentId) : null;
     const level = LEVEL_LABELS[item.level] || LEVEL_LABELS.cem;
+    const allowedCount = assignmentAllowedExperiments(item).length;
+    const lineOne = getAssignmentType(item) === "promo"
+      ? `${level.fr} - ${allowedCount} labo(x) autorise(s)`
+      : `${level.fr} - ${experiment.title.fr}`;
+    const lineTwo = getAssignmentType(item) === "promo"
+      ? `${level.ar} - ${allowedCount} مختبر`
+      : `${level.ar} - ${experiment.title.ar}`;
     return `
       <article class="generated-code-card">
         <div>
           <span class="code-value">${escapeHtml(item.code)}</span>
-          <p class="code-meta">${escapeHtml(level.fr)} - ${escapeHtml(experiment.title.fr)}</p>
-          <p class="code-meta">${escapeHtml(level.ar)} - ${escapeHtml(experiment.title.ar)}</p>
+          <p class="code-meta">${escapeHtml(lineOne)}</p>
+          <p class="code-meta">${escapeHtml(lineTwo)}</p>
         </div>
         <button type="button" class="secondary-btn" data-copy-code="${escapeHtml(item.code)}">${dualText("Copier", "نسخ")}</button>
       </article>
@@ -2087,8 +2301,33 @@ function renderLabCodeList() {
 function initLabCodeGenerator() {
   const form = document.getElementById("lab-code-form");
   if (!form) return;
+  const typeSelect = form.querySelector('[name="codeType"]');
   const levelSelect = form.querySelector('[name="codeLevel"]');
   const experimentSelect = form.querySelector('[name="codeExperiment"]');
+  const promoLabsField = document.getElementById("promo-labs-field");
+  const promoLabsGrid = document.getElementById("promo-labs-grid");
+
+  function renderPromoLabOptions() {
+    if (!promoLabsGrid) return;
+    const level = normalizeLevelKey(levelSelect ? levelSelect.value : "cem");
+    const labs = availableLabsForLevel(level);
+    promoLabsGrid.innerHTML = labs.map((item, index) => `
+      <label class="promo-lab-option">
+        <input type="checkbox" name="promoLabs" value="${escapeHtml(item.lab)}" ${index === 0 ? "checked" : ""}>
+        <span>
+          <strong>${escapeHtml(getText(item.title))}</strong>
+          <span>${escapeHtml(getText(item.subject))}</span>
+        </span>
+      </label>
+    `).join("");
+  }
+
+  function refreshGeneratorMode() {
+    const isPromo = (typeSelect ? typeSelect.value : "single") === "promo";
+    const experimentLabel = experimentSelect ? experimentSelect.closest("label") : null;
+    if (experimentLabel) experimentLabel.hidden = isPromo;
+    if (promoLabsField) promoLabsField.hidden = !isPromo;
+  }
 
   function refreshExperimentOptions() {
     const level = levelSelect ? levelSelect.value : "cem";
@@ -2105,29 +2344,47 @@ function initLabCodeGenerator() {
   }
 
   if (levelSelect) levelSelect.addEventListener("change", refreshExperimentOptions);
+  if (levelSelect) levelSelect.addEventListener("change", renderPromoLabOptions);
+  if (typeSelect) typeSelect.addEventListener("change", refreshGeneratorMode);
   refreshExperimentOptions();
+  renderPromoLabOptions();
+  refreshGeneratorMode();
   renderLabCodeList();
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(form);
-    const level = String(data.get("codeLevel") || "cem");
+    const codeType = String(data.get("codeType") || "single");
+    const level = normalizeLevelKey(String(data.get("codeLevel") || "cem"));
     const experimentId = String(data.get("codeExperiment") || "plante");
+    const selectedPromoLabs = data.getAll("promoLabs").map((value) => String(value));
     const audience = EXPERIMENT_AUDIENCE[experimentId];
-    if (audience && !audience.levels.includes(level)) {
+    if (codeType === "single" && audience && !audience.levels.includes(level)) {
       alert(getText({ fr: "Cette activite ne correspond pas a ce niveau.", ar: "هذا النشاط لا يناسب هذا المستوى." }));
       return;
     }
-    const subject = subjectForExperiment(experimentId, level);
-    const code = createReadableLabCode(level, experimentId);
+    if (codeType === "promo" && !selectedPromoLabs.length) {
+      alert(getText({
+        fr: "Choisissez au moins un laboratoire pour le code promo.",
+        ar: "اختر مختبرا واحدا على الأقل للرمز.",
+        en: "Choose at least one lab for the promo code."
+      }));
+      return;
+    }
+    const primaryExperimentId = codeType === "promo" ? selectedPromoLabs[0] : experimentId;
+    const subject = subjectForExperiment(primaryExperimentId, level);
+    const code = createReadableLabCode(level, codeType === "promo" ? "PRO" : experimentId);
     const codes = readLabCodes();
-    codes.unshift({
+    const nextCode = {
       code,
       level,
+      type: codeType,
       subjectId: subject ? subject.id : "",
-      experimentId,
       createdAt: new Date().toISOString()
-    });
+    };
+    if (codeType === "promo") nextCode.allowedExperiments = selectedPromoLabs;
+    else nextCode.experimentId = experimentId;
+    codes.unshift(nextCode);
     writeLabCodes(codes.slice(0, 12));
     renderLabCodeList();
   });
@@ -2805,9 +3062,11 @@ function initLevelExperiences() {
   const assignment = findLabCodeAssignment(params.get("code")) || getActiveLabAssignment();
   const level = normalizeLevelKey(assignment ? assignment.level : (params.get("level") || localStorage.getItem(STORAGE.currentLevel) || "cem"));
   let subject = parseSavedSubject();
-  const subjectId = assignment ? (subjectForExperiment(assignment.experimentId, level)?.id || "") : params.get("subject");
+  const subjectId = assignment
+    ? (params.get("subject") || subject?.id || defaultSubjectForAssignment(assignment)?.id || "")
+    : params.get("subject");
   if (subjectId) subject = (SUBJECTS[level] || []).find((item) => item.id === subjectId) || subject;
-  if (!subject) subject = (SUBJECTS[level] || [])[0] || { fr: "Physique", ar: "الفيزياء", en: "Physics" };
+  if (!subject) subject = defaultSubjectForAssignment(assignment) || (SUBJECTS[level] || [])[0] || { fr: "Physique", ar: "Physics", en: "Physics" };
 
   localStorage.setItem(STORAGE.currentLevel, level);
   localStorage.setItem(STORAGE.currentSubject, JSON.stringify(subject));
@@ -2815,22 +3074,29 @@ function initLevelExperiences() {
 
   const selectedSubjectId = subject.id || subjectId || "";
   const list = assignment
-    ? (LEVEL_EXPERIENCES[level] || []).filter((item) => item.lab === assignment.experimentId)
+    ? (LEVEL_EXPERIENCES[level] || []).filter((item) => assignmentAllowsExperiment(assignment, item.lab) && (!selectedSubjectId || item.subjectId === selectedSubjectId))
     : (LEVEL_EXPERIENCES[level] || []).filter((item) => !selectedSubjectId || item.subjectId === selectedSubjectId);
 
   renderLevelExperiencePage(level, list);
 
-  if (assignment) {
+  if (assignment && getAssignmentType(assignment) === "single") {
     const experiment = getExperimentConfig(assignment.experimentId);
     summary.innerHTML = dualText(
       `Code ${assignment.code} : une seule activite assignee par le professeur, ${experiment.title.fr}.`,
-      `الرمز ${assignment.code}: نشاط واحد فقط حدده الأستاذ، ${experiment.title.ar}.`,
+      `Code ${assignment.code}: one teacher activity, ${experiment.title.en || experiment.title.fr}.`,
       `Code ${assignment.code}: one activity assigned by the teacher, ${experiment.title.en || experiment.title.fr}.`
+    );
+  } else if (assignment) {
+    const labCount = assignmentAllowedExperiments(assignment).length;
+    summary.innerHTML = dualText(
+      `Code ${assignment.code} : ${labCount} activite(s) autorisee(s) pour ${LEVEL_LABELS[level].fr}.`,
+      `Code ${assignment.code}: ${labCount} available activit(ies) for ${LEVEL_LABELS[level].en || LEVEL_LABELS[level].fr}.`,
+      `Code ${assignment.code}: ${labCount} allowed activity(ies) for ${LEVEL_LABELS[level].en}.`
     );
   } else {
     summary.innerHTML = dualText(
       `Voici ${list.length} experience(s) pour ${LEVEL_LABELS[level].fr} - ${subject.fr}.`,
-      `هذه ${list.length} تجربة مناسبة لـ ${LEVEL_LABELS[level].ar} - ${subject.ar}.`,
+      `Here are ${list.length} experiments for ${LEVEL_LABELS[level].en || LEVEL_LABELS[level].fr} - ${subject.en || subject.fr}.`,
       `Here are ${list.length} experiment(s) for ${LEVEL_LABELS[level].en} - ${subject.en || subject.fr}.`
     );
   }
@@ -2995,11 +3261,12 @@ function renderRegisteredStudents() {
   });
 }
 
-function getAvailableSubjectsForLevel(level) {
+function getAvailableSubjectsForLevel(level, assignment = null) {
   const experiences = LEVEL_EXPERIENCES[normalizeLevelKey(level)] || [];
   const availableSubjectIds = [...new Set(
     experiences
       .filter((item) => item.status === "available" && item.subjectId)
+      .filter((item) => !assignment || assignmentAllowsExperiment(assignment, item.lab))
       .map((item) => item.subjectId)
   )];
   return (SUBJECTS[normalizeLevelKey(level)] || []).filter((subject) => availableSubjectIds.includes(subject.id));
@@ -3011,7 +3278,7 @@ function renderSubjects(level) {
   if (!subjectGrid) return;
   const assignment = getActiveLabAssignment();
 
-  if (assignment && normalizeLevelKey(assignment.level) === level) {
+  if (assignment && normalizeLevelKey(assignment.level) === level && getAssignmentType(assignment) === "single") {
     const subject = subjectForExperiment(assignment.experimentId, assignment.level);
     const experiment = getExperimentConfig(assignment.experimentId);
     subjectGrid.classList.remove("empty-state");
@@ -3032,7 +3299,9 @@ function renderSubjects(level) {
     return;
   }
 
-  const subjects = getAvailableSubjectsForLevel(level);
+  const subjects = assignment && normalizeLevelKey(assignment.level) === level
+    ? getAvailableSubjectsForLevel(level, assignment)
+    : getAvailableSubjectsForLevel(level);
   const meta = LEVEL_META[level] || LEVEL_META.cem;
   subjectGrid.classList.remove("empty-state");
 
@@ -3085,10 +3354,26 @@ function initDashboard() {
   const studentName = localStorage.getItem(STORAGE.studentName) || "";
   const savedLevel = normalizeLevelKey(localStorage.getItem(STORAGE.currentLevel) || "cem");
   const levelLabel = LEVEL_LABELS[savedLevel] || LEVEL_LABELS.cem;
+  const assignment = getActiveLabAssignment();
   if (welcome) {
-    welcome.innerHTML = studentName
-      ? dualText(`Bienvenue ${studentName}. Ton niveau ${levelLabel.fr} est deja selectionne.`, `مرحبا ${studentName}. مستوى ${levelLabel.ar} محدد مسبقا.`, `Welcome ${studentName}. Your ${levelLabel.en} level is already selected.`)
-      : dualText(`Ton niveau ${levelLabel.fr} est deja selectionne.`, `مستوى ${levelLabel.ar} محدد مسبقا.`, `Your ${levelLabel.en} level is already selected.`);
+    if (assignment && getAssignmentType(assignment) === "promo") {
+      const labCount = assignmentAllowedExperiments(assignment).length;
+      welcome.innerHTML = studentName
+        ? dualText(
+          `Bienvenue ${studentName}. Ton code promo ${assignment.code} ouvre ${labCount} laboratoire(s) pour le niveau ${levelLabel.fr}.`,
+          `Promo code ${assignment.code}: ${labCount} lab(s) available for ${levelLabel.en || levelLabel.fr}.`,
+          `Welcome ${studentName}. Your promo code ${assignment.code} opens ${labCount} lab(s) for ${levelLabel.en}.`
+        )
+        : dualText(
+          `Ton code promo ${assignment.code} ouvre ${labCount} laboratoire(s) pour le niveau ${levelLabel.fr}.`,
+          `Promo code ${assignment.code}: ${labCount} lab(s) available for ${levelLabel.en || levelLabel.fr}.`,
+          `Your promo code ${assignment.code} opens ${labCount} lab(s) for ${levelLabel.en}.`
+        );
+    } else {
+      welcome.innerHTML = studentName
+        ? dualText(`Bienvenue ${studentName}. Ton niveau ${levelLabel.fr} est deja selectionne.`, `Your ${levelLabel.en || levelLabel.fr} level is already selected.`, `Welcome ${studentName}. Your ${levelLabel.en} level is already selected.`)
+        : dualText(`Ton niveau ${levelLabel.fr} est deja selectionne.`, `Your ${levelLabel.en || levelLabel.fr} level is already selected.`, `Your ${levelLabel.en} level is already selected.`);
+    }
   }
   renderDashboardLevelSummary(savedLevel);
   renderSubjects(savedLevel);
@@ -3243,6 +3528,7 @@ function prepareEmbeddedResult(experimentId) {
 function finishExperiment() {
   const experimentId = experimentRuntime?.id || document.body.dataset.experiment || currentExperimentContextId();
   prepareEmbeddedResult(experimentId);
+  localStorage.setItem(STORAGE.lastExperiment, experimentId);
   storeExperimentResult();
   if (experimentRuntime && experimentRuntime.timerHandle) window.clearInterval(experimentRuntime.timerHandle);
   window.location.href = "result.html";
@@ -3506,13 +3792,16 @@ function initStudentForm() {
 
 function initStudentForm() {
   const signupForm = document.getElementById("student-signup-form");
+  const promoForm = document.getElementById("student-promo-form");
   const loginForm = document.getElementById("student-login-form");
-  if (!signupForm || !loginForm) return;
+  if (!signupForm || !promoForm || !loginForm) return;
   const levelInput = signupForm.querySelector('input[name="level"]');
   const levelButtons = document.querySelectorAll("[data-level-choice]");
   const authTabs = document.querySelectorAll("[data-auth-mode]");
   const panels = document.querySelectorAll("[data-auth-panel]");
   const levelPanel = document.getElementById("student-level-panel");
+  const promoCodeInput = promoForm.querySelector('input[name="promoCode"]');
+  const promoLevelPreview = document.getElementById("student-promo-level");
   const savedLevel = normalizeLevelKey(localStorage.getItem(STORAGE.currentLevel) || "cem");
 
   function selectLevel(level) {
@@ -3533,6 +3822,24 @@ function initStudentForm() {
     if (levelPanel) levelPanel.hidden = mode !== "signup";
   }
 
+  function updatePromoPreview() {
+    if (!promoCodeInput || !promoLevelPreview) return;
+    const assignment = findLabCodeAssignment(promoCodeInput.value);
+    if (!assignment || getAssignmentType(assignment) !== "promo") {
+      promoLevelPreview.hidden = true;
+      promoLevelPreview.innerHTML = "";
+      return;
+    }
+    const level = LEVEL_LABELS[normalizeLevelKey(assignment.level)] || LEVEL_LABELS.cem;
+    const labCount = assignmentAllowedExperiments(assignment).length;
+    promoLevelPreview.hidden = false;
+    promoLevelPreview.innerHTML = dualText(
+      `Niveau detecte : ${level.fr}. ${labCount} labo(x) disponible(s).`,
+      `Detected level: ${level.en || level.fr}. ${labCount} lab(s) available.`,
+      `Detected level: ${level.en}. ${labCount} lab(s) available.`
+    );
+  }
+
   levelButtons.forEach((button) => {
     button.addEventListener("click", () => selectLevel(button.dataset.levelChoice));
   });
@@ -3540,7 +3847,9 @@ function initStudentForm() {
   authTabs.forEach((button) => {
     button.addEventListener("click", () => setMode(button.dataset.authMode || "signup"));
   });
+  if (promoCodeInput) promoCodeInput.addEventListener("input", updatePromoPreview);
   setMode("signup");
+  updatePromoPreview();
 
   signupForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -3553,18 +3862,14 @@ function initStudentForm() {
     const existingStudent = students.find((student) => String(student.name || "").toLowerCase() === fullName.toLowerCase());
 
     if (!firstName) {
-      alert(getText({
-        fr: "Ecris ton prenom pour continuer.",
-        ar: "اكتب اسمك للمتابعة.",
-        en: "Write your first name to continue."
-      }));
+      alert(getText({ fr: "Ecris ton prenom pour continuer.", ar: "Write your first name to continue.", en: "Write your first name to continue." }));
       return;
     }
 
     if (existingStudent) {
       alert(getText({
         fr: "Ce nom a deja un compte. Utilise l'onglet connexion avec ton code personnel.",
-        ar: "هذا الاسم لديه حساب بالفعل. استعمل قسم الدخول مع رمزك الشخصي.",
+        ar: "This name already has an account. Use the login tab with your personal code.",
         en: "This name already has an account. Use the login section with your personal code."
       }));
       setMode("login");
@@ -3594,6 +3899,69 @@ function initStudentForm() {
     window.location.href = "dashboard.html";
   });
 
+  promoForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const data = new FormData(promoForm);
+    const promoCode = normalizeLabCode(data.get("promoCode"));
+    const firstName = String(data.get("firstName") || "").trim();
+    const lastName = String(data.get("lastName") || "").trim();
+    const fullName = normalizeStudentFullName(firstName, lastName);
+    const assignment = findLabCodeAssignment(promoCode);
+    const students = readJson(STORAGE.students, []);
+    const existingStudent = students.find((student) => String(student.name || "").toLowerCase() === fullName.toLowerCase());
+
+    if (!promoCode) {
+      alert(getText({ fr: "Entre le code promo de ta classe.", ar: "Enter your class promo code.", en: "Enter your class promo code." }));
+      return;
+    }
+    if (!assignment || getAssignmentType(assignment) !== "promo") {
+      alert(getText({
+        fr: "Ce code promo est introuvable ou ne correspond pas a un code de classe.",
+        ar: "This promo code was not found or is not a class code.",
+        en: "This promo code was not found or is not a class code."
+      }));
+      return;
+    }
+    if (!firstName) {
+      alert(getText({ fr: "Ecris ton prenom pour continuer.", ar: "Write your first name to continue.", en: "Write your first name to continue." }));
+      return;
+    }
+    if (existingStudent) {
+      alert(getText({
+        fr: "Ce nom a deja un compte. Utilise l'onglet connexion avec ton code personnel.",
+        ar: "This name already has an account. Use the login tab with your personal code.",
+        en: "This name already has an account. Use the login section with your personal code."
+      }));
+      setMode("login");
+      return;
+    }
+
+    const selectedLevel = normalizeLevelKey(assignment.level || "cem");
+    const password = generateStudentPassword(fullName, selectedLevel, students);
+    const subject = defaultSubjectForAssignment(assignment);
+    const nextStudent = {
+      name: fullName,
+      password,
+      classCode: assignment.code,
+      level: selectedLevel,
+      activeCode: assignment.code,
+      createdAt: new Date().toISOString(),
+      lastLoginAt: new Date().toISOString()
+    };
+
+    students.unshift(nextStudent);
+    localStorage.setItem(STORAGE.students, JSON.stringify(students));
+    localStorage.setItem(STORAGE.studentName, fullName);
+    localStorage.setItem(STORAGE.studentClass, assignment.code);
+    localStorage.setItem(STORAGE.currentLevel, selectedLevel);
+    localStorage.setItem(STORAGE.activeLabCode, assignment.code);
+    if (subject) localStorage.setItem(STORAGE.currentSubject, JSON.stringify(subject));
+    else localStorage.removeItem(STORAGE.currentSubject);
+
+    await showStudentPasswordModal(fullName, password);
+    window.location.href = "dashboard.html";
+  });
+
   loginForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const data = new FormData(loginForm);
@@ -3601,19 +3969,11 @@ function initStudentForm() {
     const students = readJson(STORAGE.students, []);
     const existingIdx = students.findIndex((student) => String(student.password || "") === password);
     if (!password) {
-      alert(getText({
-        fr: "Entre ton code de connexion.",
-        ar: "أدخل رمز الدخول الخاص بك.",
-        en: "Enter your login code."
-      }));
+      alert(getText({ fr: "Entre ton code de connexion.", ar: "Enter your login code.", en: "Enter your login code." }));
       return;
     }
     if (existingIdx === -1) {
-      alert(getText({
-        fr: "Code introuvable. Verifie le code genere lors de l'inscription.",
-        ar: "الرمز غير موجود. تحقق من الرمز الذي تم إنشاؤه عند التسجيل.",
-        en: "Code not found. Check the code generated during signup."
-      }));
+      alert(getText({ fr: "Code introuvable. Verifie le code genere lors de l'inscription.", ar: "Code not found. Check the code generated during signup.", en: "Code not found. Check the code generated during signup." }));
       return;
     }
     const existingStudent = students[existingIdx];
@@ -3632,7 +3992,7 @@ function initStudentForm() {
       localStorage.setItem(STORAGE.activeLabCode, nextStudent.activeCode);
       const linkedAssignment = findLabCodeAssignment(nextStudent.activeCode);
       if (linkedAssignment) {
-        const subject = subjectForExperiment(linkedAssignment.experimentId, linkedAssignment.level);
+        const subject = defaultSubjectForAssignment(linkedAssignment);
         if (subject) localStorage.setItem(STORAGE.currentSubject, JSON.stringify(subject));
       }
     }

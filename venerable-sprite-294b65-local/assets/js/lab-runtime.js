@@ -80,7 +80,7 @@
     };
 
     function looksLikeMojibake(value) {
-      return typeof value === 'string' && /[ØÙÃÂ]/.test(value);
+      return typeof value === 'string' && /[\u00d8\u00d9\u00c3\u00c2]/.test(value);
     }
 
     function decodeMojibake(value) {
@@ -838,7 +838,7 @@
       if (biologyState.dyeMix > 0.05) return;
       gsap.killTweensOf(biologyState);
 
-      // Animate bottle pour: lift ? tilt ? pour (???? ??????) ? return
+      // Animate bottle pour: lift, tilt, pour, then return.
       if (biologyLab && biologyLab.dropperBottle) {
         const bottle = biologyLab.dropperBottle;
         gsap.killTweensOf(bottle.position);
@@ -1117,7 +1117,7 @@
         { x: 0.18, y: 2.42, z: -0.03, ry: -0.68, rz: 0.22, s: 0.56 }
       ];
       leafSpecs.forEach((spec) => {
-        const leaf = createLeafMesh(0xf5f3ec);  // Start WHITE as requested (???? ?????)
+        const leaf = createLeafMesh(0xf5f3ec);  // Start white as requested.
         leaf.mesh.position.set(spec.x, spec.y, spec.z);
         leaf.mesh.rotation.set(0.08, spec.ry, spec.rz);
         leaf.mesh.scale.set(spec.s, spec.s, spec.s);

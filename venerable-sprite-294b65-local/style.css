@@ -834,7 +834,7 @@ body[data-lang="ar"] .visual-subject-card {
 }
 
 .experiment-layout-embedded {
-  grid-template-columns: minmax(0, 1.18fr) minmax(240px, 300px);
+  grid-template-columns: minmax(0, 1.42fr) minmax(250px, 300px);
   gap: 22px;
 }
 
@@ -851,7 +851,7 @@ body[data-lang="ar"] .visual-subject-card {
 }
 
 .experiment-shell {
-  max-width: 1640px;
+  max-width: 1760px;
 }
 
 .experiment-side-column {
@@ -1230,7 +1230,7 @@ body[data-lang="ar"] .visual-subject-card {
 
 .lab-frame {
   width: 100%;
-  height: clamp(520px, calc(100vh - 320px), 720px);
+  height: clamp(760px, calc(100vh - 170px), 980px);
   min-height: 0;
   margin-top: 14px;
   border: 1px solid rgba(21, 101, 192, 0.12);
@@ -1239,7 +1239,7 @@ body[data-lang="ar"] .visual-subject-card {
 }
 
 .lab-frame-large {
-  height: clamp(560px, calc(100vh - 320px), 760px);
+  height: clamp(800px, calc(100vh - 150px), 1040px);
   min-height: 0;
 }
 
@@ -1537,6 +1537,49 @@ body[data-lang="ar"] .visual-subject-card {
   display: grid;
   gap: 12px;
   margin-top: 18px;
+}
+
+.promo-labs-field {
+  border: 1px solid rgba(31, 111, 235, 0.12);
+  border-radius: 18px;
+  padding: 14px;
+  margin: 0;
+}
+
+.promo-labs-field legend {
+  padding: 0 8px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.promo-labs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.promo-lab-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(238, 246, 255, 0.72);
+  border: 1px solid rgba(31, 111, 235, 0.12);
+}
+
+.promo-lab-option input {
+  margin-top: 3px;
+}
+
+.promo-lab-option strong,
+.promo-lab-option span {
+  display: block;
+}
+
+.promo-lab-option span {
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
 .generated-code-card {
@@ -2453,12 +2496,12 @@ body[data-lang="ar"] .visual-level-grid .level-choice {
   }
 
   .lab-frame {
-    height: 480px;
+    height: 620px;
     min-height: 0;
   }
 
   .lab-frame-large {
-    height: 500px;
+    height: 680px;
     min-height: 0;
   }
 
@@ -2914,7 +2957,7 @@ body[data-page='student'] .page-shell {
 
 .student-auth-tabs {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -2947,6 +2990,19 @@ body[data-page='student'] .page-shell {
 
 .student-auth-form .panel-head {
   margin-bottom: 4px;
+}
+
+.promo-level-preview {
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(31, 111, 235, 0.08);
+  border: 1px solid rgba(31, 111, 235, 0.12);
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.promo-level-preview[hidden] {
+  display: none !important;
 }
 
 /* 8. Dashboard improvements */
@@ -3054,7 +3110,7 @@ body[data-page='teacher-dashboard'] .page-shell,
 }
 
 /* ================================================================
-   BACKGROUND DECORATIONS � floating blobs for all experiment pages
+   BACKGROUND DECORATIONS - floating blobs for all experiment pages
    ================================================================ */
 .page-bg-deco {
   position: fixed;
@@ -3109,7 +3165,7 @@ main.experiment-shell,
 }
 
 /* ================================================================
-   PROFESSOR LOGIN � premium full-split layout
+   PROFESSOR LOGIN - premium full-split layout
    ================================================================ */
 .prof-login-wrap {
   min-height: calc(100vh - 64px);
@@ -3194,7 +3250,7 @@ main.experiment-shell,
 }
 
 /* ================================================================
-   PROFESSOR DASHBOARD � premium 3-column layout
+   PROFESSOR DASHBOARD - premium 3-column layout
    ================================================================ */
 .teacher-page .page-shell {
   padding-top: 14px;
